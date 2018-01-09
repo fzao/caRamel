@@ -6,8 +6,8 @@ Date: 2017-12-15
 Author: Nicolas Le Moine, Fabrice Zaoui, Celine Monteil
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Depends: geometry, parallel
-Description: Outils de calage multiobjectif avec algorithme genetique - R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine
-License: What license is it under?
+Description: Outils de calage multiobjectif avec algorithme genetique - R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine.
+License: GPL-3
 LazyData: TRUE
 RoxygenNote: 6.0.1
 NeedsCompilation: no
