@@ -1,0 +1,34 @@
+#' boxes
+#' 
+#' La fonction boxes renvoie un numero de boite par points d'une population
+#'  
+#' @param points : matrice des objectifs
+#' @param prec (double, length = nobj) precision souhaitee pour les objectifs (arretes des boites)
+#' @return vecteur des numeros de boites
+#' @author F. Zaoui
+#' @export
+
+boxes <- function(points, prec) {
+  
+  n <- dim(points)[1]
+  d <- dim(points)[2]
+  
+  valmin <- apply(points,2,min)
+  val <- matrix(rep(valmin,n), ncol=d, byrow=TRUE)
+  
+  the_box <- points - val
+  the_prec <- matrix(rep(prec,n), ncol=d, byrow=TRUE)
+  the_box <- floor(the_box / the_prec)
+  
+  for(i in 1:d) {
+    C <- val2rank(the_box[,i],2)
+    the_box[,i] <- C
+  }
+  
+  base <- 1 + apply(the_box,2,max)
+  base <- c(1, base[1:length(base)-1])
+  base <- cumprod(base)
+  base <- matrix(rep(base,n),ncol=d, byrow=TRUE)
+
+  return(rowSums(the_box*base))
+}
