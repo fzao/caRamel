@@ -1,13 +1,23 @@
 Package: caRamel
 Type: Package
-Title: caRamel : CAlage RApide Multi-objectif EvoLutionnaire
+Title: A multi-objective optimizer for the calibration of hydrological models
 Version: 2017.12-15
 Date: 2017-12-15
-Author: Nicolas Le Moine, Fabrice Zaoui, Celine Monteil
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Authors@R: c(
+  person("Nicolas", "Le Moine", role = c("aut")),
+  person("Celine", "Monteil", role = c("aut")),
+  person("Frederic", "Hendrickx", role = c("ctb")),
+  person("Fabrice", "Zaoui", role = c("aut", "cre"), email = "fabrice.zaoui@edf.fr")
+  )
+Author: Nicolas Le Moine [aut],
+  Celine Monteil [aut],
+  Frederic Hendrickx [ctb],
+  Fabrice Zaoui [aut, cre]
+Maintainer: Fabrice Zaoui <fabrice.zaoui@edf.fr>
 Depends: geometry, parallel
-Description: Outils de calage multiobjectif avec algorithme genetique - R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine.
+Description: R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine.
 License: GPL-3
+Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.0.1
 NeedsCompilation: no
