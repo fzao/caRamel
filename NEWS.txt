@@ -1,29 +1,26 @@
-Nouveautes du paquet caRamel
+News of the caRamel package
 
 Version 2017.12-15
 ==================
-* Ajout de "pop_totale" dans les resultats (derniere population : Pareto et points domines) pour permettre reprise d'optimisation
-* Possibilite d'ecrire la population totale dans un fichier a chaque generation (renseigner listsave$totalpop)
-* Enrichissement de l'aide
+* add "pop_totale" in results (last population: Pareto front and dominated solutions) for restart of optimization
+* possibility to write the whole population on file at each generation (see the parameter listsave$totalpop)
+* more help documentation
 
 Version 2017.09-25
 ==================
-* calcul de gpp pour respecter le nombre de jeux generes en moyenne par chaque regle : nvar*(nobj+1)/njeux.
+* computation of gpp in order to have the right average number of games for each rule
 
 Version 2017.09-08
 ==================
-* correction dans le stockage des criteres complementaires
+* some corrections on the record of additional criteria
 
 Version 2017.08-23
 ==================
-Ajouts d'apres corrections Laura Rouhier :
-* possibilite de stocker des criteres complementaires a chaque evaluation
-  (calcules par la fonction cout mais ne servent pas a l'optimisation)
-* suppression des lignes avec tracegen qui ne sont pas utilisees
-* amelioration du script pour tracer les graphes de suivi 
+* possibility to save more info for each evaluation
+* delete some non necessary lines with tracegen
+* change script to plot convergence graphs
 
 Version 2017.07-20
 ==================
-* Premiere realisation du package R 'caRamel'
-
+* First version of the R package for caRamel
 
