@@ -1,6 +1,6 @@
-#' Cinterpole
+#' Cinterp
 #' 
-#' La fonction Cinterpole propose n nouveaux candidats par interpolation dans des simplexes de l'espace des objectifs.
+#' La fonction Cinterp propose n nouveaux candidats par interpolation dans des simplexes de l'espace des objectifs.
 #'  
 #' @param param matrice [ NPoints , NPar ] des parametres deja evalues
 #' @param crit matrice [ Npoints , NObj ] des criteres associes
@@ -12,7 +12,7 @@
 #' @author F. Zaoui
 #' @export
 
-Cinterpole <- function(param, crit, simplices, volume, n) {
+Cinterp <- function(param, crit, simplices, volume, n) {
 
   ix <- rselect(n, volume)
   nobj <- dim(crit)[2]

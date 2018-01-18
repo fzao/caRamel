@@ -104,14 +104,14 @@ newXval <-
     
     # Nouveaux jeux crees par interpolation dans les simplexes  
     if (n_inter > 0) {
-      carain <- Cinterpole(param, crit, simplices, volume, n_inter)
+      carain <- Cinterp(param, crit, simplices, volume, n_inter)
       xnouv <- rbind(xnouv, carain$xnouv)
       project_crit <- rbind(project_crit, carain$pcrit)
     }
     
     # Nouveaux jeux crees par extrapolation sur les directions des aretes
     if (n_extra > 0) {
-      caraex <- Cextrapole(param, crit, oriedge, ledge, n_extra)
+      caraex <- Cextrap(param, crit, oriedge, ledge, n_extra)
       xnouv <- rbind(xnouv, caraex$xnouv)
       project_crit <- rbind(project_crit, caraex$pcrit)
     }

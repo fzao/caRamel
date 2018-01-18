@@ -1,6 +1,6 @@
-#' Cextrapole
+#' Cextrap
 #' 
-#' La fonction Cextrapole propose n nouveaux candidats par extrapolation le long de directions orthogonales au Front de Pareto dans l'espace des objectifs
+#' La fonction Cextrap propose n nouveaux candidats par extrapolation le long de directions orthogonales au Front de Pareto dans l'espace des objectifs
 #'  
 #' @param param matrice [ NPoints , NPar ] des parametres deja evalues
 #' @param crit matrice [ Npoints , NObj ] des criteres associes
@@ -13,7 +13,7 @@
 #' @export
 
 
-Cextrapole <- function(param, crit, directions, longu, n) {
+Cextrap <- function(param, crit, directions, longu, n) {
   
   ix <- rselect(n, longu)
   nobj <- dim(crit)[2]
