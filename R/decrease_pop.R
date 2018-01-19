@@ -14,7 +14,7 @@
 ##' \item{ind_pop}{} 
 ##' }
 #' @author Fabrice Zaoui
-#' @export
+
 decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
 
   nobj <- dim(matobj)[2]

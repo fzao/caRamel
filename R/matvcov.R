@@ -6,7 +6,6 @@
 #' @param g : center of reference population (in the parameter space)
 #' @return rr : variances-covariances matrix on the reference population
 #' @author Fabrice Zaoui
-#' @export
 
 matvcov <- function(x, g) {
   

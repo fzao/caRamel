@@ -7,7 +7,6 @@
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
 #' @author Fabrice Zaoui
-#' @export
 
 Cusecovar <- function(xref, amplif, n) {
   

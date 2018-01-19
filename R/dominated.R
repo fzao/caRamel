@@ -6,7 +6,6 @@
 #' @param Y : matrix
 #' @return D : vector of booleans
 #' @author F. Zaoui
-#' @export
 
 dominated <- function(x, Y) {
   

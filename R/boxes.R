@@ -6,7 +6,6 @@
 #' @param prec : (double, length = nobj) desired accuracy for the objectives (edges of the boxes)
 #' @return vector of numbers for the boxes
 #' @author Fabrice Zaoui
-#' @export
 
 boxes <- function(points, prec) {
   

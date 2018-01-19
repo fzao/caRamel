@@ -13,7 +13,6 @@
 #' @return xnouv : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
 #' @return project_crit: assumed position of the new vectors in the criteria space: [ sum(Repart_Gene)+ eventually (nobj+1)*nvar if fireworks , NObj ];
 #' @author Fabrice Zaoui
-#' @export
 
 newXval <-
   function(param,

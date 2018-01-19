@@ -7,7 +7,6 @@
 #' @param prec : (double, length = nobj) desired accuracy for sorting objectives
 #' @return vector indices
 #' @author Fabrice Zaoui
-#' @export
 
 downsize <- function(points, Fo, prec) {
   the_box <- boxes(points, prec)

@@ -6,7 +6,6 @@
 #' @param f_splx : vector (npoints) of associated Pareto numbers (1 = dominated)
 #' @return list of elements "oriedge": oriented edges and "ledge": length
 #' @author Fabrice Zaoui
-#' @export
 
 Dimprove <- function(o_splx, f_splx) {
   if1 <- which(f_splx == 1)

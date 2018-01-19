@@ -5,7 +5,6 @@
 #' @param X : matrix [NInd * NObj]
 #' @return Ft : column matrix [NInd * 1]
 #' @author Fabrice Zaoui
-#' @export
 
 pareto <- function(X) {
   

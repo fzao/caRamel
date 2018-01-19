@@ -6,7 +6,6 @@
 #' @param facp : vector of initial points
 #' @return ix : ranks of selected points (vector of dimension n)
 #' @author Fabrice Zaoui
-#' @export
 
 rselect <- function(n, facp) {
   if (sum(facp) > 0 & n > 0) {

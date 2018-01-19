@@ -5,7 +5,6 @@
 #' @param matobj : matrix [ NInd , NObj ] of objectives
 #' @return f : vector of dimension NInd of dominances
 #' @author Fabrice Zaoui
-#' @export
 
 dominate <- function(matobj) {
   # Call "pareto" function

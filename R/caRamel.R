@@ -35,7 +35,6 @@
 ##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
 ##' }
 #' @author Fabrice Zaoui - Celine Monteil
-#' @export
 
 caRamel <-
   function(nobj,

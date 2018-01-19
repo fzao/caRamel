@@ -7,7 +7,6 @@
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
 #' @author Fabrice Zaoui
-#' @export
 
 Crecombination <- function(param, blocks, n) {
   npar <- dim(param)[2]

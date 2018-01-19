@@ -10,7 +10,6 @@
 #' @return xnouv : matrix [ n , NPar ] of new vectors
 #' @return pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
 #' @author Fabrice Zaoui
-#' @export
 
 Cinterp <- function(param, crit, simplices, volume, n) {
 
