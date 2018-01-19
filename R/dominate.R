@@ -1,17 +1,17 @@
 #' dominate
 #' 
-#' La fonction dominate calcule les fronts de Pareto successifs d'une population (classement "en pelure d'oignon")
+#' calculates the successive Pareto fronts of a population (classification "onion peel")
 #'  
-#' @param matobj matrice [ NInd , NObj ] des objectifs
-#' @return f vecteur de dimension NInd des dominances
-#' @author F. Zaoui
+#' @param matobj : matrix [ NInd , NObj ] of objectives
+#' @return f : vector of dimension NInd of dominances
+#' @author Fabrice Zaoui
 #' @export
 
 dominate <- function(matobj) {
-  # Appelle la fonction "pareto"
+  # Call "pareto" function
   
-  nind <- dim(matobj)[1] # Nombre d'individus
-  nobj <- dim(matobj)[2] # Nombre de criteres
+  nind <- dim(matobj)[1] # Number of individuals
+  nobj <- dim(matobj)[2] # Number of criteria
   f <- matrix(data = 0., nrow = nind)
   ix <- which(f == 0)
   k <- 1

@@ -5,48 +5,48 @@
 \title{caRamel}
 \usage{
 caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
-  repart_gene = c(5, 5, 5, 5), gpp = NULL, blocs = NULL, pop = NULL,
-  funcinit = NULL, noms_obj = NULL, listsave = NULL, ecrit_gen = 0,
-  parallele = TRUE, numcores = NULL)
+  repart_gene = c(5, 5, 5, 5), gpp = NULL, blocks = NULL, pop = NULL,
+  funcinit = NULL, noms_obj = NULL, listsave = NULL, write_gen = 0,
+  carallel = TRUE, numcores = NULL)
 }
 \arguments{
-\item{nobj}{(integer, length = 1) the number of objectives to optimize (nobj >= 2)}
+\item{nobj}{: (integer, length = 1) the number of objectives to optimize (nobj >= 2)}
 
-\item{nvar}{(integer, length = 1) the number of variables}
+\item{nvar}{: (integer, length = 1) the number of variables}
 
-\item{minmax}{(logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)}
+\item{minmax}{: (logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)}
 
-\item{bounds}{(matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables}
+\item{bounds}{: (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables}
 
-\item{func}{the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2}
+\item{func}{: the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2}
 
-\item{popsize}{(integer, length = 1) the population size for the genetic algorithm}
+\item{popsize}{: (integer, length = 1) the population size for the genetic algorithm}
 
-\item{archsize}{(integer, length = 1) the size of the Pareto front}
+\item{archsize}{: (integer, length = 1) the size of the Pareto front}
 
-\item{maxrun}{(integer, length = 1) the max. number of simulations allowed}
+\item{maxrun}{: (integer, length = 1) the max. number of simulations allowed}
 
-\item{prec}{(double, length = nobj) the desired precision for the optimization of the objectives}
+\item{prec}{: (double, length = nobj) the desired accuracy for the optimization of the objectives}
 
-\item{repart_gene}{(integer, length = 4) nombre de jeux generes pour chaque regle par generation,}
+\item{repart_gene}{: (integer, length = 4) number of new solutions for each rule and per generation}
 
-\item{gpp}{(integer, length = 1) frequence d'appel de la regle "Fireworks"}
+\item{gpp}{: (integer, length = 1) calling frequency for the rule "Fireworks"}
 
-\item{blocs}{blocs pour les parametres}
+\item{blocks}{: groups for parameters}
 
-\item{pop}{(matrix, nrow = njeux, ncol = nvar ou nvar+nobj ) Population initiale}
+\item{pop}{: (matrix, nrow = nset, ncol = nvar or nvar+nobj ) Initial population}
 
-\item{funcinit}{the name of the initialization function. The arguments are is cl and numcores.}
+\item{funcinit}{: the name of the initialization function. The arguments are cl and numcores}
 
-\item{noms_obj}{the name of the objectives}
+\item{noms_obj}{: the name of the objectives}
 
-\item{listsave}{liste du noms des fichiers de suivi ecrits en cours d'optim, pas d'ecriture par defaut. Champs obligatoires : "pmt" (fichier des jeux de parametres sur le front), "obj" (Objectifs associes), "evol" (evolution des objectifs max par generation). Champ optionnel : "totalpop" (population totale : parametres et objectifs associes)}
+\item{listsave}{: names of the listing files. Default: None (no output)}
 
-\item{ecrit_gen}{(integer, length = 1) si =1, conservation des fichiers pmt et obj a chaque generation (0 par defaut)}
+\item{write_gen}{: (integer, length = 1) if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)}
 
-\item{parallele}{(logical, length = 1) activation du calcul parallele (TRUE par defaut)}
+\item{carallel}{: (logical, length = 1) do parallel computations (TRUE by default)}
 
-\item{numcores}{(integer, length = 1) the number of cores for parallel computation}
+\item{numcores}{: (integer, length = 1) the number of cores for the parallel computations}
 }
 \value{
 List of five elements:
@@ -54,8 +54,8 @@ List of five elements:
 \item{success}{return value (logical, length = 1) : TRUE if successfull}
 \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
 \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj)}
-\item{suivi_crit}{evolution of the maximum objectives}
-\item{pop_totale}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
+\item{save_crit}{evolution of the maximum objectives}
+\item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
 }
 }
 \description{

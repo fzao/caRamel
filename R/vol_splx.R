@@ -1,10 +1,10 @@
 #' vol_splx
 #' 
-#' La fonction vol_splx calcule le volume d'un simplex
+#' calculates the volume of a simplex
 #'  
-#' @param S : matrice (d+1) lignes * d colonnes contenant les coordonnees en d-dim des d+1 sommets d'un simplex
-#' @return V volume du simplex
-#' @author F. Zaoui
+#' @param S : matrix (d+1) rows * d columns containing the coordinates in d-dim of d + 1 vertices of a simplex
+#' @return V : simplex volume
+#' @author Fabrice Zaoui
 #' @export
 
 vol_splx <- function(S) {

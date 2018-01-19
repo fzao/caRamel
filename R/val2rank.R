@@ -1,11 +1,11 @@
 #' val2rank
 #' 
-#' La fonction val2rank convertit les valeurs d'un vecteur en leur rang 
+#' converts the values of a vector into their rank
 #'  
-#' @param X vecteur a traiter
-#' @param opt entier qui donne la regle a suivre en cas  de rangs lies (valeurs repetees) : si opt = 1, on renvoie le rang moyen, si opt = 2, on renvoie le rang correspondant dans la serie des valeurs uniques, si opt = 3, on renvoie le rang max
-#' @return R vecteur des rangs
-#' @author F. Zaoui
+#' @param X : vector to treat
+#' @param opt : integer which gives the rule to follow in case of ranks linked (repeated values): if opt = 1, one returns the average rank, if opt = 2, one returns the corresponding rank in the series of the unique values, if opt = 3, return the max rank
+#' @return R : rank vector
+#' @author Fabrice Zaoui
 #' @export
 val2rank <- function(X, opt) {
 

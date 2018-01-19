@@ -7,18 +7,18 @@
 downsize(points, Fo, prec)
 }
 \arguments{
-\item{points}{: matrice des objectifs}
+\item{points}{: matrix of objectives}
 
-\item{Fo}{: rang sur le front de chaque point (1 : domine sur le Pareto)}
+\item{Fo}{: rank on the front of each point (1: dominates on the Pareto)}
 
-\item{prec}{(double, length = nobj) precision souhaitee pour le tri des objectifs}
+\item{prec}{: (double, length = nobj) desired accuracy for sorting objectives}
 }
 \value{
-vecteur des indices
+vector indices
 }
 \description{
 La fonction downsize renvoie les indentifiants d'une population en ne conservant qu'un seul point par boite (de resolution prec)
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

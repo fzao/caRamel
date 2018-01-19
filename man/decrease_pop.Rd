@@ -7,26 +7,26 @@
 decrease_pop(matobj, minmax, prec, archsize, popsize)
 }
 \arguments{
-\item{matobj}{matrice des objectifs, de dimension (njeux, nobj)}
+\item{matobj}{: matrix of objectives, dimension (ngames, nobj)}
 
-\item{minmax}{: vecteur de booleens, de dimension nobj : TRUE si maximisation de l'objectif, FALSE sinon}
+\item{minmax}{: vector of booleans, of dimension nobj: TRUE if maximization of the objective, FALSE otherwise}
 
-\item{prec}{: vecteur de dimension nobj : precision}
+\item{prec}{: nobj dimension vector: accuracy}
 
-\item{archsize}{: entier, taille de l'archive}
+\item{archsize}{: integer: archive size}
 
-\item{popsize}{: entier : taille de la population}
+\item{popsize}{: integer: population size}
 }
 \value{
-Une liste contenant deux elements:
+A list containing two elements:
 \describe{
 \item{ind_arch}{}
 \item{ind_pop}{} 
 }
 }
 \description{
-La fonction decrease_pop reduit la population de jeux de parametres.
+decreases the population of parameter sets
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

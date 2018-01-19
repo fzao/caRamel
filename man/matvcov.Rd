@@ -7,16 +7,16 @@
 matvcov(x, g)
 }
 \arguments{
-\item{x}{population}
+\item{x}{: population}
 
-\item{g}{barycentre de la population de reference (dans l'espace des parametres)}
+\item{g}{: center of reference population (in the parameter space)}
 }
 \value{
-rr matrice de variances-covariances sur la population de reference
+rr : variances-covariances matrix on the reference population
 }
 \description{
-La fonction matvcov calcule la matrice de variances-covariances sur la population de reference
+calculates the variances-covariances matrix on the reference population
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

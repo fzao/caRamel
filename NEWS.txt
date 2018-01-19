@@ -2,7 +2,7 @@ News of the caRamel package
 
 Version 2017.12-15
 ==================
-* add "pop_totale" in results (last population: Pareto front and dominated solutions) for restart of optimization
+* add "total_pop" in results (last population: Pareto front and dominated solutions) for restart of optimization
 * possibility to write the whole population on file at each generation (see the parameter listsave$totalpop)
 * more help documentation
 

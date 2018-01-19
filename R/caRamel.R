@@ -5,25 +5,25 @@
 #' Documentation : "Principe de l'optimiseur CaRaMEL et illustration au travers d'exemples de parametres dans le cadre de la modelisation hydrologique conceptuelle"
 #'                 Frederic Hendrickx (EDF) and Nicolas Le Moine (UPMC)
 #'                 Report EDF H-P73-2014-09038-FR
-#' @param nobj (integer, length = 1) the number of objectives to optimize (nobj >= 2)
-#' @param nvar (integer, length = 1) the number of variables
-#' @param minmax (logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)
-#' @param bounds (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables
-#' @param func the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2
-#' @param popsize (integer, length = 1) the population size for the genetic algorithm
-#' @param archsize (integer, length = 1) the size of the Pareto front
-#' @param maxrun (integer, length = 1) the max. number of simulations allowed
-#' @param prec (double, length = nobj) the desired precision for the optimization of the objectives
-#' @param repart_gene (integer, length = 4) nombre de jeux generes pour chaque regle par generation,
-#' @param gpp (integer, length = 1) frequence d'appel de la regle "Fireworks"
-#' @param blocs blocs pour les parametres
-#' @param pop (matrix, nrow = njeux, ncol = nvar ou nvar+nobj ) Population initiale
-#' @param funcinit the name of the initialization function. The arguments are is cl and numcores.
-#' @param noms_obj the name of the objectives
-#' @param listsave liste du noms des fichiers de suivi ecrits en cours d'optim, pas d'ecriture par defaut. Champs obligatoires : "pmt" (fichier des jeux de parametres sur le front), "obj" (Objectifs associes), "evol" (evolution des objectifs max par generation). Champ optionnel : "totalpop" (population totale : parametres et objectifs associes)
-#' @param ecrit_gen (integer, length = 1) si =1, conservation des fichiers pmt et obj a chaque generation (0 par defaut)
-#' @param parallele (logical, length = 1) activation du calcul parallele (TRUE par defaut)
-#' @param numcores (integer, length = 1) the number of cores for parallel computation
+#' @param nobj : (integer, length = 1) the number of objectives to optimize (nobj >= 2)
+#' @param nvar : (integer, length = 1) the number of variables
+#' @param minmax : (logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)
+#' @param bounds : (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables
+#' @param func : the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2
+#' @param popsize : (integer, length = 1) the population size for the genetic algorithm
+#' @param archsize : (integer, length = 1) the size of the Pareto front
+#' @param maxrun : (integer, length = 1) the max. number of simulations allowed
+#' @param prec : (double, length = nobj) the desired accuracy for the optimization of the objectives
+#' @param repart_gene : (integer, length = 4) number of new solutions for each rule and per generation
+#' @param gpp : (integer, length = 1) calling frequency for the rule "Fireworks"
+#' @param blocks : groups for parameters
+#' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) Initial population
+#' @param funcinit : the name of the initialization function. The arguments are cl and numcores
+#' @param noms_obj : the name of the objectives
+#' @param listsave : names of the listing files. Default: None (no output)
+#' @param write_gen : (integer, length = 1) if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
+#' @param carallel : (logical, length = 1) do parallel computations (TRUE by default)
+#' @param numcores : (integer, length = 1) the number of cores for the parallel computations
 #
 ##' @return
 ##' List of five elements:
@@ -31,8 +31,8 @@
 ##' \item{success}{return value (logical, length = 1) : TRUE if successfull}
 ##' \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
 ##' \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj)}
-##' \item{suivi_crit}{evolution of the maximum objectives}
-##' \item{pop_totale}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
+##' \item{save_crit}{evolution of the maximum objectives}
+##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
 ##' }
 #' @author Fabrice Zaoui - Celine Monteil
 #' @export
@@ -49,13 +49,13 @@ caRamel <-
            prec,
            repart_gene = c(5, 5, 5, 5),
            gpp = NULL,
-           blocs = NULL,
+           blocks = NULL,
            pop = NULL,
            funcinit = NULL,
            noms_obj = NULL,
            listsave = NULL,
-           ecrit_gen = 0,
-           parallele = TRUE,
+           write_gen = 0,
+           carallel = TRUE,
            numcores = NULL) {
     
     # Check the input arguments #
@@ -111,13 +111,13 @@ caRamel <-
       initialise_calc<-1
     }
     if (is.null(noms_obj)){noms_obj=paste("Obj",as.character(c(1:nobj)),sep="")}
-    ecritfic<-0
+    writefile<-0
     if (!is.null(listsave)){
       if (class(listsave) != "list") {
         message("'listsave' is not an R list!")
         return(list(-1, "'listsave' is not an R list!", NA, NA))
       }
-      ecritfic<-1
+      writefile<-1
       if (is.null(listsave$pmt)){
         message(" 'listsave$pmt' must be defined!")
         return(list(-1, " 'listsave$pmt' must be defined!", NA, NA))
@@ -130,27 +130,27 @@ caRamel <-
         message(" 'listsave$evol' must be defined!")
         return(list(-1, " 'listsave$evol' must be defined!", NA, NA))
       }
-      ecrit_pop_totale = 0 
+      ecrit_total_pop = 0 
       if (!is.null(listsave$totalpop)){
-        ecrit_pop_totale = 1
+        ecrit_total_pop = 1
       }
     }
-    if (ecrit_gen==1){
-      if (ecritfic==0){
-        message(" 'listsave' must be defined to use ecrit_gen!")
-        return(list(-1, " 'listsave' must be defined to use ecrit_gen!", NA, NA))
+    if (write_gen==1){
+      if (writefile==0){
+        message(" 'listsave' must be defined to use write_gen!")
+        return(list(-1, " 'listsave' must be defined to use write_gen!", NA, NA))
       }
       listsave$RadPmt <- gsub(pattern = ".txt",replacement = "",listsave$pmt)
       listsave$RadObj <- gsub(pattern = ".txt",replacement = "",listsave$obj)
-      if (ecrit_pop_totale==1){listsave$RadPop <- gsub(pattern = ".txt",replacement = "",listsave$totalpop)}
+      if (ecrit_total_pop==1){listsave$RadPop <- gsub(pattern = ".txt",replacement = "",listsave$totalpop)}
     }
-    if (typeof(parallele)!="logical") {
-      message("'parallele' must be a logical!")
-      return(list(-1, "'parallele' must be a logical!", NA, NA))
+    if (typeof(carallel)!="logical") {
+      message("'carallel' must be a logical!")
+      return(list(-1, "'carallel' must be a logical!", NA, NA))
     }
     
     # Initializations
-    suivi_crit<<-c()
+    save_crit<<-c()
     sp <- (bounds[, 2] - bounds[, 1]) / (2 * sqrt(3)) # standard deviation
     gsearch <-
       ceiling((nvar / 10) * nobj / log(nobj + 1)) # independant search every 'gsearch' iteration
@@ -162,24 +162,24 @@ caRamel <-
       gpp <- ceiling( nvar * (nobj+1) * 4 / sum(repart_gene) )
     }
     
-    # Initialisation du calcul parallele
-    if (parallele==TRUE){
+    # Init the parallel computation
+    if (carallel==TRUE){
       if (is.null(numcores)){ numcores <- detectCores()}
       cl <- makeCluster(numcores)
       if (initialise_calc==1){
-        funcinit(cl,numcores) # Initialisation pour le simulateur "func"
+        funcinit(cl,numcores) # Init for "func"
       }
     }
     
-    # Verification du type de la population initiale
+    # Check the type of the initial population
     if (!is.null(pop)){
       pop <- as.matrix(pop)
-      if(length(pop[1,])<(nvar+nobj)){  # S'il y a une pop initiale mais que les objectifs ne sont pas evalues
+      if(length(pop[1,])<(nvar+nobj)){  # If an initial population exists with no corresponding values for the objectives
         
-        # Evaluation des objectifs
+        # Evaluation of the objectives
         x<<-pop[,1:nvar]
         eval_complementaire <- NULL
-        if (parallele==TRUE){
+        if (carallel==TRUE){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
           res = parLapply(cl, 1:dim(x)[1], func)
@@ -230,7 +230,7 @@ caRamel <-
                   sp,
                   bounds,
                   repart_gene,
-                  blocs,
+                  blocks,
                   vamax)
         x <- Xp$x
         probj <- Xp$pcrit
@@ -239,7 +239,7 @@ caRamel <-
       # simulations
       eval_complementaire <- NULL
       # parallel calls
-      if (parallele==TRUE){
+      if (carallel==TRUE){
         newfeval <- NULL
         clusterExport(cl=cl, varlist=c("x"), envir = environment())
         res <- parLapply(cl, 1:dim(x)[1], func)
@@ -304,15 +304,15 @@ caRamel <-
         eval_complementaire <- matrix(arch[, (nvar + nobj+1):(nvar + nobj+ncomplement)], nrow=length(ind$arch), ncol=ncomplement)
       }
       
-      # Suivi criteres
+      # Records on criteria
       a=c(lapply(c(1:nobj),function(i){max(crit_arch[,i])}))
       maxcrit=as.data.frame(a,col.names = noms_obj)
       a=c(lapply(c(1:nobj),function(i){min(crit_arch[,i])}))
       mincrit=as.data.frame(a,col.names = noms_obj)
       crit=mincrit; crit[minmax]<-maxcrit[minmax]
-      suivi_crit<-cbind(suivi_crit,c(nrun,t(crit)))
+      save_crit<-cbind(save_crit,c(nrun,t(crit)))
       
-      # Graphes
+      # Graphs
       info<-paste("ngen=",ngen,", nrun=",nrun,", gpp=",gpp,sep="")
       nbre_fen = choose(n = nobj, k=2)+1
       if (nbre_fen <= 4){
@@ -327,38 +327,38 @@ caRamel <-
           plot(crit_arch[, i_fig], crit_arch[, i_fig2],xlab = noms_obj[i_fig],ylab = noms_obj[i_fig2])
         }
       }
-      plot(x=suivi_crit[1,],y=suivi_crit[2,], ylim=c(min(suivi_crit[-1,]),max(suivi_crit[-1,])),xlab = info, ylab = "Criteres Optimaux")
-      lapply(c(2:nobj),function(i){points(x=suivi_crit[1,],y=suivi_crit[i+1,],col=i)})
-      xlgd <- popsize +(nrun-popsize)*2/3 ; ylgd <- min(suivi_crit[-1,]) + (max(suivi_crit[-1,])-min(suivi_crit[-1,]))/2
+      plot(x=save_crit[1,],y=save_crit[2,], ylim=c(min(save_crit[-1,]),max(save_crit[-1,])),xlab = info, ylab = "Optimal Criteria")
+      lapply(c(2:nobj),function(i){points(x=save_crit[1,],y=save_crit[i+1,],col=i)})
+      xlgd <- popsize +(nrun-popsize)*2/3 ; ylgd <- min(save_crit[-1,]) + (max(save_crit[-1,])-min(save_crit[-1,]))/2
       legend(xlgd,ylgd,legend=noms_obj,col=1:nobj,fill=1:nobj)
       
-      # Pour sauvegarde en cours d'optimisation
-      if (ecritfic == 1){
-        if (ecrit_gen == 1){
+      # Online saves
+      if (writefile == 1){
+        if (write_gen == 1){
           listsave$pmt <- paste(listsave$RadPmt,"_gen",ngen,".txt",sep="")
           listsave$obj <- paste(listsave$RadObj,"_gen",ngen,".txt",sep="")
-          if (ecrit_pop_totale==1){
+          if (ecrit_total_pop==1){
             listsave$totalpop <- paste(listsave$RadPop,"_gen",ngen,".txt",sep="")
           }
         }
         
         write.table(param_arch,listsave$pmt,row.names = FALSE,col.names = FALSE)
         write.table(cbind(crit_arch,eval_complementaire),listsave$obj,row.names = FALSE,col.names = FALSE)
-        write.table(t(suivi_crit),listsave$evol,row.names = FALSE,col.names = FALSE)
-        if (ecrit_pop_totale==1){
+        write.table(t(save_crit),listsave$evol,row.names = FALSE,col.names = FALSE)
+        if (ecrit_total_pop==1){
           write.table(pop,listsave$totalpop,row.names = FALSE,col.names = FALSE)
         }
       }
     }
     
-    if (parallele==TRUE){stopCluster(cl)}
+    if (carallel==TRUE){stopCluster(cl)}
     close(pb)
     
     return(list(
       "success" = TRUE,
       "parameters" = param_arch,
       "objectives" = cbind(crit_arch,eval_complementaire),
-      "suivi_crit" = t(suivi_crit),
-      "pop_totale"= pop
+      "save_crit" = t(save_crit),
+      "total_pop"= pop
     ))
   }

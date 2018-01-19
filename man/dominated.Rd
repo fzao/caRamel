@@ -7,15 +7,15 @@
 dominated(x, Y)
 }
 \arguments{
-\item{x}{: vecteur ligne}
+\item{x}{: row vecteur}
 
-\item{Y}{: matrice}
+\item{Y}{: matrix}
 }
 \value{
-D : vecteur de booleens
+D : vector of booleans
 }
 \description{
-La fonction dominated indique quelles lignes de la matrice Y sont dominees par le vecteur (ligne) x
+Tindicates which rows of the matrix Y are dominated by the vector (row) x
 }
 \author{
 F. Zaoui

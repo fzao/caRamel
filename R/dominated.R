@@ -1,18 +1,16 @@
 #' dominated
 #' 
-#' La fonction dominated indique quelles lignes de la matrice Y sont dominees par le vecteur (ligne) x
+#' Tindicates which rows of the matrix Y are dominated by the vector (row) x
 #'  
-#' @param x : vecteur ligne
-#' @param Y : matrice
-#' @return D : vecteur de booleens
+#' @param x : row vecteur
+#' @param Y : matrix
+#' @return D : vector of booleans
 #' @author F. Zaoui
 #' @export
 
 dominated <- function(x, Y) {
   
-  # Fonction predicat indiquant quelles lignes de la matrice Y
-  # sont dominees par le vecteur (ligne) x
-  
+  # Predicate function indicating which rows of the matrix Y are dominated by the vector (row) x
   X = matrix(rep(x, dim(Y)[1]), ncol = dim(Y)[2], byrow = TRUE)
   
   D = X - Y

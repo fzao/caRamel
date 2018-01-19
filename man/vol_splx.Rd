@@ -7,14 +7,14 @@
 vol_splx(S)
 }
 \arguments{
-\item{S}{: matrice (d+1) lignes * d colonnes contenant les coordonnees en d-dim des d+1 sommets d'un simplex}
+\item{S}{: matrix (d+1) rows * d columns containing the coordinates in d-dim of d + 1 vertices of a simplex}
 }
 \value{
-V volume du simplex
+V : simplex volume
 }
 \description{
-La fonction vol_splx calcule le volume d'un simplex
+calculates the volume of a simplex
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

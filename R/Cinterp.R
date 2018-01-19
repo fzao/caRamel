@@ -1,15 +1,15 @@
 #' Cinterp
 #' 
-#' La fonction Cinterp propose n nouveaux candidats par interpolation dans des simplexes de l'espace des objectifs.
+#' proposes n new candidates by interpolation in simplexes of the objective space
 #'  
-#' @param param matrice [ NPoints , NPar ] des parametres deja evalues
-#' @param crit matrice [ Npoints , NObj ] des criteres associes
-#' @param simplices matrice [ NSimp , NObj+1 ] contenant tout ou partie de la triangulation de l'espace des objectifs
-#' @param volume matrice [ NSimp , 1 ] donnant le volume de chaque simplexe (mesure de la probabilite d'interpoler dans ce simplexe)
-#' @param n nombre de nouveaux vecteurs a generer
-#' @return xnouv matrice [ n , NPar ] des nouveaux vecteurs
-#' @return pcrit : matrice [ n , NObj ] positions estimees des nouveaux jeux dans l'espace des objectifs
-#' @author F. Zaoui
+#' @param param : matrix [ NPoints , NPar ] of already evaluated parameters
+#' @param crit : matrix [ Npoints , NObj ] of associated criteria
+#' @param simplices : matrix [ NSimp , NObj+1 ] containing all or part of the triangulation of the space of the objectives
+#' @param volume : matrix [ NSimp , 1 ] giving the volume of each simplex (measure of the probability of interpolating in this simplex)
+#' @param n : number of new vectors to generate
+#' @return xnouv : matrix [ n , NPar ] of new vectors
+#' @return pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
+#' @author Fabrice Zaoui
 #' @export
 
 Cinterp <- function(param, crit, simplices, volume, n) {
@@ -27,12 +27,12 @@ Cinterp <- function(param, crit, simplices, volume, n) {
     param_s <- param[simplices[isimp,],]
     crit_s <- crit[simplices[isimp,],]
     
-    # Tirage aleatoire d'un jeu de coordonnees barycentriques
+    # Random drawing of a set of barycentric coordinates
     xb <- runif(nobj + 1)
     xb <- xb / sum(xb)
     
-    xnouv[i,] <- xb %*% param_s # Coordonnees de la C.L. dans l'espace des parameres
-    pcrit[i,] <- xb %*% crit_s  # Coordonnees de la C.L. dans l'espace des criteres
+    xnouv[i,] <- xb %*% param_s # Coordinates in the space of the parameters
+    pcrit[i,] <- xb %*% crit_s  # Coordinates in the space of the criteria
   }
   return(list("xnouv" = xnouv, "pcrit" = pcrit))
 }

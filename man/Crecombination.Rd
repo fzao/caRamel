@@ -4,21 +4,21 @@
 \alias{Crecombination}
 \title{Crecombination}
 \usage{
-Crecombination(param, blocs, n)
+Crecombination(param, blocks, n)
 }
 \arguments{
-\item{param}{matrice [ . , NPar ] de la population des parametre}
+\item{param}{: matrix [ . , NPar ] of the population of parameters}
 
-\item{blocs}{liste de vecteurs d'entier : liste de blocs de variables pour la recombinaison}
+\item{blocks}{: list of integer vectors: list of variable blocks for recombination}
 
-\item{n}{nombre de nouveaux vecteurs a generer}
+\item{n}{: number of new vectors to generate}
 }
 \value{
-xnew matrice [ n , NPar ] des nouveaux vecteurs
+xnew : matrix [ n , NPar ] of new vectors
 }
 \description{
-La fonction Crecombination effectue une recombinaison des jeux de parametres.
+performs a recombination of the sets of parameters
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

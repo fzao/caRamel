@@ -4,33 +4,33 @@
 \alias{newXval}
 \title{newXval}
 \usage{
-newXval(param, crit, isperf, sp, bounds, repart_gene, blocs, fireworks)
+newXval(param, crit, isperf, sp, bounds, repart_gene, blocks, fireworks)
 }
 \arguments{
-\item{param}{matrice [ Nvec , NPar ] des parametres de la population courante}
+\item{param}{: matrix [ Nvec , NPar ] of parameters of the current population}
 
-\item{crit}{matrice [ Nvec , NObj ] des criteres associes}
+\item{crit}{: matrix [ Nvec , NObj ] of associated criteria}
 
-\item{isperf}{vecteur de booleens de longueur NObj, TRUE si maximisation de l'objectif, FALSE sinon}
+\item{isperf}{: vector of Booleans of length NObj, TRUE if maximization of the objective, FALSE otherwise}
 
-\item{sp}{Variance a priori des parametres}
+\item{sp}{: variance a priori of the parameters}
 
-\item{bounds}{bornes inf et sup des parametres [ NPar , 2 ]}
+\item{bounds}{: lower and upper bounds of parameters [ NPar , 2 ]}
 
-\item{repart_gene}{: matrice de longueur 4 donnant le nombre de jeux a generer avec chaque regle : 1 Interpolation dans les simplexes du front, 2 Extrapolation selon les directions des aretes "orthogonales" au front, 3 Tirages aleatoires avec matrice de variance-covariance prescrite, 4 Recombinaison par blocs fonctionnels}
+\item{repart_gene}{: matrix of length 4 giving the number of games to be generated with each rule: 1 Interpolation in the simplexes of the front, 2 Extrapolation according to the directions of the edges "orthogonal" to the front, 3 Random draws with prescribed variance-covariance matrix, 4 Recombination by functional blocks}
 
-\item{blocs}{liste de vecteurs d'entier contenant les blocs fonctionnels de parametres}
+\item{blocks}{: list of integer vectors containing function blocks of parameters}
 
-\item{fireworks}{: booleen, TRUE si on teste une variation aleatoire sur chaque parametre et chaque maximum de F.O.}
+\item{fireworks}{: boolean, TRUE if one tests a random variation on each parameter and each maximum of O.F.}
 }
 \value{
-xnouv matrice de nouveaux vecteurs [ sum(Repart_Gene) + eventuellement (nobj+1)*nvar si fireworks , NPar ]
+xnouv : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
 
-project_crit position supposee des nouveau vecteurs dans l'espace des criteres : [ sum(Repart_Gene)+ eventuellement (nobj+1)*nvar si fireworks , NObj ];
+project_crit: assumed position of the new vectors in the criteria space: [ sum(Repart_Gene)+ eventually (nobj+1)*nvar if fireworks , NObj ];
 }
 \description{
-La fonction newXval genere une nouvelle population de jeux de parametres en suivant les cinq regles de caRamel.
+generates a new population of parameter sets following the five rules of caRamel
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

@@ -7,24 +7,24 @@
 Cinterp(param, crit, simplices, volume, n)
 }
 \arguments{
-\item{param}{matrice [ NPoints , NPar ] des parametres deja evalues}
+\item{param}{: matrix [ NPoints , NPar ] of already evaluated parameters}
 
-\item{crit}{matrice [ Npoints , NObj ] des criteres associes}
+\item{crit}{: matrix [ Npoints , NObj ] of associated criteria}
 
-\item{simplices}{matrice [ NSimp , NObj+1 ] contenant tout ou partie de la triangulation de l'espace des objectifs}
+\item{simplices}{: matrix [ NSimp , NObj+1 ] containing all or part of the triangulation of the space of the objectives}
 
-\item{volume}{matrice [ NSimp , 1 ] donnant le volume de chaque simplexe (mesure de la probabilite d'interpoler dans ce simplexe)}
+\item{volume}{: matrix [ NSimp , 1 ] giving the volume of each simplex (measure of the probability of interpolating in this simplex)}
 
-\item{n}{nombre de nouveaux vecteurs a generer}
+\item{n}{: number of new vectors to generate}
 }
 \value{
-xnouv matrice [ n , NPar ] des nouveaux vecteurs
+xnouv : matrix [ n , NPar ] of new vectors
 
-pcrit : matrice [ n , NObj ] positions estimees des nouveaux jeux dans l'espace des objectifs
+pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
 }
 \description{
-La fonction Cinterp propose n nouveaux candidats par interpolation dans des simplexes de l'espace des objectifs.
+proposes n new candidates by interpolation in simplexes of the objective space
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

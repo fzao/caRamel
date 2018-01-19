@@ -1,18 +1,18 @@
 #' newXval
 #' 
-#' La fonction newXval genere une nouvelle population de jeux de parametres en suivant les cinq regles de caRamel.
+#' generates a new population of parameter sets following the five rules of caRamel
 #'  
-#' @param param matrice [ Nvec , NPar ] des parametres de la population courante
-#' @param crit matrice [ Nvec , NObj ] des criteres associes
-#' @param isperf vecteur de booleens de longueur NObj, TRUE si maximisation de l'objectif, FALSE sinon
-#' @param sp Variance a priori des parametres
-#' @param bounds bornes inf et sup des parametres [ NPar , 2 ]
-#' @param repart_gene : matrice de longueur 4 donnant le nombre de jeux a generer avec chaque regle : 1 Interpolation dans les simplexes du front, 2 Extrapolation selon les directions des aretes "orthogonales" au front, 3 Tirages aleatoires avec matrice de variance-covariance prescrite, 4 Recombinaison par blocs fonctionnels
-#' @param blocs liste de vecteurs d'entier contenant les blocs fonctionnels de parametres
-#' @param fireworks : booleen, TRUE si on teste une variation aleatoire sur chaque parametre et chaque maximum de F.O.
-#' @return xnouv matrice de nouveaux vecteurs [ sum(Repart_Gene) + eventuellement (nobj+1)*nvar si fireworks , NPar ]
-#' @return project_crit position supposee des nouveau vecteurs dans l'espace des criteres : [ sum(Repart_Gene)+ eventuellement (nobj+1)*nvar si fireworks , NObj ];
-#' @author F. Zaoui
+#' @param param : matrix [ Nvec , NPar ] of parameters of the current population
+#' @param crit : matrix [ Nvec , NObj ] of associated criteria
+#' @param isperf : vector of Booleans of length NObj, TRUE if maximization of the objective, FALSE otherwise
+#' @param sp : variance a priori of the parameters
+#' @param bounds : lower and upper bounds of parameters [ NPar , 2 ]
+#' @param repart_gene : matrix of length 4 giving the number of games to be generated with each rule: 1 Interpolation in the simplexes of the front, 2 Extrapolation according to the directions of the edges "orthogonal" to the front, 3 Random draws with prescribed variance-covariance matrix, 4 Recombination by functional blocks
+#' @param blocks : list of integer vectors containing function blocks of parameters
+#' @param fireworks : boolean, TRUE if one tests a random variation on each parameter and each maximum of O.F.
+#' @return xnouv : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
+#' @return project_crit: assumed position of the new vectors in the criteria space: [ sum(Repart_Gene)+ eventually (nobj+1)*nvar if fireworks , NObj ];
+#' @author Fabrice Zaoui
 #' @export
 
 newXval <-
@@ -22,7 +22,7 @@ newXval <-
            sp,
            bounds,
            repart_gene,
-           blocs,
+           blocks,
            fireworks) {
 
     nobj <- dim(crit)[2]
@@ -30,7 +30,7 @@ newXval <-
     nvec <- dim(param)[1]
     a <- 3 / 8
     
-    # Normalisation des differents objectifs
+    # Standardization of the different objectives
     obj <- matrix(0, nrow = dim(crit)[1], ncol = nobj)
     for (i in 1:nobj) {
       obj[, i] <- (val2rank(crit[, i], 3) - a) / (nvec + 1 - 2 * a)
@@ -39,26 +39,26 @@ newXval <-
     
     Fo <- dominate(obj)
     param_arch <- as.matrix(param[Fo == 1, ])
-    if (dim(param_arch)[2]<npar){param_arch <- t(param_arch)} # pour garder nb_param colonnes
+    if (dim(param_arch)[2]<npar){param_arch <- t(param_arch)} # to keep nb_param columns
     obj_arch <- obj[Fo == 1, ]
     crit_arch <- crit[Fo == 1, ]
     
-    n_inter <- repart_gene[1] #Nombre maximum de nouveaux jeux crees par interpolation dans les simplexes
-    n_extra <- repart_gene[2] #Nombre maximum de nouveaux jeux crees par extrapolation sur les directions des aretes
-    n_cov <- repart_gene[3]   #Nombre maximum de nouveaux jeux crees par tirages aleatoires avec matrice de covariance prescrite
-    n_recomb <- repart_gene[4]#Nombre maximum de nouveaux jeux crees par recombinaisons
+    n_inter <- repart_gene[1]  # Maximum number of new sets created by interpolation in simplexes
+    n_extra <- repart_gene[2]  # Maximum number of new sets created by extrapolation on the directions of the edges
+    n_cov <- repart_gene[3]    # Maximum number of new sets created by random draws with prescribed covariance matrix
+    n_recomb <- repart_gene[4] # Maximum number of new games created by recombinations
     
     xnouv <- NULL
     project_crit <- NULL
     
-    #**********************************************************************
-    #            TRIANGULATION DE L'ESPACE DES OBJECTIFS (SI BESOIN)      *
-    #**********************************************************************
+    #**************************************************************
+    #       TRIANGULATION OF SPACE OF OBJECTIVES (IF NEEDED)      *
+    #**************************************************************
     
     if (n_inter > 0 | n_extra > 0) {
       simplices <- delaunayn(obj)
       
-      # Pour chaque simplexe on calcule le nombre nf de sommets appartenant au front de Pareto 
+      # For each simplex calculation of the number of vertices belonging to the Pareto front
       nf <-
         apply((matrix(
           Fo[simplices],
@@ -66,14 +66,14 @@ newXval <-
           ncol = dim(simplices)[2]
         ) == 1), 1, sum)
       
-      # On ne garde que les simplexes ayant au moins un sommet sur le front de Pareto
+      # Keep only the simplexes with at least one vertex on the Pareto front
       ix <- which(nf > 0)
       simplices <- simplices[ix, ]
-      simplices <- matrix(data = simplices,ncol=(nobj+1)) # Pour garder une matrice meme si un seul simplex
+      simplices <- matrix(data = simplices,ncol=(nobj+1)) # To keep a matrix even if a single simplex
       nbsimp <- length(ix)
       
-      # Decomposition en aretes, calcul du volume des simplexes conserves
-      na <- nobj * (nobj + 1) / 2 #nombre d'aretes dans un simplexe en dimension NObj
+      # Decomposition in edges, calculation of the volume of the simplexes preserved
+      na <- nobj * (nobj + 1) / 2 #number of edges in a NObj size simplex
       
       volume <- matrix(0, nrow = nbsimp, ncol = 1)
       oriedge <- NULL
@@ -98,28 +98,28 @@ newXval <-
       ledge <- ledge[unik]
     }
     
-    #**********************************************************************
-    #                   GENERATION DES NOUVEAUX POINTS                    *
-    #**********************************************************************
+    #**************************************************************
+    #                 GENERATION OF NEW POINTS                    *
+    #**************************************************************
     
-    # Nouveaux jeux crees par interpolation dans les simplexes  
+    # New sets created by interpolation in simplexes  
     if (n_inter > 0) {
       carain <- Cinterp(param, crit, simplices, volume, n_inter)
       xnouv <- rbind(xnouv, carain$xnouv)
       project_crit <- rbind(project_crit, carain$pcrit)
     }
     
-    # Nouveaux jeux crees par extrapolation sur les directions des aretes
+    # New sets created by extrapolation on the directions of the edges
     if (n_extra > 0) {
       caraex <- Cextrap(param, crit, oriedge, ledge, n_extra)
       xnouv <- rbind(xnouv, caraex$xnouv)
       project_crit <- rbind(project_crit, caraex$pcrit)
     }
     
-    # Nouveaux jeux crees par tirages aleatoire avec matrice de covariance prescrite
+    # New sets created by random draws with prescribed covariance matrix
     if (n_cov > 0) {
-      # Calcul de la matrice de variance-covariance sur une sous-population de reference
-      iref <- sort(unique(c(simplices))) # Population de reference : ensembles des points sommet d'un simplexe "frontal"
+      # Calculation of the variance-covariance matrix on a reference subpopulation
+      iref <- sort(unique(c(simplices))) # Reference population: all vertex points of a "frontal" simplex
       xref <- as.matrix(param[iref, ])
       xcov <- Cusecovar(xref, sqrt(2), n_cov)
       critcov <- matrix(NaN, nrow = n_cov, ncol = nobj)
@@ -127,29 +127,28 @@ newXval <-
       project_crit <- rbind(project_crit, critcov)
     }
     
-    # Nouveaux jeux crees avec recombinaisons par blocs
+    # New sets created with block recombinations
     if (dim(param_arch)[1] > 1 & n_recomb > 0) {
-      xrecomb <- Crecombination(param_arch, blocs, n_recomb)
+      xrecomb <- Crecombination(param_arch, blocks, n_recomb)
       critrec <- matrix(NaN, nrow = n_recomb, ncol = nobj)
       xnouv <- rbind(xnouv, xrecomb)
       project_crit <- rbind(project_crit, critrec)
     }
     
-    # Nouveaux jeux crees par variations independantes des parametres
+    # New sets created by independent variations of parameters
     if (fireworks) {
-      
-      if (sum(Fo == 1) == 1){              # Dans le cas ou seulement 1 point sur le front
+      if (sum(Fo == 1) == 1){              # In the case or only 1 point on the front
         obj_arch <- matrix(obj_arch,1,nobj)
         crit_arch <- matrix(crit_arch,1,nobj)
       }
       
       sp <- matrix(sp, nrow = 1, ncol = length(sp))
       
-      #Points maximisant chaque F.O. individuellement
+      #Points maximizing each O.F. individually
       m <- apply(obj_arch, 2, max)
       ipp <- apply(obj_arch, 2, which.max)
       
-      # Maxi-min (point "central" du front)
+      # Maxi-min ("central" point of the front)
       m <- max(apply(obj_arch, 1, min))
       maximin <- which.max(apply(obj_arch, 1, min))
       ipp <- c(ipp, maximin)

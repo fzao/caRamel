@@ -1,15 +1,15 @@
 #' Cextrap
 #' 
-#' La fonction Cextrap propose n nouveaux candidats par extrapolation le long de directions orthogonales au Front de Pareto dans l'espace des objectifs
+#' gives n new candidates by extrapolation along orthogonal directions to the Pareto front in the space of the objectives
 #'  
-#' @param param matrice [ NPoints , NPar ] des parametres deja evalues
-#' @param crit matrice [ Npoints , NObj ] des criteres associes
-#' @param directions  matrice [ NDir, 2 ] les points de debut et de fin des vecteurs directeurs candidats
-#' @param longu matrice [ NDir , 1 ] donnant la longueur de chaque segment ainsi defini dans l'espace des OBJ (mesure de la probabilite d'explorer cette direction)
-#' @param n nombre de nouveaux vecteurs a generer
-#' @return xnouv matrice [ n , NPar ] des nouveaux vecteurs
-#' @return pcrit : matrice [ n , NObj ] positions estimees des nouveaux jeux dans l'espace des objectifs
-#' @author F. Zaoui
+#' @param param : matrix [ NPoints , NPar ] of already evaluated parameters
+#' @param crit : matrix [ Npoints , NObj ] of associated criteria
+#' @param directions : matrix [ NDir, 2 ] the starting and ending points of the candidate vectors
+#' @param longu : matrix [ NDir , 1 ] giving the length of each segment thus defined in the OBJ space (measure of the probability of exploring this direction)
+#' @param n : number of new vectors to generate
+#' @return xnouv : matrix [ n , NPar ] of new vectors
+#' @return pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
+#' @author Fabrice Zaoui
 #' @export
 
 
@@ -28,15 +28,15 @@ Cextrap <- function(param, crit, directions, longu, n) {
     param_a <- as.matrix(param[directions[iar, ], ])
     crit_a <- crit[directions[iar, ], ]
     
-    # Vecteur de recherche
+    # Search vector
     u_param <- diff(param_a)
     u_crit <- diff(crit_a)
     
-    boost <- mean(longu) / longu[iar] # Plus l'arete est courte plus on "booste" la recherche
+    boost <- mean(longu) / longu[iar] # The shorter the edge, the more "boost" the search
     lambda <- -log(1 - runif(1))
     
-    xnouv[i, ] <- param_a[2, ] + boost * lambda * u_param # Coordonnees de la C.L. dans l'espace des parametres
-    pcrit[i, ] <- crit_a[2, ]  + boost * lambda * u_crit  # Coordonnees de la C.L. dans l'espace des criteres
+    xnouv[i, ] <- param_a[2, ] + boost * lambda * u_param # Coordinates in the space of the parameters
+    pcrit[i, ] <- crit_a[2, ]  + boost * lambda * u_crit  # Coordinates in the space of the criteria
   }
   return(list("xnouv" = xnouv, "pcrit" = pcrit))
 }

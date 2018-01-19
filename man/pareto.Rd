@@ -7,14 +7,14 @@
 pareto(X)
 }
 \arguments{
-\item{X}{matrice [NInd * NObj]}
+\item{X}{: matrix [NInd * NObj]}
 }
 \value{
-Ft matrice colonne [NInd * 1]
+Ft : column matrix [NInd * 1]
 }
 \description{
-La fonction pareto indique quelles lignes de la matrice de criteres X sont Pareto
+indicates which rows of the X criterion matrix are Pareto
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

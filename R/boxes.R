@@ -1,11 +1,11 @@
 #' boxes
 #' 
-#' La fonction boxes renvoie un numero de boite par points d'une population
+#' This function returns a box number for each points individual of the population
 #'  
-#' @param points : matrice des objectifs
-#' @param prec (double, length = nobj) precision souhaitee pour les objectifs (arretes des boites)
-#' @return vecteur des numeros de boites
-#' @author F. Zaoui
+#' @param points : matrix of the objectives
+#' @param prec : (double, length = nobj) desired accuracy for the objectives (edges of the boxes)
+#' @return vector of numbers for the boxes
+#' @author Fabrice Zaoui
 #' @export
 
 boxes <- function(points, prec) {

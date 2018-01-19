@@ -7,24 +7,24 @@
 Cextrap(param, crit, directions, longu, n)
 }
 \arguments{
-\item{param}{matrice [ NPoints , NPar ] des parametres deja evalues}
+\item{param}{: matrix [ NPoints , NPar ] of already evaluated parameters}
 
-\item{crit}{matrice [ Npoints , NObj ] des criteres associes}
+\item{crit}{: matrix [ Npoints , NObj ] of associated criteria}
 
-\item{directions}{matrice [ NDir, 2 ] les points de debut et de fin des vecteurs directeurs candidats}
+\item{directions}{: matrix [ NDir, 2 ] the starting and ending points of the candidate vectors}
 
-\item{longu}{matrice [ NDir , 1 ] donnant la longueur de chaque segment ainsi defini dans l'espace des OBJ (mesure de la probabilite d'explorer cette direction)}
+\item{longu}{: matrix [ NDir , 1 ] giving the length of each segment thus defined in the OBJ space (measure of the probability of exploring this direction)}
 
-\item{n}{nombre de nouveaux vecteurs a generer}
+\item{n}{: number of new vectors to generate}
 }
 \value{
-xnouv matrice [ n , NPar ] des nouveaux vecteurs
+xnouv : matrix [ n , NPar ] of new vectors
 
-pcrit : matrice [ n , NObj ] positions estimees des nouveaux jeux dans l'espace des objectifs
+pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
 }
 \description{
-La fonction Cextrap propose n nouveaux candidats par extrapolation le long de directions orthogonales au Front de Pareto dans l'espace des objectifs
+gives n new candidates by extrapolation along orthogonal directions to the Pareto front in the space of the objectives
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

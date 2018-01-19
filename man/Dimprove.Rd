@@ -7,16 +7,16 @@
 Dimprove(o_splx, f_splx)
 }
 \arguments{
-\item{o_splx}{matrices des objectifs des simplexes (nrow = npoints, ncol = nobj)}
+\item{o_splx}{: matrix of objectives of simplexes (nrow = npoints, ncol = nobj)}
 
-\item{f_splx}{vecteur (npoints) des numeros de Pareto associes (1 = domine)}
+\item{f_splx}{: vector (npoints) of associated Pareto numbers (1 = dominated)}
 }
 \value{
-liste des elements "oriedge" : aretes orientees et "ledge" : longueur
+list of elements "oriedge": oriented edges and "ledge": length
 }
 \description{
-La fonction Dimprove determine des directions d'amelioration
+determines directions for improvement
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

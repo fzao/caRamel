@@ -1,15 +1,15 @@
 #' pareto
 #' 
-#' La fonction pareto indique quelles lignes de la matrice de criteres X sont Pareto
+#' indicates which rows of the X criterion matrix are Pareto
 #'  
-#' @param X matrice [NInd * NObj]
-#' @return Ft matrice colonne [NInd * 1]
-#' @author F. Zaoui
+#' @param X : matrix [NInd * NObj]
+#' @return Ft : column matrix [NInd * 1]
+#' @author Fabrice Zaoui
 #' @export
 
 pareto <- function(X) {
   
-  Ft <- logical(length = dim(X)[1]) # Initialement tous les vecteurs sont marques comme non-Pareto
+  Ft <- logical(length = dim(X)[1]) # Initially all vectors are marked as non-Pareto
   
   Xtmp <- X
   itmp <- matrix(data = 1:dim(X)[1])

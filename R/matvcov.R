@@ -1,11 +1,11 @@
 #' matvcov
 #' 
-#' La fonction matvcov calcule la matrice de variances-covariances sur la population de reference
+#' calculates the variances-covariances matrix on the reference population
 #'  
-#' @param x population
-#' @param g barycentre de la population de reference (dans l'espace des parametres)
-#' @return rr matrice de variances-covariances sur la population de reference
-#' @author F. Zaoui
+#' @param x : population
+#' @param g : center of reference population (in the parameter space)
+#' @return rr : variances-covariances matrix on the reference population
+#' @author Fabrice Zaoui
 #' @export
 
 matvcov <- function(x, g) {

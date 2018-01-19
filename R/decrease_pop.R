@@ -1,19 +1,19 @@
 #' decrease_pop
 #' 
-#' La fonction decrease_pop reduit la population de jeux de parametres.
+#' decreases the population of parameter sets
 #'  
-#' @param matobj matrice des objectifs, de dimension (njeux, nobj)
-#' @param minmax : vecteur de booleens, de dimension nobj : TRUE si maximisation de l'objectif, FALSE sinon
-#' @param prec : vecteur de dimension nobj : precision
-#' @param archsize : entier, taille de l'archive
-#' @param popsize : entier : taille de la population
+#' @param matobj : matrix of objectives, dimension (ngames, nobj)
+#' @param minmax : vector of booleans, of dimension nobj: TRUE if maximization of the objective, FALSE otherwise
+#' @param prec : nobj dimension vector: accuracy
+#' @param archsize : integer: archive size
+#' @param popsize : integer: population size
 ##' @return
-##' Une liste contenant deux elements:
+##' A list containing two elements:
 ##' \describe{
 ##' \item{ind_arch}{}
 ##' \item{ind_pop}{} 
 ##' }
-#' @author F. Zaoui
+#' @author Fabrice Zaoui
 #' @export
 decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
 
@@ -25,23 +25,23 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
 
   Fo <- dominate(matobj)
 
-  # Choix des points conserves
+  # Choice of retained points
   indices <- downsize(matobj, Fo, prec)
   pop <- matobj[indices, ]
 
   ind_pop <- ind_pop[indices, ]
 
-  #////////////////////// Recalcul des fronts ////////////////////////
+  #////////////////////// Recalculation of fronts ////////////////////////
   Fo <- dominate(pop)
 
-  # Tri par front croissant
+  # Sort by increasing front
   Fs <- sort(Fo, index.return = TRUE)
   pop <- pop[Fs$ix, ]
   Fo <- Fo[Fs$ix]
 
   ind_pop <- ind_pop[Fs$ix]
 
-  # Separation "elite" / reste de la population
+  # Separation "elite" / rest of the population
   arch <- matrix(pop[Fo == 1, ], ncol=nobj)
   pop <- matrix(pop[Fo > 1, ], ncol=nobj)
   ind_arch <- ind_pop[Fo == 1]
@@ -49,16 +49,16 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
 
   Fo <- Fo[Fo > 1]
 
-  #////////////////////// Reduction de la taille de la population si > popsize //////////////////////
+  #////////////////////// Decreasing the population size if> popsize //////////////////////
   
-  # Si la taille de la population depasse popsize, on elimine les jeux de parametres ayant un Fo eleve
+  # If the population size exceeds popsize, elimination of the parameter sets with a high Fo
   if (dim(pop)[1] > popsize) {
     Fmax <- Fo[popsize]
     ind_pop1 <- ind_pop[Fo < Fmax]
 
     n2 <- popsize - length(ind_pop1)
 
-    if (n2 > 0) { # S'il reste de la place on selectionne n2 points en plus
+    if (n2 > 0) { # If still possible, selection of n2 points in addition
       ix2 <- which(Fo == Fmax)
       r <- rselect(n2, matrix(1, nrow = length(ix2), ncol = 1))
       ix2 <- ix2[r]
@@ -67,7 +67,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
     ind_pop <- ind_pop1
   }
 
-  # /////////////////// Reduction de la taille de l'archive si > archsize ///////////////
+  # /////////////////// Decreasing the archive size if> archsize ///////////////
   if (dim(arch)[1] > archsize) {
     arch_down <- TRUE
     arch_prec <- 2 * prec

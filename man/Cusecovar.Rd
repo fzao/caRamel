@@ -7,18 +7,18 @@
 Cusecovar(xref, amplif, n)
 }
 \arguments{
-\item{xref}{matrice [ . , NPar ] de la population de reference dont on souhaite utiliser la structure de covariance}
+\item{xref}{: matrix [ . , NPar ] of the reference population whose covariance structure is to be used}
 
-\item{amplif}{facteur d'amplification de l'ecart-type sur chaque parametre}
+\item{amplif}{: amplification factor of the standard deviation on each parameter}
 
-\item{n}{nombre de nouveaux vecteurs a generer}
+\item{n}{: number of new vectors to generate}
 }
 \value{
-xnew matrice [ n , NPar ] des nouveaux vecteurs
+xnew : matrix [ n , NPar ] of new vectors
 }
 \description{
-La fonction Cusecovar Propose de nouveaux vecteurs de parametres respectant une structure de covariance.
+proposes new parameter vectors respecting a covariance structure
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

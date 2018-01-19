@@ -7,16 +7,16 @@
 boxes(points, prec)
 }
 \arguments{
-\item{points}{: matrice des objectifs}
+\item{points}{: matrix of the objectives}
 
-\item{prec}{(double, length = nobj) precision souhaitee pour les objectifs (arretes des boites)}
+\item{prec}{: (double, length = nobj) desired accuracy for the objectives (edges of the boxes)}
 }
 \value{
-vecteur des numeros de boites
+vector of numbers for the boxes
 }
 \description{
-La fonction boxes renvoie un numero de boite par points d'une population
+This function returns a box number for each points individual of the population
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

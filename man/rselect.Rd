@@ -7,16 +7,16 @@
 rselect(n, facp)
 }
 \arguments{
-\item{n}{: nombre de points a selectionner}
+\item{n}{: number of points to select}
 
-\item{facp}{: vecteur de points initiaux}
+\item{facp}{: vector of initial points}
 }
 \value{
-ix : rangs des points selectionnes (vecteur de dimension n)
+ix : ranks of selected points (vector of dimension n)
 }
 \description{
-La fonction rselect effectue une selection de n points dans facp
+performs a selection of n points in facp
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }

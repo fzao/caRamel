@@ -1,11 +1,11 @@
 #' Dimprove
 #' 
-#' La fonction Dimprove determine des directions d'amelioration
+#' determines directions for improvement
 #'  
-#' @param o_splx matrices des objectifs des simplexes (nrow = npoints, ncol = nobj)
-#' @param f_splx vecteur (npoints) des numeros de Pareto associes (1 = domine)
-#' @return liste des elements "oriedge" : aretes orientees et "ledge" : longueur
-#' @author F. Zaoui
+#' @param o_splx : matrix of objectives of simplexes (nrow = npoints, ncol = nobj)
+#' @param f_splx : vector (npoints) of associated Pareto numbers (1 = dominated)
+#' @return list of elements "oriedge": oriented edges and "ledge": length
+#' @author Fabrice Zaoui
 #' @export
 
 Dimprove <- function(o_splx, f_splx) {

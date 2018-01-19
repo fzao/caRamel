@@ -7,14 +7,14 @@
 dominate(matobj)
 }
 \arguments{
-\item{matobj}{matrice [ NInd , NObj ] des objectifs}
+\item{matobj}{: matrix [ NInd , NObj ] of objectives}
 }
 \value{
-f vecteur de dimension NInd des dominances
+f : vector of dimension NInd of dominances
 }
 \description{
-La fonction dominate calcule les fronts de Pareto successifs d'une population (classement "en pelure d'oignon")
+calculates the successive Pareto fronts of a population (classification "onion peel")
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }
