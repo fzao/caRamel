@@ -61,51 +61,51 @@ caRamel <-
     #############################
     if (nobj <= 1) {
       message("the number of objectives must be greater than one!")
-      return(list(-1, "the number of objectives must be greater than one!", NA, NA))
+      return(list("success" = FALSE, "message" ="the number of objectives must be greater than one!"))
     }
     if (nvar < 1) {
       message("the number of variables must be greater than zero!")
-      return(list(-1, "the number of variables must be greater than zero!", NA, NA))
+      return(list("success" = FALSE, "message" ="the number of variables must be greater than zero!"))
     }
     if (length(minmax) != nobj) {
       message("the dimension of 'minmax' is incorrect!")
-      return(list(-1, "the dimension of 'minmax' is incorrect!", NA, NA))
+      return(list("success" = FALSE, "message" ="the dimension of 'minmax' is incorrect!"))
     }
     if ((dim(bounds)[1] != nvar) | (dim(bounds)[2] != 2)) {
       message("the dimension of 'bounds' is incorrect!")
-      return(list(-1, "the dimension of 'bounds' is incorrect!", NA, NA))
+      return(list("success" = FALSE, "message" ="the dimension of 'bounds' is incorrect!"))
     }
     if (class(func) != "function") {
       message("'func' is not an R function!")
-      return(list(-1, "'func' is not an R function!", NA, NA))
+      return(list("success" = FALSE, "message" ="'func' is not an R function!"))
     }
     if (popsize < 1) {
       message("'popsize' must be strictly positive!")
-      return(list(-1, "'popsize' must be strictly positive!", NA, NA))
+      return(list("success" = FALSE, "message" ="'popsize' must be strictly positive!"))
     }
     if (archsize < 1) {
       message("'archsize' must be strictly positive!")
-      return(list(-1, "'archsize' must be strictly positive!", NA, NA))
+      return(list("success" = FALSE, "message" ="'archsize' must be strictly positive!"))
     }
     if (maxrun < 1) {
       message("'maxrun' must be strictly positive!")
-      return(list(-1, "'maxrun' must be strictly positive!", NA, NA))
+      return(list("success" = FALSE, "message" ="'maxrun' must be strictly positive!"))
     }
     if (length(repart_gene)!=4) {
       message("the dimension of'repart_gene' must be 4!")
-      return(list(-1, "the dimension of'repart_gene' must be 4!", NA, NA))
+      return(list("success" = FALSE, "message" ="the dimension of'repart_gene' must be 4!"))
     }
     if (!is.null(gpp)){
       if (gpp < 1) {
         message("gpp must be greater than zero!")
-        return(list(-1, "gpp be greater than zero!", NA, NA))
+        return(list("success" = FALSE, "message" ="gpp be greater than zero!"))
       }
     }
     initialise_calc<-0
     if (!is.null(funcinit)){
       if (class(funcinit) != "function") {
         message("'funcinit' is not an R function!")
-        return(list(-1, "'funcinit' is not an R function!", NA, NA))
+        return(list("success" = FALSE, "message" ="'funcinit' is not an R function!"))
       }
       initialise_calc<-1
     }
@@ -114,20 +114,20 @@ caRamel <-
     if (!is.null(listsave)){
       if (class(listsave) != "list") {
         message("'listsave' is not an R list!")
-        return(list(-1, "'listsave' is not an R list!", NA, NA))
+        return(list("success" = FALSE, "message" ="'listsave' is not an R list!"))
       }
       writefile<-1
       if (is.null(listsave$pmt)){
         message(" 'listsave$pmt' must be defined!")
-        return(list(-1, " 'listsave$pmt' must be defined!", NA, NA))
+        return(list("success" = FALSE, "message" =" 'listsave$pmt' must be defined!"))
       }
       if (is.null(listsave$obj)){
         message(" 'listsave$obj' must be defined!")
-        return(list(-1, " 'listsave$obj' must be defined!", NA, NA))
+        return(list("success" = FALSE, "message" =" 'listsave$obj' must be defined!"))
       }
       if (is.null(listsave$evol)){
         message(" 'listsave$evol' must be defined!")
-        return(list(-1, " 'listsave$evol' must be defined!", NA, NA))
+        return(list("success" = FALSE, "message" =" 'listsave$evol' must be defined!"))
       }
       ecrit_total_pop = 0 
       if (!is.null(listsave$totalpop)){
@@ -137,7 +137,7 @@ caRamel <-
     if (write_gen==1){
       if (writefile==0){
         message(" 'listsave' must be defined to use write_gen!")
-        return(list(-1, " 'listsave' must be defined to use write_gen!", NA, NA))
+        return(list("success" = FALSE, "message" =" 'listsave' must be defined to use write_gen!"))
       }
       listsave$RadPmt <- gsub(pattern = ".txt",replacement = "",listsave$pmt)
       listsave$RadObj <- gsub(pattern = ".txt",replacement = "",listsave$obj)
@@ -145,7 +145,7 @@ caRamel <-
     }
     if (typeof(carallel)!="logical") {
       message("'carallel' must be a logical!")
-      return(list(-1, "'carallel' must be a logical!", NA, NA))
+      return(list("success" = FALSE, "message" ="'carallel' must be a logical!"))
     }
     
     # Initializations

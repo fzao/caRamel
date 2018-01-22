@@ -15,7 +15,7 @@ Author: Nicolas Le Moine [aut],
   Fabrice Zaoui [aut, cre]
 Maintainer: Fabrice Zaoui <fabrice.zaoui@edf.fr>
 Depends: geometry, parallel
-Suggests: knitr
+Suggests: knitr, testthat
 Description: R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine.
 License: GPL-3
 Encoding: UTF-8
