@@ -9,7 +9,7 @@ fonseca <- function(i) {
   val1 <- 1 - exp(-(x[i,1] - s2) * (x[i,1] - s2) - (x[i,2] - s2) * (x[i,2] - s2))
   s2 <- 1 / sqrt(2)
   val2 <- 1 - exp(-(x[i,1] + s2) * (x[i,1] + s2) - (x[i,2] + s2) * (x[i,2] + s2))
-  return(list(val1=val1, val2=val2))
+  return(c(val1, val2))
 }
 
 nvar <- 2 # number of variables
@@ -24,7 +24,7 @@ maxrun <- 1000 # maximum number of calls
 prec <- matrix(1.e-3, nrow = 1, ncol = nobj) # accuracy for the convergence phase
 
 test_that("Right number of objectives", {
-    # must be greater than one"
+    # must be greater than one
     nobj <- 1
     results <-
       caRamel(nobj,
@@ -58,7 +58,7 @@ test_that("Right number of variables", {
 })
 
 test_that("Test the nmuber of goals", {
-    # must be equal to nobj"
+    # must be equal to nobj
     minmax <- c(TRUE)
     results <- caRamel(nobj,
               nvar,
@@ -74,7 +74,7 @@ test_that("Test the nmuber of goals", {
 })
 
 test_that("Test bound arrays", {
-    # must be equal to nvar"
+    # must be equal to nvar
     fbounds <- matrix(data = 1, nrow = nvar+1, ncol = 2)
     results <- caRamel(nobj,
               nvar,
@@ -89,7 +89,7 @@ test_that("Test bound arrays", {
 })
 
 test_that("Test objective function", {
-    # must be R function"
+    # must be R function
     results <- caRamel(nobj,
               nvar,
               minmax,
@@ -103,7 +103,7 @@ test_that("Test objective function", {
 })
 
 test_that("Test size of the genetic population", {
-    # must be positive"
+    # must be positive
     results <- caRamel(nobj,
               nvar,
               minmax,
@@ -117,7 +117,7 @@ test_that("Test size of the genetic population", {
 })
 
 test_that("Test size of the archive", {
-    # must be positive"
+    # must be positive
     results <- caRamel(nobj,
               nvar,
               minmax,
@@ -131,7 +131,7 @@ test_that("Test size of the archive", {
 })
 
 test_that("Test size of the maximum number of runs", {
-    # must be strictly positive"
+    # must be strictly positive
     results <- caRamel(nobj,
               nvar,
               minmax,

@@ -18,7 +18,7 @@ caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
 
 \item{bounds}{: (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables}
 
-\item{func}{: the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2}
+\item{func}{: the name of the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).}
 
 \item{popsize}{: (integer, length = 1) the population size for the genetic algorithm}
 
@@ -28,34 +28,34 @@ caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
 
 \item{prec}{: (double, length = nobj) the desired accuracy for the optimization of the objectives}
 
-\item{repart_gene}{: (integer, length = 4) number of new solutions for each rule and per generation}
+\item{repart_gene}{: (integer, length = 4) optional, number of new parameter sets for each rule and per generation}
 
-\item{gpp}{: (integer, length = 1) calling frequency for the rule "Fireworks"}
+\item{gpp}{: (integer, length = 1) optional, calling frequency for the rule "Fireworks"}
 
-\item{blocks}{: groups for parameters}
+\item{blocks}{(optional): groups for parameters}
 
-\item{pop}{: (matrix, nrow = nset, ncol = nvar or nvar+nobj ) Initial population}
+\item{pop}{: (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)}
 
-\item{funcinit}{: the name of the initialization function. The arguments are cl and numcores}
+\item{funcinit}{(optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.}
 
-\item{noms_obj}{: the name of the objectives}
+\item{noms_obj}{(optional): the name of the objectives}
 
-\item{listsave}{: names of the listing files. Default: None (no output)}
+\item{listsave}{(optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)}
 
-\item{write_gen}{: (integer, length = 1) if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)}
+\item{write_gen}{: (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)}
 
-\item{carallel}{: (logical, length = 1) do parallel computations (TRUE by default)}
+\item{carallel}{: (logical, length = 1) optional, do parallel computations (TRUE by default)}
 
-\item{numcores}{: (integer, length = 1) the number of cores for the parallel computations}
+\item{numcores}{: (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).}
 }
 \value{
 List of five elements:
 \describe{
 \item{success}{return value (logical, length = 1) : TRUE if successfull}
 \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
-\item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj)}
+\item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj+nadditional)}
 \item{save_crit}{evolution of the maximum objectives}
-\item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
+\item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
 }
 }
 \description{

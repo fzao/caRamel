@@ -9,30 +9,30 @@
 #' @param nvar : (integer, length = 1) the number of variables
 #' @param minmax : (logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)
 #' @param bounds : (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables
-#' @param func : the name of the objective function to optimize. The function has to return 'nobj' values with : nobj >= 2
+#' @param func : the name of the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).
 #' @param popsize : (integer, length = 1) the population size for the genetic algorithm
 #' @param archsize : (integer, length = 1) the size of the Pareto front
 #' @param maxrun : (integer, length = 1) the max. number of simulations allowed
 #' @param prec : (double, length = nobj) the desired accuracy for the optimization of the objectives
-#' @param repart_gene : (integer, length = 4) number of new solutions for each rule and per generation
-#' @param gpp : (integer, length = 1) calling frequency for the rule "Fireworks"
-#' @param blocks : groups for parameters
-#' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) Initial population
-#' @param funcinit : the name of the initialization function. The arguments are cl and numcores
-#' @param noms_obj : the name of the objectives
-#' @param listsave : names of the listing files. Default: None (no output)
-#' @param write_gen : (integer, length = 1) if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
-#' @param carallel : (logical, length = 1) do parallel computations (TRUE by default)
-#' @param numcores : (integer, length = 1) the number of cores for the parallel computations
+#' @param repart_gene : (integer, length = 4) optional, number of new parameter sets for each rule and per generation
+#' @param gpp : (integer, length = 1) optional, calling frequency for the rule "Fireworks"
+#' @param blocks (optional): groups for parameters
+#' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)
+#' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.
+#' @param noms_obj (optional): the name of the objectives
+#' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
+#' @param write_gen : (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
+#' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
+#' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).
 #
 ##' @return
 ##' List of five elements:
 ##' \describe{
 ##' \item{success}{return value (logical, length = 1) : TRUE if successfull}
 ##' \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
-##' \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj)}
+##' \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj+nadditional)}
 ##' \item{save_crit}{evolution of the maximum objectives}
-##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+ncomplement)}
+##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
 ##' }
 #' @author Fabrice Zaoui - Celine Monteil
 
@@ -177,14 +177,12 @@ caRamel <-
         
         # Evaluation of the objectives
         x<<-pop[,1:nvar]
-        eval_complementaire <- NULL
         if (carallel==TRUE){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
           res = parLapply(cl, 1:dim(x)[1], func)
           for (j in 1:dim(x)[1]) {
             newfeval <- rbind(newfeval, as.numeric(res[[j]][1:nobj]))
-            eval_complementaire <- rbind(eval_complementaire, res[[j]][(nobj+1):length(res[[1]])])
           }
         } else { #sequential calls
           newfeval <- matrix(data = 0.,
@@ -193,7 +191,6 @@ caRamel <-
           for (i in 1:dim(x)[1]) {
             res <- func(i)
             newfeval[i, ] <- res[1:nobj]
-            eval_complementaire <- rbind(eval_complementaire, res[(nobj+1):length(res)])
           }
         }
         pop <- cbind(pop[,1:nvar],newfeval)
@@ -236,7 +233,7 @@ caRamel <-
       }
       
       # simulations
-      eval_complementaire <- NULL
+      additional_eval <- NULL
       # parallel calls
       if (carallel==TRUE){
         newfeval <- NULL
@@ -244,12 +241,12 @@ caRamel <-
         res <- parLapply(cl, 1:dim(x)[1], func)
         for (j in 1:dim(x)[1]) {
           newfeval <- rbind(newfeval, as.numeric(res[[j]][1:nobj]))
-          eval_complementaire <- rbind(eval_complementaire, res[[j]][(nobj+1):length(res[[1]])])
+          additional_eval <- rbind(additional_eval, res[[j]][(nobj+1):length(res[[1]])])
         }
-        ncomplement <- ncol(eval_complementaire)
+        nadditional <- ncol(additional_eval)
         if (length(res[[1]])<(nobj+1)){
-          eval_complementaire <- NULL
-          ncomplement <- 0
+          additional_eval <- NULL
+          nadditional <- 0
         }
       } else { #sequential calls
         newfeval <- matrix(data = 0.,
@@ -259,12 +256,12 @@ caRamel <-
         for (i in 1:dim(x)[1]) {
           res <- func(i)
           newfeval[i, ] <- res[1:nobj]
-          eval_complementaire <- rbind(eval_complementaire, res[(nobj+1):length(res)])
+          additional_eval <- rbind(additional_eval, res[(nobj+1):length(res)])
         }
-        ncomplement <- ncol(eval_complementaire)
+        nadditional <- ncol(additional_eval)
         if (length(res)<(nobj+1)){
-          eval_complementaire <- NULL
-          ncomplement <- 0
+          additional_eval <- NULL
+          nadditional <- 0
         }
       }
       
@@ -282,7 +279,7 @@ caRamel <-
       newfeval <- newfeval[set_ok, ]
       x <- x[set_ok, ]
       probj <- probj[set_ok, ]
-      pop1 <- rbind(pop, cbind(x, newfeval, eval_complementaire))
+      pop1 <- rbind(pop, cbind(x, newfeval, additional_eval))
       
       # decrease population
       #message("decrease pop")
@@ -291,16 +288,16 @@ caRamel <-
       
       # archive
       # message("archive")
-      arch <- matrix(pop1[ind$arch, ], nrow=length(ind$arch), ncol=nobj+nvar+ncomplement)
+      arch <- matrix(pop1[ind$arch, ], nrow=length(ind$arch), ncol=nobj+nvar+nadditional)
       
       # population update
       #message("pop update")
       pop <- pop1[c(ind$arch, ind$pop), ]
       param_arch <- arch[, 1:nvar]
       crit_arch <- matrix(arch[, (nvar + 1):(nvar + nobj)], nrow=length(ind$arch), ncol=nobj)
-      if (ncomplement>0){
-        eval_complementaire[,1:ncol(eval_complementaire)] <- eval_complementaire[set_ok, 1:ncomplement]
-        eval_complementaire <- matrix(arch[, (nvar + nobj+1):(nvar + nobj+ncomplement)], nrow=length(ind$arch), ncol=ncomplement)
+      if (nadditional>0){
+        additional_eval[,1:ncol(additional_eval)] <- additional_eval[set_ok, 1:nadditional]
+        additional_eval <- matrix(arch[, (nvar + nobj+1):(nvar + nobj+nadditional)], nrow=length(ind$arch), ncol=nadditional)
       }
       
       # Records on criteria
@@ -342,7 +339,7 @@ caRamel <-
         }
         
         write.table(param_arch,listsave$pmt,row.names = FALSE,col.names = FALSE)
-        write.table(cbind(crit_arch,eval_complementaire),listsave$obj,row.names = FALSE,col.names = FALSE)
+        write.table(cbind(crit_arch,additional_eval),listsave$obj,row.names = FALSE,col.names = FALSE)
         write.table(t(save_crit),listsave$evol,row.names = FALSE,col.names = FALSE)
         if (ecrit_total_pop==1){
           write.table(pop,listsave$totalpop,row.names = FALSE,col.names = FALSE)
@@ -356,7 +353,7 @@ caRamel <-
     return(list(
       "success" = TRUE,
       "parameters" = param_arch,
-      "objectives" = cbind(crit_arch,eval_complementaire),
+      "objectives" = cbind(crit_arch,additional_eval),
       "save_crit" = t(save_crit),
       "total_pop"= pop
     ))

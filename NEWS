@@ -1,5 +1,10 @@
 News of the caRamel package
 
+Version 2018.01-23
+==================
+* English translation
+* Package finalization (vignette+test)
+
 Version 2017.12-15
 ==================
 * add "total_pop" in results (last population: Pareto front and dominated solutions) for restart of optimization
