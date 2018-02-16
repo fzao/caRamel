@@ -1,6 +1,6 @@
 #' downsize
 #' 
-#' La fonction downsize renvoie les indentifiants d'une population en ne conservant qu'un seul point par boite (de resolution prec)
+#' reduces the number of individuals in a population to only one individual per box up to a given accuracy
 #'  
 #' @param points : matrix of objectives
 #' @param Fo : rank on the front of each point (1: dominates on the Pareto)

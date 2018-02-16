@@ -4,7 +4,7 @@
 #'  
 #' @param points : matrix of the objectives
 #' @param prec : (double, length = nobj) desired accuracy for the objectives (edges of the boxes)
-#' @return vector of numbers for the boxes
+#' @return vector of numbers for the boxes. boxes[i] gives the number of the box containing points[i].
 #' @author Fabrice Zaoui
 
 boxes <- function(points, prec) {

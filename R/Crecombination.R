@@ -26,15 +26,15 @@ Crecombination <- function(param, blocks, n) {
     blocks1[[(nblocks+i)]] <- c(ix[i])
   }
   
-  xnouv <- matrix(0, nrow = n, ncol = npar)
+  xnew <- matrix(0, nrow = n, ncol = npar)
   for (i in 1:n) {
     gamebloc <- rselect(n1, matrix(1, nrow = dim(param)[1], ncol = 1)) # Selection of n1 sets for n1 blocks
     p <- matrix(0, ncol = npar, nrow = 1)
     for (b in 1:n1) {
       p[blocks1[[b]]] <- param[gamebloc[b], blocks1[[b]]]
     }
-    xnouv[i,] <- p
+    xnew[i,] <- p
   }
 
-  return(xnouv)
+  return(xnew)
 }

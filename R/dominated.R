@@ -1,6 +1,6 @@
 #' dominated
 #' 
-#' Tindicates which rows of the matrix Y are dominated by the vector (row) x
+#' indicates which rows of the matrix Y are dominated by the vector (row) x
 #'  
 #' @param x : row vecteur
 #' @param Y : matrix

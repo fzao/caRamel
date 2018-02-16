@@ -20,8 +20,8 @@ decrease_pop(matobj, minmax, prec, archsize, popsize)
 \value{
 A list containing two elements:
 \describe{
-\item{ind_arch}{}
-\item{ind_pop}{} 
+\item{ind_arch}{indices of individuals in the updated Pareto front}
+\item{ind_pop}{indices of individuals in the updated population} 
 }
 }
 \description{

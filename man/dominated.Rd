@@ -15,7 +15,7 @@ dominated(x, Y)
 D : vector of booleans
 }
 \description{
-Tindicates which rows of the matrix Y are dominated by the vector (row) x
+indicates which rows of the matrix Y are dominated by the vector (row) x
 }
 \author{
 F. Zaoui

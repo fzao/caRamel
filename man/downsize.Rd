@@ -17,7 +17,7 @@ downsize(points, Fo, prec)
 vector indices
 }
 \description{
-La fonction downsize renvoie les indentifiants d'une population en ne conservant qu'un seul point par boite (de resolution prec)
+reduces the number of individuals in a population to only one individual per box up to a given accuracy
 }
 \author{
 Fabrice Zaoui

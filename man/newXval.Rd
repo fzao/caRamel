@@ -24,7 +24,7 @@ newXval(param, crit, isperf, sp, bounds, repart_gene, blocks, fireworks)
 \item{fireworks}{: boolean, TRUE if one tests a random variation on each parameter and each maximum of O.F.}
 }
 \value{
-xnouv : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
+xnew : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
 
 project_crit: assumed position of the new vectors in the criteria space: [ sum(Repart_Gene)+ eventually (nobj+1)*nvar if fireworks , NObj ];
 }

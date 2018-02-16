@@ -10,7 +10,7 @@
 #' @param repart_gene : matrix of length 4 giving the number of games to be generated with each rule: 1 Interpolation in the simplexes of the front, 2 Extrapolation according to the directions of the edges "orthogonal" to the front, 3 Random draws with prescribed variance-covariance matrix, 4 Recombination by functional blocks
 #' @param blocks : list of integer vectors containing function blocks of parameters
 #' @param fireworks : boolean, TRUE if one tests a random variation on each parameter and each maximum of O.F.
-#' @return xnouv : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
+#' @return xnew : matrix of new vectors [ sum(Repart_Gene) + eventually (nobj+1)*nvar if fireworks , NPar ]
 #' @return project_crit: assumed position of the new vectors in the criteria space: [ sum(Repart_Gene)+ eventually (nobj+1)*nvar if fireworks , NObj ];
 #' @author Fabrice Zaoui
 
@@ -47,7 +47,7 @@ newXval <-
     n_cov <- repart_gene[3]    # Maximum number of new sets created by random draws with prescribed covariance matrix
     n_recomb <- repart_gene[4] # Maximum number of new games created by recombinations
     
-    xnouv <- NULL
+    xnew <- NULL
     project_crit <- NULL
     
     #**************************************************************
@@ -104,14 +104,14 @@ newXval <-
     # New sets created by interpolation in simplexes  
     if (n_inter > 0) {
       carain <- Cinterp(param, crit, simplices, volume, n_inter)
-      xnouv <- rbind(xnouv, carain$xnouv)
+      xnew <- rbind(xnew, carain$xnew)
       project_crit <- rbind(project_crit, carain$pcrit)
     }
     
     # New sets created by extrapolation on the directions of the edges
     if (n_extra > 0) {
       caraex <- Cextrap(param, crit, oriedge, ledge, n_extra)
-      xnouv <- rbind(xnouv, caraex$xnouv)
+      xnew <- rbind(xnew, caraex$xnew)
       project_crit <- rbind(project_crit, caraex$pcrit)
     }
     
@@ -122,7 +122,7 @@ newXval <-
       xref <- as.matrix(param[iref, ])
       xcov <- Cusecovar(xref, sqrt(2), n_cov)
       critcov <- matrix(NaN, nrow = n_cov, ncol = nobj)
-      xnouv <- rbind(xnouv, xcov)
+      xnew <- rbind(xnew, xcov)
       project_crit <- rbind(project_crit, critcov)
     }
     
@@ -130,7 +130,7 @@ newXval <-
     if (dim(param_arch)[1] > 1 & n_recomb > 0) {
       xrecomb <- Crecombination(param_arch, blocks, n_recomb)
       critrec <- matrix(NaN, nrow = n_recomb, ncol = nobj)
-      xnouv <- rbind(xnouv, xrecomb)
+      xnew <- rbind(xnew, xrecomb)
       project_crit <- rbind(project_crit, critrec)
     }
     
@@ -170,7 +170,7 @@ newXval <-
                         ncol = length(devi))
         xcloud <- xcloud[sp > 0, ]
         ccloud <- ccloud[sp > 0, ]
-        xnouv <- rbind(xnouv, xcloud)
+        xnew <- rbind(xnew, xcloud)
         project_crit <- rbind(project_crit, ccloud)
       }
       
@@ -178,32 +178,32 @@ newXval <-
     
     minp <-
       matrix(bounds[, 1],
-             nrow = dim(xnouv)[1],
+             nrow = dim(xnew)[1],
              ncol = npar,
              byrow = TRUE)
     maxp <-
       matrix(bounds[, 2],
-             nrow = dim(xnouv)[1],
+             nrow = dim(xnew)[1],
              ncol = npar,
              byrow = TRUE)
-    ll = which(xnouv > maxp, arr.ind = TRUE)
+    ll = which(xnew > maxp, arr.ind = TRUE)
     nelem <- dim(ll)[1]
     if (nelem > 0) {
       for (i in 1:nelem) {
         rnum <- ll[i, 1]
         cnum <- ll[i, 2]
-        xnouv[rnum, cnum] <- maxp[rnum, cnum]
+        xnew[rnum, cnum] <- maxp[rnum, cnum]
       }
     }
-    ll = which(xnouv < minp, arr.ind = TRUE)
+    ll = which(xnew < minp, arr.ind = TRUE)
     nelem <- dim(ll)[1]
     if (nelem > 0) {
       for (i in 1:nelem) {
         rnum <- ll[i, 1]
         cnum <- ll[i, 2]
-        xnouv[rnum, cnum] <- minp[rnum, cnum]
+        xnew[rnum, cnum] <- minp[rnum, cnum]
       }
     }
     
-    return(list("xnouv" = xnouv, "pcrit" = project_crit))
+    return(list("xnew" = xnew, "pcrit" = project_crit))
   }

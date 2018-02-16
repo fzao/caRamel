@@ -1,31 +1,6 @@
 News of the caRamel package
 
-Version 2018.01-23
+Version 2018.02-16
 ==================
-* English translation
-* Package finalization (vignette+test)
-
-Version 2017.12-15
-==================
-* add "total_pop" in results (last population: Pareto front and dominated solutions) for restart of optimization
-* possibility to write the whole population on file at each generation (see the parameter listsave$totalpop)
-* more help documentation
-
-Version 2017.09-25
-==================
-* computation of gpp in order to have the right average number of games for each rule
-
-Version 2017.09-08
-==================
-* some corrections on the record of additional criteria
-
-Version 2017.08-23
-==================
-* possibility to save more info for each evaluation
-* delete some non necessary lines with tracegen
-* change script to plot convergence graphs
-
-Version 2017.07-20
-==================
-* First version of the R package for caRamel
+* first open source release
 

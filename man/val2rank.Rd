@@ -9,7 +9,7 @@ val2rank(X, opt)
 \arguments{
 \item{X}{: vector to treat}
 
-\item{opt}{: integer which gives the rule to follow in case of ranks linked (repeated values): if opt = 1, one returns the average rank, if opt = 2, one returns the corresponding rank in the series of the unique values, if opt = 3, return the max rank}
+\item{opt}{: integer which gives the rule to follow in case of tied ranks (repeated values): if opt = 1, one returns the average rank, if opt = 2, one returns the corresponding rank in the series of the unique values, if opt = 3, return the max rank}
 }
 \value{
 R : rank vector

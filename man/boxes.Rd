@@ -12,7 +12,7 @@ boxes(points, prec)
 \item{prec}{: (double, length = nobj) desired accuracy for the objectives (edges of the boxes)}
 }
 \value{
-vector of numbers for the boxes
+vector of numbers for the boxes. boxes[i] gives the number of the box containing points[i].
 }
 \description{
 This function returns a box number for each points individual of the population

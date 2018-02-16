@@ -18,7 +18,7 @@ Cinterp(param, crit, simplices, volume, n)
 \item{n}{: number of new vectors to generate}
 }
 \value{
-xnouv : matrix [ n , NPar ] of new vectors
+xnew : matrix [ n , NPar ] of new vectors
 
 pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
 }
