@@ -1,8 +1,8 @@
 Package: caRamel
 Type: Package
 Title: A multi-objective optimizer initially developed for the calibration of hydrological models
-Version: 2018.02-23
-Date: 2018-02-23
+Version: 2018.02-16
+Date: 2018-02-16
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),
