@@ -5,6 +5,14 @@
 #' @param x : row vecteur
 #' @param Y : matrix
 #' @return D : vector of booleans
+#' 
+#' @examples
+#' # Definition of the parameters
+#' Y <- matrix(rexp(200), 100, 2)
+#' x <- Y[1,]
+#' # Call the function
+#' res <- dominated(x, Y)
+#' 
 #' @author F. Zaoui
 
 dominated <- function(x, Y) {

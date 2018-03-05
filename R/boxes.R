@@ -5,13 +5,21 @@
 #' @param points : matrix of the objectives
 #' @param prec : (double, length = nobj) desired accuracy for the objectives (edges of the boxes)
 #' @return vector of numbers for the boxes. boxes[i] gives the number of the box containing points[i].
+#' 
+#' @examples
+#' # Definition of the parameters
+#' points <- matrix(rexp(200), 100, 2)
+#' prec <- c(1.e-3, 1.e-3)
+#' # Call the function
+#' res <- boxes(points, prec)
+#' 
 #' @author Fabrice Zaoui
 
 boxes <- function(points, prec) {
   
   n <- dim(points)[1]
   d <- dim(points)[2]
-  
+
   valmin <- apply(points,2,min)
   val <- matrix(rep(valmin,n), ncol=d, byrow=TRUE)
   

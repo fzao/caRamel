@@ -25,6 +25,17 @@ pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
 \description{
 gives n new candidates by extrapolation along orthogonal directions to the Pareto front in the space of the objectives
 }
+\examples{
+# Definition of the parameters
+param <- matrix(rexp(100), 100, 1)
+crit <- matrix(rexp(200), 100, 2)
+directions <- matrix(c(1,3,2,7,13,40), nrow = 3, ncol = 2)
+longu <- runif(3)
+n <- 5
+# Call the function
+res <- Cextrap(param, crit, directions, longu, n)
+
+}
 \author{
 Fabrice Zaoui
 }

@@ -17,6 +17,14 @@ ix : ranks of selected points (vector of dimension n)
 \description{
 performs a selection of n points in facp
 }
+\examples{
+# Definition of the parameters
+n <- 5
+facp <- runif(30)
+# Call the function
+res <- rselect(n, facp)
+
+}
 \author{
 Fabrice Zaoui
 }

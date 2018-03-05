@@ -6,12 +6,21 @@
 #' @param amplif : amplification factor of the standard deviation on each parameter
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
+#' 
+#' @examples
+#' # Definition of the parameters
+#' xref <- matrix(rexp(35), 35, 1)
+#' amplif <- 2.
+#' n <- 5
+#' # Call the function
+#' res <- Cusecovar(xref, amplif, n)
+#' 
 #' @author Fabrice Zaoui
 
 Cusecovar <- function(xref, amplif, n) {
   
   g <- apply(xref, 2, mean) # center of reference population (in the parameter space)
-  
+
   # Calculation of the variances-covariances matrix of the lines
   rr <- matvcov(xref, g)
   

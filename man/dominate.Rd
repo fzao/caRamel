@@ -15,6 +15,13 @@ f : vector of dimension NInd of dominances
 \description{
 calculates the successive Pareto fronts of a population (classification "onion peel")
 }
+\examples{
+# Definition of the parameters
+matobj <- matrix(rexp(200), 100, 2)
+# Call the function
+res <- dominate(matobj)
+
+}
 \author{
 Fabrice Zaoui
 }

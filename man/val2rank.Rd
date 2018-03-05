@@ -17,6 +17,14 @@ R : rank vector
 \description{
 converts the values of a vector into their rank
 }
+\examples{
+# Definition of the parameters
+X <- matrix(rexp(100), 100, 1)
+opt <- 3
+# Call the function
+res <- val2rank(X, opt)
+
+}
 \author{
 Fabrice Zaoui
 }

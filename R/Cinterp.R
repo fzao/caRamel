@@ -9,6 +9,17 @@
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
 #' @return pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
+#' 
+#' @examples
+#' # Definition of the parameters
+#' param <- matrix(rexp(100), 100, 1)
+#' crit <- matrix(rexp(200), 100, 2)
+#' simplices <- matrix(c(15,2,1,15,22,1,18,15,2,17,13,14), nrow = 4, ncol = 3)
+#' volume <- runif(4)
+#' n <- 5
+#' # Call the function
+#' res <- Cinterp(param, crit, simplices, volume, n)
+#' 
 #' @author Fabrice Zaoui
 
 Cinterp <- function(param, crit, simplices, volume, n) {

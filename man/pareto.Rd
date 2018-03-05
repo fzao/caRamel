@@ -15,6 +15,13 @@ Ft : column matrix [NInd * 1]
 \description{
 indicates which rows of the X criterion matrix are Pareto
 }
+\examples{
+# Definition of the parameters
+X <- matrix(rexp(200), 100, 2)
+# Call the function
+res <- dominate(X)
+
+}
 \author{
 Fabrice Zaoui
 }

@@ -17,6 +17,14 @@ D : vector of booleans
 \description{
 indicates which rows of the matrix Y are dominated by the vector (row) x
 }
+\examples{
+# Definition of the parameters
+Y <- matrix(rexp(200), 100, 2)
+x <- Y[1,]
+# Call the function
+res <- dominated(x, Y)
+
+}
 \author{
 F. Zaoui
 }

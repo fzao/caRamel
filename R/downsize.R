@@ -6,11 +6,20 @@
 #' @param Fo : rank on the front of each point (1: dominates on the Pareto)
 #' @param prec : (double, length = nobj) desired accuracy for sorting objectives
 #' @return vector indices
+#' 
+#' @examples
+#' # Definition of the parameters
+#' points <- matrix(rexp(200), 100, 2)
+#' prec <- c(1.e-3, 1.e-3)
+#' Fo <- sample(1:100, 100)
+#' # Call the function
+#' res <- downsize(points, Fo, prec)
+#' 
 #' @author Fabrice Zaoui
 
 downsize <- function(points, Fo, prec) {
   the_box <- boxes(points, prec)
-  
+
   imax1 <- apply(points, 2, which.max)
   imax1 <- sort(unique(imax1))
   

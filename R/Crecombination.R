@@ -6,9 +6,19 @@
 #' @param blocks : list of integer vectors: list of variable blocks for recombination
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
+#' 
+#' @examples
+#' # Definition of the parameters
+#' param <- matrix(rexp(15), 15, 1)
+#' blocks <- NULL
+#' n <- 5
+#' # Call the function
+#' res <- Crecombination(param, blocks, n)
+#' 
 #' @author Fabrice Zaoui
 
 Crecombination <- function(param, blocks, n) {
+
   npar <- dim(param)[2]
   paramiso <- matrix(TRUE, ncol = npar)
   nblocks <- length(blocks)

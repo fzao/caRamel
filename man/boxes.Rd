@@ -17,6 +17,14 @@ vector of numbers for the boxes. boxes[i] gives the number of the box containing
 \description{
 This function returns a box number for each points individual of the population
 }
+\examples{
+# Definition of the parameters
+points <- matrix(rexp(200), 100, 2)
+prec <- c(1.e-3, 1.e-3)
+# Call the function
+res <- boxes(points, prec)
+
+}
 \author{
 Fabrice Zaoui
 }

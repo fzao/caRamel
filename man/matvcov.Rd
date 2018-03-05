@@ -17,6 +17,14 @@ rr : variances-covariances matrix on the reference population
 \description{
 calculates the variances-covariances matrix on the reference population
 }
+\examples{
+# Definition of the parameters
+x <- matrix(rexp(30), 30, 1)
+g <- mean(x)
+# Call the function
+res <- matvcov(x, g)
+
+}
 \author{
 Fabrice Zaoui
 }

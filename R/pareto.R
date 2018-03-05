@@ -4,6 +4,13 @@
 #'  
 #' @param X : matrix [NInd * NObj]
 #' @return Ft : column matrix [NInd * 1]
+#' 
+#' @examples
+#' # Definition of the parameters
+#' X <- matrix(rexp(200), 100, 2)
+#' # Call the function
+#' res <- dominate(X)
+#' 
 #' @author Fabrice Zaoui
 
 pareto <- function(X) {

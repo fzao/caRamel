@@ -15,6 +15,13 @@ V : simplex volume
 \description{
 calculates the volume of a simplex
 }
+\examples{
+# Definition of the parameters
+S <- matrix(rexp(6), 3, 2)
+# Call the function
+res <- vol_splx(S)
+
+}
 \author{
 Fabrice Zaoui
 }

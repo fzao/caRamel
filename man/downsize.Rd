@@ -19,6 +19,15 @@ vector indices
 \description{
 reduces the number of individuals in a population to only one individual per box up to a given accuracy
 }
+\examples{
+# Definition of the parameters
+points <- matrix(rexp(200), 100, 2)
+prec <- c(1.e-3, 1.e-3)
+Fo <- sample(1:100, 100)
+# Call the function
+res <- downsize(points, Fo, prec)
+
+}
 \author{
 Fabrice Zaoui
 }

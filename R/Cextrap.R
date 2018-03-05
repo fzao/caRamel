@@ -9,6 +9,17 @@
 #' @param n : number of new vectors to generate
 #' @return xnew : matrix [ n , NPar ] of new vectors
 #' @return pcrit : matrix [ n , NObj ] estimated positions of new sets in the goal space
+#' 
+#' @examples
+#' # Definition of the parameters
+#' param <- matrix(rexp(100), 100, 1)
+#' crit <- matrix(rexp(200), 100, 2)
+#' directions <- matrix(c(1,3,2,7,13,40), nrow = 3, ncol = 2)
+#' longu <- runif(3)
+#' n <- 5
+#' # Call the function
+#' res <- Cextrap(param, crit, directions, longu, n)
+#' 
 #' @author Fabrice Zaoui
 
 Cextrap <- function(param, crit, directions, longu, n) {
