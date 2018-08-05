@@ -20,6 +20,14 @@ library(caRamel)
 
 [*Schaffer*](https://en.wikipedia.org/wiki/File:Schaffer_function_2_-_multi-objective.pdf) test function has two objectives with one variable.
 
+<p align="center">
+  <img src="./vignettes/Schaffer.png" width="800"/>
+</p>
+<p align="center">
+   <b>Schaffer test function</b> 
+</p>
+
+
 ```{r schaffer}
 schaffer <- function(i) {
   if (x[i,1] <= 1) {
