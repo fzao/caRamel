@@ -1,0 +1,110 @@
+---
+title: "testing constraints"
+author: "Fabrice Zaoui"
+date: "October 05 2018"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Using the caRamel R package: test a constrained problem}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Short Description
+
+**caRamel** is a multiobjective evolutionary algorithm combining the MEAS algorithm and the NGSA-II algorithm.
+
+Download the package from CRAN or [GitHub](https://github.com/fzao/caRamel) and then install and load it.
+
+Dealing with constraints is possible with **caRamel** by returning a NaN value for an infeasible solution. See the example below.
+
+```{r caRa}
+library(caRamel)
+```
+
+# Test functions
+
+## Constr-Ex problem
+
+[*Constr-Ex*](https://en.wikipedia.org/wiki/File:Constr-Ex_problem.pdf) test function has two objectives with two variables and two inequality constraints.
+
+```{r constr}
+constr_ex <- function(i) {
+  # functions f1 and f2
+  s1 <- x[i,1]
+  s2 <- (1. + x[i,2]) / x[i,1]
+  # now test for the feasibility
+  # constraint g1
+  if((x[i,2] + 9. * x[i,1] - 6.) < 0. | (-x[i,2] + 9. * x[i,1] -1.) < 0.) {
+    s1 <- NaN
+    s2 <- NaN
+  }
+  return(c(s1, s2))
+}
+```
+
+Note that :
+
+* parameter _i_ is mandatory for the management of parallelism.
+* the variable __must be named__ _x_ and is a matrix of size [npopulation, nvariables].
+
+The variable lies in the range [0.1, 1] and [0, 5]:
+
+```{r constr_variable}
+nvar <- 2 # number of variables
+bounds <- matrix(data = 0., nrow = nvar, ncol = 2) # upper and lower bounds
+bounds[1, 1] <- 0.1
+bounds[1, 2] <- 1.
+bounds[2, 1] <- 0.
+bounds[2, 2] <- 5.
+```
+
+Both functions are to be minimized:
+
+```{r constr_objectives}
+nobj <- 2 # number of objectives
+minmax <- c(FALSE, FALSE) # min and min
+```
+
+Before calling **caRamel** in order to optimize the Constr_Ex problem, some algorithmic parameters need to be set:
+
+```{r constr_param}
+popsize <- 100 # size of the genetic population
+archsize <- 100 # size of the archive for the Pareto front
+maxrun <- 1000 # maximum number of calls
+prec <- matrix(1.e-3, nrow = 1, ncol = nobj) # accuracy for the convergence phase
+```
+
+Then the minimization problem can be launched:
+
+```{r schaffer_launch, fig.show="hide", results="hide"}
+results <-
+  caRamel(nobj,
+          nvar,
+          minmax,
+          bounds,
+          constr_ex,
+          popsize,
+          archsize,
+          maxrun,
+          prec,
+          carallel=FALSE) # no parallelism
+```
+
+Test if the convergence is successful:
+
+```{r schaffer_OK}
+print(results$success==TRUE)
+```
+
+Plot the Pareto front:
+
+```{r schaffer_plot1}
+plot(results$objectives[,1], results$objectives[,2], main="Constr_Ex Pareto front", xlab="Objective #1", ylab="Objective #2")
+```
+
+```{r schaffer_plot2}
+plot(results$parameters, main="Corresponding values for X", xlab="Element of the archive", ylab="X Variable")
+```
