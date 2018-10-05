@@ -90,6 +90,8 @@ caRamel <-
            carallel = TRUE,
            numcores = NULL) {
     
+    start_time <- Sys.time()
+
     # Check the input arguments #
     #############################
     if (nobj <= 1) {
@@ -232,7 +234,9 @@ caRamel <-
     }
     
     # Optimization
-    message("Beginning of optimization process")
+    message(paste("Beginning of caRamel optimization <--", date()))
+    message(paste("Number of variables :", as.character(nvar)))
+    message(paste("Number of functions :", as.character(nobj)))
     pb <- txtProgressBar(min=0, max=1,initial=0,title="caRamel progress :",label="caRamel progress :" , style=3)
     while (nrun < maxrun) {
       ngen <- ngen + 1
@@ -382,6 +386,11 @@ caRamel <-
     
     if (carallel==TRUE){stopCluster(cl)}
     close(pb)
+    
+    end_time <- Sys.time()
+    message(paste("Done in", as.character(end_time-start_time), " s", "-->", date()))
+    message(paste("Size of the Pareto front :", as.character(dim(param_arch)[1])))
+    message(paste("Number of calls :", as.character(nrun)))
     
     return(list(
       "success" = TRUE,
