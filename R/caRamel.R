@@ -315,6 +315,7 @@ caRamel <-
       set_ok <- !rowSums(detect_nan)
       newfeval <- newfeval[set_ok, ]
       x <- x[set_ok, ]
+      additional_eval <- additional_eval[set_ok, ]
       probj <- probj[set_ok, ]
       pop1 <- rbind(pop, cbind(x, newfeval, additional_eval))
       
@@ -333,7 +334,6 @@ caRamel <-
       param_arch <- arch[, 1:nvar]
       crit_arch <- matrix(arch[, (nvar + 1):(nvar + nobj)], nrow=length(ind$arch), ncol=nobj)
       if (nadditional>0){
-        additional_eval[,1:ncol(additional_eval)] <- additional_eval[set_ok, 1:nadditional]
         additional_eval <- matrix(arch[, (nvar + nobj+1):(nvar + nobj+nadditional)], nrow=length(ind$arch), ncol=nadditional)
       }
       
