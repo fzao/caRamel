@@ -1,8 +1,8 @@
 Package: caRamel
 Type: Package
 Title: Automatic Calibration by Evolutionary Multi Objective Algorithm
-Version: 1.0
-Date: 2018-03-02
+Version: 1.0.1
+Date: 2018-03-26
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),
@@ -27,6 +27,6 @@ LazyData: TRUE
 RoxygenNote: 6.0.1
 NeedsCompilation: no
 VignetteBuilder: knitr
-Packaged: 2018-03-02 17:50:25 UTC; I21149
+Packaged: 2018-03-26 17:50:25 UTC; I21149
 Repository: CRAN
-Date/Publication: 2018-03-05 10:45:37 UTC
+Date/Publication: 2018-03-26 10:45:37 UTC

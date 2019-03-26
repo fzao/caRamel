@@ -1,5 +1,10 @@
 News of the caRamel package
 
+Version 1.0.1
+===========
+* add plot function (plot_caramel)
+* add small complements in documentation
+
 Version 1.0
 ===========
 * change version numbering (CRAN)
