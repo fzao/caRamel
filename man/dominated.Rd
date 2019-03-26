@@ -2,7 +2,7 @@
 % Please edit documentation in R/dominated.R
 \name{dominated}
 \alias{dominated}
-\title{dominated}
+\title{Rows domination of a matrix by a vector}
 \usage{
 dominated(x, Y)
 }

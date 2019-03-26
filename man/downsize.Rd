@@ -2,7 +2,7 @@
 % Please edit documentation in R/downsize.R
 \name{downsize}
 \alias{downsize}
-\title{downsize}
+\title{Downsizing of a population to only one individual per box up to a given accuracy}
 \usage{
 downsize(points, Fo, prec)
 }

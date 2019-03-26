@@ -2,7 +2,7 @@
 % Please edit documentation in R/boxes.R
 \name{boxes}
 \alias{boxes}
-\title{boxes}
+\title{Box numbering for each points individual of the population}
 \usage{
 boxes(points, prec)
 }

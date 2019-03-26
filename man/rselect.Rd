@@ -2,7 +2,7 @@
 % Please edit documentation in R/rselect.R
 \name{rselect}
 \alias{rselect}
-\title{rselect}
+\title{Selection of n points}
 \usage{
 rselect(n, facp)
 }

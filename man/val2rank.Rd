@@ -2,7 +2,7 @@
 % Please edit documentation in R/val2rank.R
 \name{val2rank}
 \alias{val2rank}
-\title{val2rank}
+\title{Converting the values of a vector into their rank}
 \usage{
 val2rank(X, opt)
 }

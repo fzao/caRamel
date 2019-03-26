@@ -2,7 +2,7 @@
 % Please edit documentation in R/dominate.R
 \name{dominate}
 \alias{dominate}
-\title{dominate}
+\title{Successive Pareto fronts of a population}
 \usage{
 dominate(matobj)
 }

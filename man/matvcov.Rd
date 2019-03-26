@@ -2,7 +2,7 @@
 % Please edit documentation in R/matvcov.R
 \name{matvcov}
 \alias{matvcov}
-\title{matvcov}
+\title{Calculation of the variances-covariances matrix on the reference population}
 \usage{
 matvcov(x, g)
 }

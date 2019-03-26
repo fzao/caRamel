@@ -2,7 +2,7 @@
 % Please edit documentation in R/Crecombination.R
 \name{Crecombination}
 \alias{Crecombination}
-\title{Crecombination}
+\title{Recombination of the sets of parameters}
 \usage{
 Crecombination(param, blocks, n)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/newXval.R
 \name{newXval}
 \alias{newXval}
-\title{newXval}
+\title{Generation of a new population of parameter sets following the five rules of caRamel}
 \usage{
 newXval(param, crit, isperf, sp, bounds, repart_gene, blocks, fireworks)
 }

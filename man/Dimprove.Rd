@@ -2,7 +2,7 @@
 % Please edit documentation in R/Dimprove.R
 \name{Dimprove}
 \alias{Dimprove}
-\title{Dimprove}
+\title{Determination of directions for improvement}
 \usage{
 Dimprove(o_splx, f_splx)
 }

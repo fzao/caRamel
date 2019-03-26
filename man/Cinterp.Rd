@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cinterp.R
 \name{Cinterp}
 \alias{Cinterp}
-\title{Cinterp}
+\title{Interpolation in simplexes of the objective space}
 \usage{
 Cinterp(param, crit, simplices, volume, n)
 }

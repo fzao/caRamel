@@ -2,7 +2,7 @@
 % Please edit documentation in R/vol_splx.R
 \name{vol_splx}
 \alias{vol_splx}
-\title{vol_splx}
+\title{Volume of a simplex}
 \usage{
 vol_splx(S)
 }

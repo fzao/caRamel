@@ -2,7 +2,7 @@
 % Please edit documentation in R/pareto.R
 \name{pareto}
 \alias{pareto}
-\title{pareto}
+\title{Indicates which rows are Pareto}
 \usage{
 pareto(X)
 }

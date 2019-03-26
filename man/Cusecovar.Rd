@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cusecovar.R
 \name{Cusecovar}
 \alias{Cusecovar}
-\title{Cusecovar}
+\title{New parameter vectors generation respecting a covariance structure}
 \usage{
 Cusecovar(xref, amplif, n)
 }

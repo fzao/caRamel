@@ -2,7 +2,7 @@
 % Please edit documentation in R/decrease_pop.R
 \name{decrease_pop}
 \alias{decrease_pop}
-\title{decrease_pop}
+\title{Decreasing of the population of parameters sets}
 \usage{
 decrease_pop(matobj, minmax, prec, archsize, popsize)
 }
@@ -25,7 +25,7 @@ A list containing two elements:
 }
 }
 \description{
-decreases the population of parameter sets
+decreases the population of parameters sets
 }
 \examples{
 # Definition of the parameters

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cextrap.R
 \name{Cextrap}
 \alias{Cextrap}
-\title{Cextrap}
+\title{Extrapolation along orthogonal directions to the Pareto front in the space of the objectives}
 \usage{
 Cextrap(param, crit, directions, longu, n)
 }
