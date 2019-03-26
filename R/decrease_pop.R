@@ -1,6 +1,6 @@
-#' decrease_pop
+#' Decreasing of the population of parameters sets
 #' 
-#' decreases the population of parameter sets
+#' decreases the population of parameters sets
 #'  
 #' @param matobj : matrix of objectives, dimension (ngames, nobj)
 #' @param minmax : vector of booleans, of dimension nobj: TRUE if maximization of the objective, FALSE otherwise

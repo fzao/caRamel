@@ -1,4 +1,4 @@
-#' boxes
+#' Box numbering for each points individual of the population
 #' 
 #' This function returns a box number for each points individual of the population
 #'  

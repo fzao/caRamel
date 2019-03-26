@@ -1,4 +1,4 @@
-#' rselect
+#' Selection of n points
 #' 
 #' performs a selection of n points in facp
 #'  

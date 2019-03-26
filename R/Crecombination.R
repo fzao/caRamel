@@ -1,4 +1,4 @@
-#' Crecombination
+#' Recombination of the sets of parameters
 #' 
 #' performs a recombination of the sets of parameters
 #'  

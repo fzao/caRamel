@@ -1,4 +1,4 @@
-#' val2rank
+#' Converting the values of a vector into their rank
 #' 
 #' converts the values of a vector into their rank
 #'  

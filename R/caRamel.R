@@ -1,7 +1,10 @@
-#' caRamel
+#' MAIN FUNCTION: multi-objective optimizer
 #'
-#' R version of the multi-objective optimizer 'CaRaMEL' originally written for Scilab by Nicolas Le Moine
+#' Multi-objective optimizer. It requires to define a multi-objective function (func) to calibrate the model and bounds on the parameters to optimize.
 #'
+#' The optimizer was originally written for Scilab by Nicolas Le Moine.
+#' The algorithm is a hybrid of the MEAS algorithm (Efstratiadis and Koutsoyiannis (2005) <doi:10.13140/RG.2.2.32963.81446>) by using the directional search method based on the simplexes of the objective space 
+#'     and the epsilon-NGSA-II algorithm with the method of classification of the parameter vectors archiving management by epsilon-dominance (Reed and Devireddy <doi:10.1142/9789812567796_0004>).
 #' Documentation : "Principe de l'optimiseur CaRaMEL et illustration au travers d'exemples de parametres dans le cadre de la modelisation hydrologique conceptuelle"
 #'                 Frederic Hendrickx (EDF) and Nicolas Le Moine (UPMC)
 #'                 Report EDF H-P73-2014-09038-FR
@@ -31,7 +34,7 @@
 ##' \item{success}{return value (logical, length = 1) : TRUE if successfull}
 ##' \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
 ##' \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj+nadditional)}
-##' \item{save_crit}{evolution of the maximum objectives}
+##' \item{save_crit}{evolution of the optimal objectives}
 ##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
 ##' }
 #' 
@@ -346,24 +349,7 @@ caRamel <-
       save_crit<-cbind(save_crit,c(nrun,t(crit)))
       
       # Graphs
-      info<-paste("ngen=",ngen,", nrun=",nrun,", gpp=",gpp,sep="")
-      nbre_fen = choose(n = nobj, k=2)+1
-      if (nbre_fen <= 4){
-        par(mfrow=c(2,2))
-      } else {
-        par(mfrow = c(3,floor(nbre_fen/3)+1))
-      }
-      l = seq(1,nobj)
-      for (i_fig in 1:(nobj-1)){
-        l_tmp = l[-i_fig]; l_tmp = l_tmp[l_tmp>i_fig]
-        for (i_fig2 in l_tmp){
-          plot(crit_arch[, i_fig], crit_arch[, i_fig2],xlab = noms_obj[i_fig],ylab = noms_obj[i_fig2])
-        }
-      }
-      plot(x=save_crit[1,],y=save_crit[2,], ylim=c(min(save_crit[-1,]),max(save_crit[-1,])),xlab = info, ylab = "Optimal Criteria")
-      lapply(c(2:nobj),function(i){points(x=save_crit[1,],y=save_crit[i+1,],col=i)})
-      xlgd <- popsize +(nrun-popsize)*2/3 ; ylgd <- min(save_crit[-1,]) + (max(save_crit[-1,])-min(save_crit[-1,]))/2
-      legend(xlgd,ylgd,legend=noms_obj,col=1:nobj,fill=1:nobj)
+      plot_pareto(nobj,ngen,nrun,objnames=noms_obj,MatObj = crit_arch,MatEvol = save_crit)
       
       # Online saves
       if (writefile == 1){
@@ -397,6 +383,7 @@ caRamel <-
       "parameters" = param_arch,
       "objectives" = cbind(crit_arch,additional_eval),
       "save_crit" = t(save_crit),
-      "total_pop"= pop
+      "total_pop"= pop,
+	  "gpp"=gpp
     ))
   }

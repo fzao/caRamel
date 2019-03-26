@@ -1,4 +1,4 @@
-#' newXval
+#' Generation of a new population of parameter sets following the five rules of caRamel
 #' 
 #' generates a new population of parameter sets following the five rules of caRamel
 #'  
@@ -71,7 +71,7 @@ newXval <-
     #**************************************************************
     
     if (n_inter > 0 | n_extra > 0) {
-      simplices <- delaunayn(obj)
+      simplices <- suppressMessages(delaunayn(obj))
       
       # For each simplex calculation of the number of vertices belonging to the Pareto front
       nf <-

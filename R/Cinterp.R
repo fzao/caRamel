@@ -1,4 +1,4 @@
-#' Cinterp
+#' Interpolation in simplexes of the objective space
 #' 
 #' proposes n new candidates by interpolation in simplexes of the objective space
 #'  

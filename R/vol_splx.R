@@ -1,4 +1,4 @@
-#' vol_splx
+#' Volume of a simplex
 #' 
 #' calculates the volume of a simplex
 #'  

@@ -1,4 +1,4 @@
-#' Dimprove
+#' Determination of directions for improvement
 #' 
 #' determines directions for improvement
 #'  

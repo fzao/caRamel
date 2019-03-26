@@ -1,4 +1,4 @@
-#' pareto
+#' Indicates which rows are Pareto
 #' 
 #' indicates which rows of the X criterion matrix are Pareto
 #'  

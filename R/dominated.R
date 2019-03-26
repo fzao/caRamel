@@ -1,4 +1,4 @@
-#' dominated
+#'Rows domination of a matrix by a vector
 #' 
 #' indicates which rows of the matrix Y are dominated by the vector (row) x
 #'  

@@ -1,4 +1,4 @@
-#' Cusecovar
+#' New parameter vectors generation respecting a covariance structure
 #' 
 #' proposes new parameter vectors respecting a covariance structure
 #'  

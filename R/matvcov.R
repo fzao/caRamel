@@ -1,4 +1,4 @@
-#' matvcov
+#' Calculation of the variances-covariances matrix on the reference population
 #' 
 #' calculates the variances-covariances matrix on the reference population
 #'  

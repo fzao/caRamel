@@ -1,4 +1,4 @@
-#' dominate
+#' Successive Pareto fronts of a population
 #' 
 #' calculates the successive Pareto fronts of a population (classification "onion peel")
 #'  

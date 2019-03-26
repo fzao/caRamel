@@ -1,4 +1,4 @@
-#' downsize
+#' Downsizing of a population to only one individual per box up to a given accuracy
 #' 
 #' reduces the number of individuals in a population to only one individual per box up to a given accuracy
 #'  

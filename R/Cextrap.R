@@ -1,4 +1,4 @@
-#' Cextrap
+#' Extrapolation along orthogonal directions to the Pareto front in the space of the objectives
 #' 
 #' gives n new candidates by extrapolation along orthogonal directions to the Pareto front in the space of the objectives
 #'  
