@@ -13,13 +13,13 @@ dominate(matobj)
 f : vector of dimension NInd of dominances
 }
 \description{
-calculates the successive Pareto fronts of a population (classification "onion peel")
+calculates the successive Pareto fronts of a population (classification "onion peel"), when objectives need to be maximized.
 }
 \examples{
 # Definition of the parameters
-matobj <- matrix(rexp(200), 100, 2)
+matobj <- matrix(runif(200), 100, 2)
 # Call the function
-res <- dominate(matobj)
+pareto_rank <- dominate(matobj)
 
 }
 \author{

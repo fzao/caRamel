@@ -6,7 +6,7 @@
 \usage{
 caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
   repart_gene = c(5, 5, 5, 5), gpp = NULL, blocks = NULL, pop = NULL,
-  funcinit = NULL, noms_obj = NULL, listsave = NULL, write_gen = 0,
+  funcinit = NULL, objnames = NULL, listsave = NULL, write_gen = 0,
   carallel = TRUE, numcores = NULL)
 }
 \arguments{
@@ -38,7 +38,7 @@ caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
 
 \item{funcinit}{(optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.}
 
-\item{noms_obj}{(optional): the name of the objectives}
+\item{objnames}{(optional): the name of the objectives}
 
 \item{listsave}{(optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)}
 

@@ -7,19 +7,19 @@
 pareto(X)
 }
 \arguments{
-\item{X}{: matrix [NInd * NObj]}
+\item{X}{: matrix of objectives [NInd * NObj]}
 }
 \value{
-Ft : column matrix [NInd * 1]
+Ft : vector [NInd], TRUE when the set is on the Pareto front.
 }
 \description{
-indicates which rows of the X criterion matrix are Pareto
+indicates which rows of the X criterion matrix are Pareto, when objectives need to be maximized
 }
 \examples{
 # Definition of the parameters
-X <- matrix(rexp(200), 100, 2)
+X <- matrix(runif(200), 100, 2)
 # Call the function
-res <- dominate(X)
+is_pareto <- pareto(X)
 
 }
 \author{

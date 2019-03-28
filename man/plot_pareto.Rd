@@ -2,50 +2,21 @@
 % Please edit documentation in R/plot_pareto.R
 \name{plot_pareto}
 \alias{plot_pareto}
-\title{Plotting of Pareto Front}
+\title{Plotting of a population of objectives and Pareto front}
 \usage{
-plot_pareto(nobj, ngen, nrun, objnames, MatObj, MatEvol = NULL)
+plot_pareto(MatObj, nobj = NULL, objnames = NULL)
 }
 \arguments{
-\item{nobj}{: number of objectives}
-
-\item{ngen}{: number of generations}
-
-\item{nrun}{: number of model evaluations}
-
-\item{objnames}{: vector of objectives names}
-
-\item{MatObj}{: matrix of the objectives of the Pareto front}
-
-\item{MatEvol}{: matrix of the evolution of the optimal objectives (optional)}
+\item{MatObj}{: matrix of the objectives [NInd, nobj]}
 }
 \description{
-Plot graphs of the Pareto front and a graph of optimization evolution
+Plots graphs the population regarding each couple of objectives and emphasizes the Pareto front
 }
 \examples{
-# Definition of the test function
-viennet <- function(i) {
-  val1 <- 0.5*(x[i,1]*x[i,1]+x[i,2]*x[i,2])+sin(x[i,1]*x[i,1]+x[i,2]*x[i,2])
-  val2 <- 15+(x[i,1]-x[i,2]+1)*(x[i,1]-x[i,2]+1)/27+(3*x[i,1]-2*x[i,2]+4)*(3*x[i,1]-2*x[i,2]+4)/8
-  val3 <- 1/(x[i,1]*x[i,1]+x[i,2]*x[i,2]+1) -1.1*exp(-(x[i,1]*x[i,1]+x[i,2]*x[i,2]))
-  return(c(val1,val2,val3))
-}
-nobj <- 3 # Number of objectives
-nvar <- 2 # Number of variables
-minmax <- c(FALSE, FALSE, FALSE) # All the objectives are to be minimized
-bounds <- matrix(data = 1, nrow = nvar, ncol = 2) # Define the bound constraints
-bounds[, 1] <- -3 * bounds[, 1]
-bounds[, 2] <- 3 * bounds[, 2]
-
-# Caramel optimization
-results <- caRamel(nobj, nvar, minmax, bounds, viennet, popsize = 100, archsize = 100,
-          maxrun = 500, prec = matrix(1.e-3, nrow = 1, ncol = nobj), carallel = FALSE)
-
-# Plot of results
-ngen <- length(results$save_crit[,1])
-nrun <- results$save_crit[ngen,1]
-objnames <- c("Obj1","Obj2","Obj3")
-plot_pareto(nobj, ngen, nrun, objnames, MatObj = results$objectives, MatEvol = results$save_crit)
+# Definition of the population
+Pop <- matrix(runif(300), 100, 3)
+# Call the function
+plot_pareto(MatObj = Pop)
 
 }
 \author{
