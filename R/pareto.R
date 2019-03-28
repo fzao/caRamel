@@ -1,15 +1,15 @@
 #' Indicates which rows are Pareto
 #' 
-#' indicates which rows of the X criterion matrix are Pareto
+#' indicates which rows of the X criterion matrix are Pareto, when objectives need to be maximized
 #'  
-#' @param X : matrix [NInd * NObj]
-#' @return Ft : column matrix [NInd * 1]
+#' @param X : matrix of objectives [NInd * NObj]
+#' @return Ft : vector [NInd], TRUE when the set is on the Pareto front.
 #' 
 #' @examples
 #' # Definition of the parameters
-#' X <- matrix(rexp(200), 100, 2)
+#' X <- matrix(runif(200), 100, 2)
 #' # Call the function
-#' res <- dominate(X)
+#' is_pareto <- pareto(X)
 #' 
 #' @author Fabrice Zaoui
 

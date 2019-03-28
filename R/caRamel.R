@@ -22,7 +22,7 @@
 #' @param blocks (optional): groups for parameters
 #' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)
 #' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.
-#' @param noms_obj (optional): the name of the objectives
+#' @param objnames (optional): the name of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
 #' @param write_gen : (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
 #' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
@@ -87,7 +87,7 @@ caRamel <-
            blocks = NULL,
            pop = NULL,
            funcinit = NULL,
-           noms_obj = NULL,
+           objnames = NULL,
            listsave = NULL,
            write_gen = 0,
            carallel = TRUE,
@@ -147,7 +147,7 @@ caRamel <-
       }
       initialise_calc<-1
     }
-    if (is.null(noms_obj)){noms_obj=paste("Obj",as.character(c(1:nobj)),sep="")}
+    if (is.null(objnames)){objnames=paste("Obj",as.character(c(1:nobj)),sep="")}
     writefile<-0
     if (!is.null(listsave)){
       if (class(listsave) != "list") {
@@ -342,14 +342,14 @@ caRamel <-
       
       # Records on criteria
       a=c(lapply(c(1:nobj),function(i){max(crit_arch[,i])}))
-      maxcrit=as.data.frame(a,col.names = noms_obj)
+      maxcrit=as.data.frame(a,col.names = objnames)
       a=c(lapply(c(1:nobj),function(i){min(crit_arch[,i])}))
-      mincrit=as.data.frame(a,col.names = noms_obj)
+      mincrit=as.data.frame(a,col.names = objnames)
       crit=mincrit; crit[minmax]<-maxcrit[minmax]
       save_crit<-cbind(save_crit,c(nrun,t(crit)))
       
       # Graphs
-      plot_pareto(nobj,ngen,nrun,objnames=noms_obj,MatObj = crit_arch,MatEvol = save_crit)
+      plot_population(MatObj = crit_arch,nobj,ngen,nrun,objnames,MatEvol = save_crit,popsize)
       
       # Online saves
       if (writefile == 1){

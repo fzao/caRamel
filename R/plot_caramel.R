@@ -39,6 +39,6 @@ plot_caramel <- function(caramel_results, nobj=NULL, objnames=NULL){
   MatObj <- caramel_results$objectives
   MatEvol <- t(caramel_results$save_crit)
   
-  plot_pareto(nobj, ngen, nrun, objnames, MatObj, MatEvol)
+  plot_population(MatObj, nobj, ngen, nrun, objnames, MatEvol)
   
 }
