@@ -4,10 +4,16 @@
 \alias{plot_pareto}
 \title{Plotting of a population of objectives and Pareto front}
 \usage{
-plot_pareto(MatObj, nobj = NULL, objnames = NULL)
+plot_pareto(MatObj, nobj = NULL, objnames = NULL, maximized = NULL)
 }
 \arguments{
 \item{MatObj}{: matrix of the objectives [NInd, nobj]}
+
+\item{nobj}{: number of objectives (optional)}
+
+\item{objnames}{: vector, length nobj, of names of the objectives (optional)}
+
+\item{maximized}{: vector of logical, length nobj, TRUE if objective need to be maximized, FALSE if minimized}
 }
 \description{
 Plots graphs the population regarding each couple of objectives and emphasizes the Pareto front
@@ -15,8 +21,12 @@ Plots graphs the population regarding each couple of objectives and emphasizes t
 \examples{
 # Definition of the population
 Pop <- matrix(runif(300), 100, 3)
+
+# Definition of objectives to maximize (Obj1, Obj2) and to minimize (Obj3)
+maximized <- c(TRUE,TRUE,FALSE)
+
 # Call the function
-plot_pareto(MatObj = Pop)
+plot_pareto(MatObj = Pop, maximized=maximized)
 
 }
 \author{
