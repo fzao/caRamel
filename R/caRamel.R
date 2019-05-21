@@ -374,7 +374,7 @@ caRamel <-
     close(pb)
     
     end_time <- Sys.time()
-    message(paste("Done in", as.character(end_time-start_time), " s", "-->", date()))
+    message(paste("Done in", as.character(end_time-start_time), units(end_time-start_time), "-->", date()))
     message(paste("Size of the Pareto front :", as.character(dim(param_arch)[1])))
     message(paste("Number of calls :", as.character(nrun)))
     
