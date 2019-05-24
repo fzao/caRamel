@@ -6,6 +6,7 @@ Version 1.1
 * add plot functions (plot_caramel, plot_pareto)
 * add small complements in documentation
 * renaming of caRamel argument "noms_obj" as "objnames"
+* add caRamel argument "graph" to display graphical output
 
 Version 1.0
 ===========
