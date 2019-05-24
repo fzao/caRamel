@@ -27,6 +27,7 @@
 #' @param write_gen : (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
 #' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
 #' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).
+#' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default).
 #
 ##' @return
 ##' List of five elements:
@@ -91,7 +92,8 @@ caRamel <-
            listsave = NULL,
            write_gen = 0,
            carallel = TRUE,
-           numcores = NULL) {
+           numcores = NULL,
+           graph = TRUE) {
     
     start_time <- Sys.time()
 
@@ -349,7 +351,7 @@ caRamel <-
       save_crit<-cbind(save_crit,c(nrun,t(crit)))
       
       # Graphs
-      plot_population(MatObj = crit_arch,nobj,ngen,nrun,objnames,MatEvol = save_crit,popsize)
+      if (graph==TRUE) plot_population(MatObj = crit_arch,nobj,ngen,nrun,objnames,MatEvol = save_crit,popsize)
       
       # Online saves
       if (writefile == 1){
