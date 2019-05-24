@@ -7,7 +7,7 @@
 caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
   repart_gene = c(5, 5, 5, 5), gpp = NULL, blocks = NULL, pop = NULL,
   funcinit = NULL, objnames = NULL, listsave = NULL, write_gen = 0,
-  carallel = TRUE, numcores = NULL)
+  carallel = TRUE, numcores = NULL, graph = TRUE)
 }
 \arguments{
 \item{nobj}{: (integer, length = 1) the number of objectives to optimize (nobj >= 2)}
@@ -47,6 +47,8 @@ caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
 \item{carallel}{: (logical, length = 1) optional, do parallel computations (TRUE by default)}
 
 \item{numcores}{: (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).}
+
+\item{graph}{: (logical, length = 1) optional, plot graphical output at each generation (TRUE by default).}
 }
 \value{
 List of five elements:
