@@ -133,7 +133,11 @@ caRamel <-
     }
     if (length(repart_gene)!=4) {
       message("the dimension of'repart_gene' must be 4!")
-      return(list("success" = FALSE, "message" ="the dimension of'repart_gene' must be 4!"))
+      return(list("success" = FALSE, "message" ="the dimension of 'repart_gene' must be 4!"))
+    }
+    if (sum(repart_gene <= 0) > 0) {
+      message("parameter values for each rule of 'repart_gene' must be strictly positive!")
+      return(list("success" = FALSE, "message" ="parameter values for each rule of 'repart_gene' must be strictly positive!"))
     }
     if (!is.null(gpp)){
       if (gpp < 1) {
