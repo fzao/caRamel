@@ -39,6 +39,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
   # Choice of retained points
   indices <- downsize(matobj, Fo, prec)
   pop <- matobj[indices, ]
+  dim(pop) <- c(length(indices), nobj)
 
   ind_pop <- ind_pop[indices, ]
 
@@ -48,6 +49,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
   # Sort by increasing front
   Fs <- sort(Fo, index.return = TRUE)
   pop <- pop[Fs$ix, ]
+  dim(pop) <- c(length(Fs$ix), nobj)
   Fo <- Fo[Fs$ix]
 
   ind_pop <- ind_pop[Fs$ix]

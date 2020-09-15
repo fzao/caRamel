@@ -265,9 +265,19 @@ caRamel <-
                         ncol = nobj)
       } else {
         vamax <- (ngen %% gpp) == 0
+        param <- as.matrix(pop[, 1:nvar])
+        dim(param) <- c(dim(pop)[1], nvar)
+        if(dim(param)[1] < 4){
+          if (carallel==TRUE){stopCluster(cl)}
+          close(pb)
+          message("Optimization failed")
+          return(list("success" = FALSE, "message" ="The number of feasible points is not sufficient! Try to increase the size of the population..."))
+        }
+        crit <- pop[, (nvar + 1):(nvar + nobj)]
+        dim(crit) <- c(dim(pop)[1], nobj)
         Xp <-
-          newXval(as.matrix(pop[, 1:nvar]),
-                  pop[, (nvar + 1):(nvar + nobj)],
+          newXval(param,
+                  crit,
                   minmax,
                   sp,
                   bounds,
@@ -311,7 +321,6 @@ caRamel <-
         }
       }
       
-      
       # update the number of calls
       nrun <- nrun + dim(x)[1]
       
@@ -323,15 +332,18 @@ caRamel <-
       detect_nan <- is.na(newfeval)
       set_ok <- !rowSums(detect_nan)
       newfeval <- newfeval[set_ok, ]
+      dim(newfeval) <- c(sum(set_ok, na.rm=TRUE), nobj)
       x <- x[set_ok, ]
+      dim(x) <- c(sum(set_ok, na.rm=TRUE), nvar)
       additional_eval <- additional_eval[set_ok, ]
       probj <- probj[set_ok, ]
       pop1 <- rbind(pop, cbind(x, newfeval, additional_eval))
       
       # decrease population
       #message("decrease pop")
-      ind <-
-        decrease_pop(pop1[, (nvar + 1):(nvar + nobj)], minmax, prec, archsize, popsize)
+      matobj <- pop1[, (nvar + 1):(nvar + nobj)]
+      dim(matobj) <- c(dim(pop1)[1], nobj)
+      ind <- decrease_pop(matobj, minmax, prec, archsize, popsize)
       
       # archive
       # message("archive")
@@ -340,6 +352,7 @@ caRamel <-
       # population update
       #message("pop update")
       pop <- pop1[c(ind$arch, ind$pop), ]
+      dim(pop) <- c(length(c(ind$arch, ind$pop)), nvar+nobj)
       param_arch <- arch[, 1:nvar]
       crit_arch <- matrix(arch[, (nvar + 1):(nvar + nobj)], nrow=length(ind$arch), ncol=nobj)
       if (nadditional>0){
