@@ -83,6 +83,7 @@ results <-
           archsize,
           maxrun,
           prec,
+          carallel=FALSE, 
           sensitivity=TRUE) # sensitivity required
 ```
 

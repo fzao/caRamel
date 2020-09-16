@@ -24,7 +24,8 @@ caRamel(
   write_gen = FALSE,
   carallel = TRUE,
   numcores = NULL,
-  graph = TRUE
+  graph = TRUE,
+  sensitivity = FALSE
 )
 }
 \arguments{
@@ -54,7 +55,7 @@ caRamel(
 
 \item{pop}{: (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)}
 
-\item{funcinit}{(optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.}
+\item{funcinit}{(optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores}
 
 \item{objnames}{(optional): the name of the objectives}
 
@@ -64,9 +65,11 @@ caRamel(
 
 \item{carallel}{: (logical, length = 1) optional, do parallel computations (TRUE by default)}
 
-\item{numcores}{: (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).}
+\item{numcores}{: (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)}
 
-\item{graph}{: (logical, length = 1) optional, plot graphical output at each generation (TRUE by default).}
+\item{graph}{: (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)}
+
+\item{sensitivity}{: (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)}
 }
 \value{
 List of five elements:
@@ -74,6 +77,7 @@ List of five elements:
 \item{success}{return value (logical, length = 1) : TRUE if successfull}
 \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
 \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj+nadditional)}
+\item{derivatives}{list of the Jacobian matrices of the Pareto front if the sensitivity parameter is TRUE or NA otherwise}
 \item{save_crit}{evolution of the optimal objectives}
 \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
 }
