@@ -5,6 +5,10 @@
 #' The optimizer was originally written for Scilab by Nicolas Le Moine.
 #' The algorithm is a hybrid of the MEAS algorithm (Efstratiadis and Koutsoyiannis (2005) <doi:10.13140/RG.2.2.32963.81446>) by using the directional search method based on the simplexes of the objective space 
 #'     and the epsilon-NGSA-II algorithm with the method of classification of the parameter vectors archiving management by epsilon-dominance (Reed and Devireddy <doi:10.1142/9789812567796_0004>).
+#' Reference : "Multi-objective calibration by combination of stochastic and gradient-like parameter generation rules – the caRamel algorithm"
+#'             Celine Monteil (EDF), Fabrice Zaoui (EDF), Nicolas Le Moine (UPMC) and Frederic Hendrickx (EDF)
+#'             June 2020 Hydrology and Earth System Sciences 24(6):3189-3209  
+#'             DOI: 10.5194/hess-24-3189-2020
 #' Documentation : "Principe de l'optimiseur CaRaMEL et illustration au travers d'exemples de parametres dans le cadre de la modelisation hydrologique conceptuelle"
 #'                 Frederic Hendrickx (EDF) and Nicolas Le Moine (UPMC)
 #'                 Report EDF H-P73-2014-09038-FR
