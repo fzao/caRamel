@@ -1,8 +1,8 @@
 Package: caRamel
 Type: Package
 Title: Automatic Calibration by Evolutionary Multi Objective Algorithm
-Version: 1.1
-Date: 2019-05-24
+Version: 1.2
+Date: 2020-09-15
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),
@@ -17,9 +17,9 @@ Maintainer: Fabrice Zaoui <fabrice.zaoui@edf.fr>
 Depends: geometry, parallel
 Suggests: knitr, testthat
 Description: Multi-objective optimizer initially developed for the calibration of hydrological models.
-     The algorithm is a hybrid of the MEAS algorithm (Efstratiadis and Koutsoyiannis (2005) <doi:10.13140/RG.2.2.32963.81446>) by using the directional search method based on the simplexes of the objective space 
+     The algorithm is a hybrid of the MEAS algorithm (Efstratiadis and Koutsoyiannis (2005) <doi:10.13140/RG.2.2.32963.81446>) by using the directional search method based on the simplexes of the objective space
      and the epsilon-NGSA-II algorithm with the method of classification of the parameter vectors archiving management by epsilon-dominance (Reed and Devireddy <doi:10.1142/9789812567796_0004>).
-License: GPL-3
+License: GPL-3 | file LICENSE
 URL: https://github.com/fzao/caRamel
 BugReports: https://github.com/fzao/caRamel/issues
 Encoding: UTF-8

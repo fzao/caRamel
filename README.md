@@ -2,7 +2,7 @@
 
 **caRamel** is an R package for optimization implementing a multiobjective evolutionary algorithm combining the MEAS algorithm and the NGSA-II algorithm.
 
-# Installation 
+# Installation
 Download and install the package from [CRAN](https://cran.r-project.org/package=caRamel):
 
 ```{r caRa}
@@ -21,10 +21,10 @@ library(caRamel)
 [*Schaffer*](https://en.wikipedia.org/wiki/File:Schaffer_function_2_-_multi-objective.pdf) test function has two objectives with one variable.
 
 <p align="center">
-  <img src="./vignettes/Schaffer.png" width="800"/>
+  <img src="./inst/img/Schaffer.png" width="800"/>
 </p>
 <p align="center">
-   <b>Schaffer test function</b> 
+   <b>Schaffer test function</b>
 </p>
 
 

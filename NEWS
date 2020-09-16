@@ -1,5 +1,11 @@
 News of the caRamel package
 
+Version 1.2
+===========
+* bug fix when none or less than 4 feasible points in the initial population
+* parameter 'write_gen' is now of logical type
+* new reference for citing caRamel (HESS journal)
+
 Version 1.1
 ===========
 * add vignettes
@@ -17,4 +23,3 @@ Version 1.0
 Version 0.0
 ==================
 * first open source release (2018.02-16)
-
