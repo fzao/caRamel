@@ -1,0 +1,19 @@
+citHeader("To cite caRamel in publications please use the following reference:")
+
+bibentry(bibtype="Article",
+         title = "Multi-objective calibration by combination of stochastic and gradient-like parameter generation rules -- the {caRamel} algorithm",
+         author = personList(as.person("Celine Monteil"), as.person("Fabrice Zaoui"), as.person("Nicolas Le Moine"), as.person("Frederic Hendrickx")),
+         journal = "Hydrology and Earth System Sciences",
+         year = "2020",
+         pages = {"3189-3209"},
+         volume = {24},
+         doi = "10.5194/hess-24-3189-2020",
+         textVersion =
+           paste("Monteil, C., Zaoui, F., Le Moine, N. and Hendrickx, F.",
+                 "(2020).",
+                 "Multi-objective calibration by combination of stochastic and gradient-like parameter generation rules -- the caRamel algorithm.",
+                 "Hydrology and Earth System Sciences,",
+                 "24, 3189-3209.",
+                 "DOI: 10.5194/hess-24-3189-2020.",
+                 sep = " ")
+)

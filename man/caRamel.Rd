@@ -4,10 +4,28 @@
 \alias{caRamel}
 \title{MAIN FUNCTION: multi-objective optimizer}
 \usage{
-caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
-  repart_gene = c(5, 5, 5, 5), gpp = NULL, blocks = NULL, pop = NULL,
-  funcinit = NULL, objnames = NULL, listsave = NULL, write_gen = 0,
-  carallel = TRUE, numcores = NULL, graph = TRUE)
+caRamel(
+  nobj,
+  nvar,
+  minmax,
+  bounds,
+  func,
+  popsize,
+  archsize,
+  maxrun,
+  prec,
+  repart_gene = c(5, 5, 5, 5),
+  gpp = NULL,
+  blocks = NULL,
+  pop = NULL,
+  funcinit = NULL,
+  objnames = NULL,
+  listsave = NULL,
+  write_gen = FALSE,
+  carallel = TRUE,
+  numcores = NULL,
+  graph = TRUE
+)
 }
 \arguments{
 \item{nobj}{: (integer, length = 1) the number of objectives to optimize (nobj >= 2)}
@@ -42,7 +60,7 @@ caRamel(nobj, nvar, minmax, bounds, func, popsize, archsize, maxrun, prec,
 
 \item{listsave}{(optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)}
 
-\item{write_gen}{: (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)}
+\item{write_gen}{: (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)}
 
 \item{carallel}{: (logical, length = 1) optional, do parallel computations (TRUE by default)}
 
@@ -67,6 +85,10 @@ Multi-objective optimizer. It requires to define a multi-objective function (fun
 The optimizer was originally written for Scilab by Nicolas Le Moine.
 The algorithm is a hybrid of the MEAS algorithm (Efstratiadis and Koutsoyiannis (2005) <doi:10.13140/RG.2.2.32963.81446>) by using the directional search method based on the simplexes of the objective space 
     and the epsilon-NGSA-II algorithm with the method of classification of the parameter vectors archiving management by epsilon-dominance (Reed and Devireddy <doi:10.1142/9789812567796_0004>).
+Reference : "Multi-objective calibration by combination of stochastic and gradient-like parameter generation rules – the caRamel algorithm"
+            Celine Monteil (EDF), Fabrice Zaoui (EDF), Nicolas Le Moine (UPMC) and Frederic Hendrickx (EDF)
+            June 2020 Hydrology and Earth System Sciences 24(6):3189-3209  
+            DOI: 10.5194/hess-24-3189-2020
 Documentation : "Principe de l'optimiseur CaRaMEL et illustration au travers d'exemples de parametres dans le cadre de la modelisation hydrologique conceptuelle"
                 Frederic Hendrickx (EDF) and Nicolas Le Moine (UPMC)
                 Report EDF H-P73-2014-09038-FR

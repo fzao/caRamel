@@ -4,8 +4,15 @@
 \alias{plot_population}
 \title{Plotting of a population of objectives}
 \usage{
-plot_population(MatObj, nobj, ngen = NULL, nrun = NULL, objnames = NULL,
-  MatEvol = NULL, popsize = 0)
+plot_population(
+  MatObj,
+  nobj,
+  ngen = NULL,
+  nrun = NULL,
+  objnames = NULL,
+  MatEvol = NULL,
+  popsize = 0
+)
 }
 \arguments{
 \item{MatObj}{: matrix of the objectives [NInd, nobj]}
