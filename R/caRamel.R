@@ -331,6 +331,12 @@ caRamel <-
       # deal with NaN value
       detect_nan <- is.na(newfeval)
       set_ok <- !rowSums(detect_nan)
+      if(length(set_ok[set_ok == TRUE]) == 0){
+        if (carallel==TRUE){stopCluster(cl)}
+        close(pb)
+        message("Optimization failed")
+        return(list("success" = FALSE, "message" ="No feasible points! Try to increase the size of the population..."))
+      }
       newfeval <- newfeval[set_ok, ]
       dim(newfeval) <- c(sum(set_ok, na.rm=TRUE), nobj)
       x <- x[set_ok, ]
