@@ -5,7 +5,7 @@ date: "October 05 2018"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Using the caRamel R package: test a constrained problem}
+  %\VignetteIndexEntry{A constrained problem}
   %\VignetteEncoding{UTF-8}
 ---
 

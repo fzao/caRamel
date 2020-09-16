@@ -1,0 +1,128 @@
+---
+title: "Sensitivity of the Pareto front"
+author: "Fabrice Zaoui"
+date: "September 16 2020"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Pareto front sensitivity}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Short Description
+
+**caRamel** is a multiobjective evolutionary algorithm combining the MEAS algorithm and the NGSA-II algorithm.
+
+Download the package from CRAN or [GitHub](https://github.com/fzao/caRamel) and then install and load it.
+
+It is possible to compute the first order derivatives of the Pareto front with **caRamel** by setting the logical parameter _sensitivity_ to TRUE.
+
+```{r caRa}
+library(caRamel)
+```
+
+# Test function
+
+## Schaffer
+
+[*Schaffer*](https://en.wikipedia.org/wiki/File:Schaffer_function_1.pdf) test function has two objectives with one variable.
+
+```{r schaffer}
+schaffer <- function(i) {
+  s1 <- x[i,1] * x[i,1]
+  s2 <- (x[i,1] - 2) * (x[i,1] - 2)
+  return(c(s1, s2))
+}
+```
+
+Note that :
+
+* parameter _i_ is mandatory for the management of parallelism.
+* the variable __must be named__ _x_ and is a matrix of size [npopulation, nvariables].
+
+For instance, the variable will lie in the range [-10, 10]:
+
+```{r schaffer_variable}
+nvar <- 1 # number of variables
+bounds <- matrix(data = 1, nrow = nvar, ncol = 2) # upper and lower bounds
+bounds[, 1] <- -10 * bounds[, 1]
+bounds[, 2] <- 10 * bounds[, 2]
+```
+
+Both functions are to be minimized:
+
+```{r schaffer_objectives}
+nobj <- 2 # number of objectives
+minmax <- c(FALSE, FALSE) # min and min
+```
+
+Before calling **caRamel** in order to optimize the Schaffer's problem, some algorithmic parameters need to be set:
+
+```{r schaffer_param}
+popsize <- 100 # size of the genetic population
+archsize <- 100 # size of the archive for the Pareto front
+maxrun <- 1000 # maximum number of calls
+prec <- matrix(1.e-3, nrow = 1, ncol = nobj) # accuracy for the convergence phase
+```
+
+## Optimization
+
+Then the minimization problem can be launched with a sensitivity analysis:
+
+```{r schaffer_launch, fig.show="hide", results="hide"}
+results <-
+  caRamel(nobj,
+          nvar,
+          minmax,
+          bounds,
+          schaffer,
+          popsize,
+          archsize,
+          maxrun,
+          prec,
+          sensitivity=TRUE) # sensitivity required
+```
+
+Test if the convergence is successful:
+
+```{r schaffer_OK}
+print(results$success==TRUE)
+```
+
+Plot the Pareto front:
+
+```{r schaffer_plot1}
+plot(results$objectives[,1], results$objectives[,2], main="Schaffer Pareto front", xlab="Objective #1", ylab="Objective #2")
+```
+
+```{r schaffer_plot2}
+plot(results$parameters, main="Corresponding values for X", xlab="Element of the archive", ylab="X Variable")
+```
+
+## Sensitivity
+
+The sensitivity of the Pareto front is evalutated by computing first order derivatives.
+For each of the objective, one Jacobian matrix is computed:
+
+```{r jacobian}
+names(results$derivatives)
+```
+
+Plot the sensitivity for the first objective:
+```{r sensi}
+plot(results$parameters, results$derivatives$Jacobian_1, main="Sensitivitiy for the first objective", ylab="Sensitivity values", xlab="X values")
+```
+
+Plot the histogram for the second objective:
+
+```{r histo}
+hist(results$derivatives$Jacobian_2, main="Sensitivitiy for the second objective", xlab="Sensitivity values", ylab="Distribution of the Pareto front")
+```
+
+Plot the sensitivity of the Pareto front for the two objectives:
+```{r sensi2}
+plot(results$derivatives$Jacobian_1, results$derivatives$Jacobian_2, main="Sensitivitiy for both objectives", ylab="Sensitivity values #2", xlab="Sensitivity values #1")
+```
