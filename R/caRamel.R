@@ -24,7 +24,7 @@
 #' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.
 #' @param objnames (optional): the name of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
-#' @param write_gen : (integer, length = 1) optional, if = 1, save files 'pmt' and 'obj' at each generation (= 0 by default)
+#' @param write_gen : (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)
 #' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
 #' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).
 #' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default).
@@ -90,7 +90,7 @@ caRamel <-
            funcinit = NULL,
            objnames = NULL,
            listsave = NULL,
-           write_gen = 0,
+           write_gen = FALSE,
            carallel = TRUE,
            numcores = NULL,
            graph = TRUE) {
@@ -131,7 +131,7 @@ caRamel <-
       message("'maxrun' must be strictly positive!")
       return(list("success" = FALSE, "message" ="'maxrun' must be strictly positive!"))
     }
-    if (length(repart_gene)!=4) {
+    if (length(repart_gene) != 4) {
       message("the dimension of'repart_gene' must be 4!")
       return(list("success" = FALSE, "message" ="the dimension of 'repart_gene' must be 4!"))
     }
@@ -154,13 +154,13 @@ caRamel <-
       initialise_calc<-1
     }
     if (is.null(objnames)){objnames=paste("Obj",as.character(c(1:nobj)),sep="")}
-    writefile<-0
+    writefile <- FALSE
     if (!is.null(listsave)){
       if (class(listsave) != "list") {
         message("'listsave' is not an R list!")
         return(list("success" = FALSE, "message" ="'listsave' is not an R list!"))
       }
-      writefile<-1
+      writefile <- TRUE
       if (is.null(listsave$pmt)){
         message(" 'listsave$pmt' must be defined!")
         return(list("success" = FALSE, "message" =" 'listsave$pmt' must be defined!"))
@@ -178,16 +178,16 @@ caRamel <-
         ecrit_total_pop = 1
       }
     }
-    if (write_gen==1){
-      if (writefile==0){
+    if (write_gen == TRUE){
+      if (writefile == FALSE){
         message(" 'listsave' must be defined to use write_gen!")
         return(list("success" = FALSE, "message" =" 'listsave' must be defined to use write_gen!"))
       }
       listsave$RadPmt <- gsub(pattern = ".txt",replacement = "",listsave$pmt)
       listsave$RadObj <- gsub(pattern = ".txt",replacement = "",listsave$obj)
-      if (ecrit_total_pop==1){listsave$RadPop <- gsub(pattern = ".txt",replacement = "",listsave$totalpop)}
+      if (ecrit_total_pop == 1){listsave$RadPop <- gsub(pattern = ".txt",replacement = "",listsave$totalpop)}
     }
-    if (typeof(carallel)!="logical") {
+    if (typeof(carallel) != "logical") {
       message("'carallel' must be a logical!")
       return(list("success" = FALSE, "message" ="'carallel' must be a logical!"))
     }
@@ -206,10 +206,10 @@ caRamel <-
     }
     
     # Init the parallel computation
-    if (carallel==TRUE){
+    if (carallel == TRUE){
       if (is.null(numcores)){ numcores <- detectCores()}
       cl <- makeCluster(numcores)
-      if (initialise_calc==1){
+      if (initialise_calc == 1){
         funcinit(cl,numcores) # Init for "func"
       }
     }
@@ -221,7 +221,7 @@ caRamel <-
         
         # Evaluation of the objectives
         x<<-pop[,1:nvar]
-        if (carallel==TRUE){
+        if (carallel == TRUE){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
           res = parLapply(cl, 1:dim(x)[1], func)
@@ -268,7 +268,7 @@ caRamel <-
         param <- as.matrix(pop[, 1:nvar])
         dim(param) <- c(dim(pop)[1], nvar)
         if(dim(param)[1] < 4){
-          if (carallel==TRUE){stopCluster(cl)}
+          if (carallel == TRUE){stopCluster(cl)}
           close(pb)
           message("Optimization failed")
           return(list("success" = FALSE, "message" ="The number of feasible points is not sufficient! Try to increase the size of the population..."))
@@ -291,7 +291,7 @@ caRamel <-
       # simulations
       additional_eval <- NULL
       # parallel calls
-      if (carallel==TRUE){
+      if (carallel == TRUE){
         newfeval <- NULL
         clusterExport(cl=cl, varlist=c("x"), envir = environment())
         res <- parLapply(cl, 1:dim(x)[1], func)
@@ -332,7 +332,7 @@ caRamel <-
       detect_nan <- is.na(newfeval)
       set_ok <- !rowSums(detect_nan)
       if(length(set_ok[set_ok == TRUE]) == 0){
-        if (carallel==TRUE){stopCluster(cl)}
+        if (carallel == TRUE){stopCluster(cl)}
         close(pb)
         message("Optimization failed")
         return(list("success" = FALSE, "message" ="No feasible points! Try to increase the size of the population..."))
@@ -374,14 +374,14 @@ caRamel <-
       save_crit<-cbind(save_crit,c(nrun,t(crit)))
       
       # Graphs
-      if (graph==TRUE) plot_population(MatObj = crit_arch,nobj,ngen,nrun,objnames,MatEvol = save_crit,popsize)
+      if (graph == TRUE) plot_population(MatObj = crit_arch,nobj,ngen,nrun,objnames,MatEvol = save_crit,popsize)
       
       # Online saves
-      if (writefile == 1){
-        if (write_gen == 1){
+      if (writefile == TRUE){
+        if (write_gen == TRUE){
           listsave$pmt <- paste(listsave$RadPmt,"_gen",ngen,".txt",sep="")
           listsave$obj <- paste(listsave$RadObj,"_gen",ngen,".txt",sep="")
-          if (ecrit_total_pop==1){
+          if (ecrit_total_pop == 1){
             listsave$totalpop <- paste(listsave$RadPop,"_gen",ngen,".txt",sep="")
           }
         }
@@ -389,13 +389,13 @@ caRamel <-
         write.table(param_arch,listsave$pmt,row.names = FALSE,col.names = FALSE)
         write.table(cbind(crit_arch,additional_eval),listsave$obj,row.names = FALSE,col.names = FALSE)
         write.table(t(save_crit),listsave$evol,row.names = FALSE,col.names = FALSE)
-        if (ecrit_total_pop==1){
+        if (ecrit_total_pop == 1){
           write.table(pop,listsave$totalpop,row.names = FALSE,col.names = FALSE)
         }
       }
     }
     
-    if (carallel==TRUE){stopCluster(cl)}
+    if (carallel == TRUE){stopCluster(cl)}
     close(pb)
     
     end_time <- Sys.time()
