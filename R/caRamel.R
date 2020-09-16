@@ -25,13 +25,14 @@
 #' @param gpp : (integer, length = 1) optional, calling frequency for the rule "Fireworks"
 #' @param blocks (optional): groups for parameters
 #' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)
-#' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores.
+#' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores
 #' @param objnames (optional): the name of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
 #' @param write_gen : (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)
 #' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
-#' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default).
-#' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default).
+#' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)
+#' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)
+#' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
 #
 ##' @return
 ##' List of five elements:
@@ -39,6 +40,7 @@
 ##' \item{success}{return value (logical, length = 1) : TRUE if successfull}
 ##' \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
 ##' \item{objectives}{objectives of the Pareto front (matrix, nrow = archsize, ncol = nobj+nadditional)}
+##' \item{derivatives}{list of the Jacobian matrices of the Pareto front if the sensitivity parameter is TRUE or NA otherwise}
 ##' \item{save_crit}{evolution of the optimal objectives}
 ##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
 ##' }
@@ -97,7 +99,8 @@ caRamel <-
            write_gen = FALSE,
            carallel = TRUE,
            numcores = NULL,
-           graph = TRUE) {
+           graph = TRUE,
+           sensitivity = FALSE) {
     
     start_time <- Sys.time()
 
@@ -208,6 +211,7 @@ caRamel <-
     if (is.null(gpp)){
       gpp <- ceiling( nvar * (nobj+1) * 4 / sum(repart_gene) )
     }
+    jacobian <- NA
     
     # Init the parallel computation
     if (carallel == TRUE){
@@ -399,18 +403,64 @@ caRamel <-
       }
     }
     
-    if (carallel == TRUE){stopCluster(cl)}
+    # Close the progress bar
     close(pb)
+    
+    # Compute the first order derivatives
+    if(sensitivity == TRUE){
+      message("Computing the sensitivity of the Pareto front...")
+      dx <- 0.0001
+      dxinv <- 1. / dx
+      jacobian <- list()
+      
+      xopt <- param_arch
+      nfront <- dim(crit_arch)[1]
+      dim(xopt) <- c(nfront, nvar)
+      x <- xopt
+      for(k in 1:nobj){
+        nameId <- paste("Jacobian_", toString(k), sep = '')
+        jacobian[[nameId]] <- matrix(data = 0., nrow = nfront, ncol = nvar)
+        dim(jacobian[[nameId]]) <- c(nfront, nvar)  # even if only one variable it must be a matrix
+      }
+      for(j in 1:nvar){
+        x[,j] <- x[,j] + dx
+        if (carallel == TRUE){
+          newfeval <- NULL
+          clusterExport(cl=cl, varlist=c("x"), envir = environment())
+          res = parLapply(cl, 1:nfront, func)
+          for (e in 1:nfront) {
+            newfeval <- rbind(newfeval, as.numeric(res[[e]][1:nobj]))
+          }
+        } else { #sequential calls
+          newfeval <- matrix(data = 0.,
+                             nrow = nfront,
+                             ncol = nobj)
+          x<<-x
+          for (e in 1:nfront) {
+            res <- func(e)
+            newfeval[e, ] <- res[1:nobj]
+          }
+        }
+        for(k in 1:nobj){
+          jacobian[[k]][,j] <- (newfeval[,k] - crit_arch[,k]) * dxinv
+        }
+        x[,j] <- xopt[,j]
+      }
+    }
+    
+    # Stop the // cluster
+    if (carallel == TRUE){stopCluster(cl)}
     
     end_time <- Sys.time()
     message(paste("Done in", as.character(end_time-start_time), units(end_time-start_time), "-->", date()))
-    message(paste("Size of the Pareto front :", as.character(dim(param_arch)[1])))
+    message(paste("Size of the Pareto front :", as.character(dim(crit_arch)[1])))
     message(paste("Number of calls :", as.character(nrun)))
     
     return(list(
       "success" = TRUE,
       "parameters" = param_arch,
       "objectives" = cbind(crit_arch,additional_eval),
+      "derivatives" = jacobian,
       "save_crit" = t(save_crit),
       "total_pop"= pop,
 	  "gpp"=gpp
