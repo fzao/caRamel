@@ -2,6 +2,7 @@ News of the caRamel package
 
 Version 1.2
 ===========
+* option to compute the sensitivity of the Pareto front (first order derivatives)
 * bug fix when none or less than 4 feasible points in the initial population
 * parameter 'write_gen' is now of logical type
 * new reference for citing caRamel (HESS journal)
