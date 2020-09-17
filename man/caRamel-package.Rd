@@ -18,6 +18,8 @@ The main function of the package is \emph{caRamel()}.
 
 This function uses all the other functions of the package.
 
+An example of an hydrological optimization is available on the following presentation: \href{https://www.researchgate.net/publication/341931417_Automatic_Calibration_by_Evolutionary_Multi_Objective_Algorithm_the_caRamel_R_package}{useR! 2019}
+
 }
 \author{Fabrice Zaoui, Nicolas Le Moine, Celine Monteil (EDF R&D - LNHE)}
 \references{

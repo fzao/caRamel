@@ -12,11 +12,12 @@
 #' Documentation : "Principe de l'optimiseur CaRaMEL et illustration au travers d'exemples de parametres dans le cadre de la modelisation hydrologique conceptuelle"
 #'                 Frederic Hendrickx (EDF) and Nicolas Le Moine (UPMC)
 #'                 Report EDF H-P73-2014-09038-FR
+#'
 #' @param nobj : (integer, length = 1) the number of objectives to optimize (nobj >= 2)
 #' @param nvar : (integer, length = 1) the number of variables
 #' @param minmax : (logical, length = nobj) the objective is either a minimization (FALSE value) or a maximization (TRUE value)
 #' @param bounds : (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables
-#' @param func : the name of the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).
+#' @param func : (function) the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).
 #' @param popsize : (integer, length = 1) the population size for the genetic algorithm
 #' @param archsize : (integer, length = 1) the size of the Pareto front
 #' @param maxrun : (integer, length = 1) the max. number of simulations allowed
@@ -25,8 +26,8 @@
 #' @param gpp : (integer, length = 1) optional, calling frequency for the rule "Fireworks"
 #' @param blocks (optional): groups for parameters
 #' @param pop : (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)
-#' @param funcinit (optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores
-#' @param objnames (optional): the name of the objectives
+#' @param funcinit (function, optional): the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores
+#' @param objnames (optional): names of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
 #' @param write_gen : (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)
 #' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
@@ -35,7 +36,7 @@
 #' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
 #
 ##' @return
-##' List of five elements:
+##' List of seven elements:
 ##' \describe{
 ##' \item{success}{return value (logical, length = 1) : TRUE if successfull}
 ##' \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
@@ -43,6 +44,7 @@
 ##' \item{derivatives}{list of the Jacobian matrices of the Pareto front if the sensitivity parameter is TRUE or NA otherwise}
 ##' \item{save_crit}{evolution of the optimal objectives}
 ##' \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
+##' \item{gpp}{the calling period for the third generation rule (independent sampling with a priori parameters variance)}
 ##' }
 #' 
 #' @examples
@@ -463,6 +465,6 @@ caRamel <-
       "derivatives" = jacobian,
       "save_crit" = t(save_crit),
       "total_pop"= pop,
-	  "gpp"=gpp
+	    "gpp"=gpp
     ))
   }
