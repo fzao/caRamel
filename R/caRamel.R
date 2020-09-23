@@ -202,7 +202,7 @@ caRamel <-
     }
     
     # Initializations
-    save_crit<<-c()
+    save_crit <<- c()
     sp <- (bounds[, 2] - bounds[, 1]) / (2 * sqrt(3)) # standard deviation
     gsearch <-
       ceiling((nvar / 10) * nobj / log(nobj + 1)) # independant search every 'gsearch' iteration
@@ -230,7 +230,7 @@ caRamel <-
       if(length(pop[1,])<(nvar+nobj)){  # If an initial population exists with no corresponding values for the objectives
         
         # Evaluation of the objectives
-        x<<-pop[,1:nvar]
+        x <<- pop[,1:nvar]
         if (carallel == TRUE){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
@@ -318,7 +318,7 @@ caRamel <-
         newfeval <- matrix(data = 0.,
                            nrow = dim(x)[1],
                            ncol = nobj)
-        x<<-x
+        x <<- x
         for (i in 1:dim(x)[1]) {
           res <- func(i)
           newfeval[i, ] <- res[1:nobj]
@@ -437,7 +437,7 @@ caRamel <-
           newfeval <- matrix(data = 0.,
                              nrow = nfront,
                              ncol = nobj)
-          x<<-x
+          x <<- x
           for (e in 1:nfront) {
             res <- func(e)
             newfeval[e, ] <- res[1:nobj]
@@ -448,6 +448,7 @@ caRamel <-
         }
         x[,j] <- xopt[,j]
       }
+      nrun <- nrun + dim(x)[1] # update the number of calls
     }
     
     # Stop the // cluster
@@ -465,6 +466,6 @@ caRamel <-
       "derivatives" = jacobian,
       "save_crit" = t(save_crit),
       "total_pop"= pop,
-	    "gpp"=gpp
+	    "gpp"= gpp
     ))
   }

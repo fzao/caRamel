@@ -1,13 +1,17 @@
 News of the caRamel package
 
-Version 1.2
+Version 1.3
+===========
+* bug fix number of calls when sensitivity is required
+
+Version 1.2 (2020-09-17)
 ===========
 * option to compute the sensitivity of the Pareto front (first order derivatives)
 * bug fix when none or less than 4 feasible points in the initial population
 * parameter 'write_gen' is now of logical type
 * new reference for citing caRamel (HESS journal)
 
-Version 1.1
+Version 1.1 (2019-05-28)
 ===========
 * add vignettes
 * add plot functions (plot_caramel, plot_pareto)
@@ -15,12 +19,12 @@ Version 1.1
 * renaming of caRamel argument "noms_obj" as "objnames"
 * add caRamel argument "graph" to display graphical output
 
-Version 1.0
+Version 1.0 (2018-03-05)
 ===========
 * change version numbering (CRAN)
 * add small executable examples to all Rd files (CRAN)
 * add info on the method and references in the description file
 
-Version 0.0
-==================
-* first open source release (2018.02-16)
+Version 0.0 (2018-02-16)
+===========
+* first open source release
