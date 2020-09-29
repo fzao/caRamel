@@ -134,7 +134,7 @@ nobj <- 2 # number of objectives
 minmax <- c(FALSE, FALSE) # min and min
 ```
 
-Set algorithmic parameters and launch *caRamel*:
+Set algorithmic parameters and launch **caRamel**:
 
 ```{r kursawe_param, fig.show="hide", results="hide"}
 popsize <- 100 # size of the genetic population

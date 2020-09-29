@@ -1,8 +1,8 @@
 Package: caRamel
 Type: Package
 Title: Automatic Calibration by Evolutionary Multi Objective Algorithm
-Version: 1.2
-Date: 2020-09-15
+Version: 1.3
+Date: 2020-09-29
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),

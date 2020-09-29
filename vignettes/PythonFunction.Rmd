@@ -1,0 +1,111 @@
+---
+title: "using a Python function with caRamel"
+author: "Fabrice Zaoui"
+date: "September 29 2020"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{caRamel and Python function}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(python.reticulate = FALSE)
+```
+## Short Description
+
+**caRamel** is a multiobjective evolutionary algorithm combining the MEAS algorithm and the NGSA-II algorithm.
+
+Download the package from CRAN or [GitHub](https://github.com/fzao/caRamel) and then install and load it.
+
+```{r caRa, eval=F, echo=T}
+library(caRamel)
+```
+
+This example will use the **reticulate** package in order to call a Python function from R. Download the package from CRAN and then install and load it
+
+```{r reti, eval=F, echo=T}
+library(reticulate)
+```
+
+[*Kursawe*](https://en.wikipedia.org/wiki/File:Kursawe_function.pdf) test function has two objectives of three variables. This function will be written in a Python script named *kursawe.py* with the following content:
+
+```{python kursawe, eval=F, echo=T}
+import numpy as np
+
+def kursawe(x):
+    k1 = -10 * np.exp(-0.2 * np.sqrt(x[0]**2 + x[1]**2)) - \
+        10 * np.exp(-0.2 * np.sqrt(x[1]**2 + x[2]**2))
+    k2 = np.abs(x[0])**0.8 + 5 * np.sin(x[0]**3) + np.abs(x[1])**0.8 +\
+        5 * np.sin(x[1]**3) + np.abs(x[2])**0.8 + 5 * np.sin(x[2]**3)
+    return np.array([k1, k2])
+```
+
+The Python function has to be loaded in R:
+
+```{r load, eval=F, echo=T}
+use_python("/usr/local/bin/python3")
+source_python("kursawe.py")
+```
+
+
+This function is not directly called from **caRamel** but with a wrapper:
+
+```{r wrap, eval=F, echo=T}
+wrapperFunction <- function(i) {
+  return(kursawe(x[i,]))
+}
+```
+
+The variables lie in the range [-5, 5]:
+
+```{r kursawe_variable, eval=F, echo=T}
+nvar <- 3 # number of variables
+bounds <- matrix(data = 1, nrow = nvar, ncol = 2) # upper and lower bounds
+bounds[, 1] <- -5 * bounds[, 1]
+bounds[, 2] <- 5 * bounds[, 2]
+```
+
+Both functions are to be minimized:
+
+```{r kursawe_objectives, eval=F, echo=T}
+nobj <- 2 # number of objectives
+minmax <- c(FALSE, FALSE) # min and min
+```
+
+Set algorithmic parameters and launch **caRamel**:
+
+```{r kursawe_param, , eval=F, echo=T, fig.show="hide", results="hide"}
+popsize <- 100 # size of the genetic population
+archsize <- 100 # size of the archive for the Pareto front
+maxrun <- 1000 # maximum number of calls
+prec <- matrix(1.e-3, nrow = 1, ncol = nobj) # accuracy for the convergence phase
+
+results <- 
+  caRamel(nobj,
+          nvar,
+          minmax,
+          bounds,
+          wrapperFunction, # It's the wrapper function that will be called
+          popsize,
+          archsize,
+          maxrun,
+          prec,
+          carallel=FALSE) # no parallelism
+```
+
+Test if the convergence is successful and plot the optimal front:
+
+```{r kursawe_OK_plot, eval=F, echo=T}
+print(results$success==TRUE)
+
+plot(results$objectives[,1], results$objectives[,2], main="Kursawe Pareto front", xlab="Objective #1", ylab="Objective #2")
+```
+
+Finally plot the convergences of the objective functions:
+
+```{r kursawe_plot_conv, eval=F, echo=T}
+matplot(results$save_crit[,1],cbind(results$save_crit[,2],results$save_crit[,3]),type="l",col=c("blue","red"), main="Convergence", xlab="Number of calls", ylab="Objectives values")
+```
+
