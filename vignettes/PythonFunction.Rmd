@@ -50,10 +50,17 @@ source_python("kursawe.py")
 ```
 
 
-This function is not directly called from **caRamel** but with a wrapper:
+This function is not directly called from **caRamel** but with a new wrapper function and finally all can be gathered in it (recommended):
 
 ```{r wrap, eval=F, echo=T}
 wrapperFunction <- function(i) {
+  # load the package
+  library(reticulate)
+  # python path
+  use_python("/usr/local/bin/python3")
+  # source the Python function
+  source_python("kursawe.py")
+  # call the Python function and return the results
   return(kursawe(x[i,]))
 }
 ```
@@ -91,8 +98,7 @@ results <-
           popsize,
           archsize,
           maxrun,
-          prec,
-          carallel=FALSE) # no parallelism
+          prec)
 ```
 
 Test if the convergence is successful and plot the optimal front:
