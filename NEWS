@@ -2,6 +2,7 @@ News of the caRamel package
 
 Version 1.3
 ===========
+* third possible choice for evaluating the entire population by the user (carallel=2)
 * vignette example for using a Python function
 * bug fix number of calls when sensitivity is required
 
