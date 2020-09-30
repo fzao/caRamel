@@ -30,7 +30,7 @@
 #' @param objnames (optional): names of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
 #' @param write_gen : (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)
-#' @param carallel : (logical, length = 1) optional, do parallel computations (TRUE by default)
+#' @param carallel : (integer, length = 1) optional, do parallel computations (0: sequential, 1:parallel, 2:user-defined choice)
 #' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)
 #' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)
 #' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
@@ -77,7 +77,7 @@
 #'           archsize = 100,
 #'           maxrun = 500,
 #'           prec = matrix(1.e-3, nrow = 1, ncol = nobj),
-#'           carallel = FALSE)
+#'           carallel = 0)
 #' 
 #' @author Fabrice Zaoui - Celine Monteil
 
@@ -99,7 +99,7 @@ caRamel <-
            objnames = NULL,
            listsave = NULL,
            write_gen = FALSE,
-           carallel = TRUE,
+           carallel = 1,
            numcores = NULL,
            graph = TRUE,
            sensitivity = FALSE) {
@@ -196,9 +196,10 @@ caRamel <-
       listsave$RadObj <- gsub(pattern = ".txt",replacement = "",listsave$obj)
       if (ecrit_total_pop == 1){listsave$RadPop <- gsub(pattern = ".txt",replacement = "",listsave$totalpop)}
     }
-    if (typeof(carallel) != "logical") {
-      message("'carallel' must be a logical!")
-      return(list("success" = FALSE, "message" ="'carallel' must be a logical!"))
+    carallel <- as.integer(carallel)
+    if (!(carallel %in% c(0, 1, 2))){
+      message("'carallel' value is not 0, 1 or 2")
+      return(list("success" = FALSE, "message" ="wrong value for paramemter 'carallel'"))
     }
     
     # Initializations
@@ -216,7 +217,7 @@ caRamel <-
     jacobian <- NA
     
     # Init the parallel computation
-    if (carallel == TRUE){
+    if (carallel == 1){
       if (is.null(numcores)){ numcores <- detectCores()}
       cl <- makeCluster(numcores)
       if (initialise_calc == 1){
@@ -231,14 +232,14 @@ caRamel <-
         
         # Evaluation of the objectives
         x <<- pop[,1:nvar]
-        if (carallel == TRUE){
+        if (carallel == 1){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
           res = parLapply(cl, 1:dim(x)[1], func)
           for (j in 1:dim(x)[1]) {
             newfeval <- rbind(newfeval, as.numeric(res[[j]][1:nobj]))
           }
-        } else { #sequential calls
+        } else if (carallel == 0){ #sequential calls
           newfeval <- matrix(data = 0.,
                              nrow = dim(x)[1],
                              ncol = nobj)
@@ -246,6 +247,8 @@ caRamel <-
             res <- func(i)
             newfeval[i, ] <- res[1:nobj]
           }
+        } else {
+          newfeval <- func(pop[,1:nvar])
         }
         pop <- cbind(pop[,1:nvar],newfeval)
         nrun <- nrun + length(pop[,1])
@@ -278,7 +281,7 @@ caRamel <-
         param <- as.matrix(pop[, 1:nvar])
         dim(param) <- c(dim(pop)[1], nvar)
         if(dim(param)[1] < 4){
-          if (carallel == TRUE){stopCluster(cl)}
+          if (carallel == 1){stopCluster(cl)}
           close(pb)
           message("Optimization failed")
           return(list("success" = FALSE, "message" ="The number of feasible points is not sufficient! Try to increase the size of the population..."))
@@ -301,7 +304,7 @@ caRamel <-
       # simulations
       additional_eval <- NULL
       # parallel calls
-      if (carallel == TRUE){
+      if (carallel == 1){
         newfeval <- NULL
         clusterExport(cl=cl, varlist=c("x"), envir = environment())
         res <- parLapply(cl, 1:dim(x)[1], func)
@@ -314,7 +317,7 @@ caRamel <-
           additional_eval <- NULL
           nadditional <- 0
         }
-      } else { #sequential calls
+      } else if (carallel == 0){ #sequential calls
         newfeval <- matrix(data = 0.,
                            nrow = dim(x)[1],
                            ncol = nobj)
@@ -329,6 +332,10 @@ caRamel <-
           additional_eval <- NULL
           nadditional <- 0
         }
+      } else {
+        newfeval <- func(x)
+        additional_eval <- NULL
+        nadditional <- 0
       }
       
       # update the number of calls
@@ -342,7 +349,7 @@ caRamel <-
       detect_nan <- is.na(newfeval)
       set_ok <- !rowSums(detect_nan)
       if(length(set_ok[set_ok == TRUE]) == 0){
-        if (carallel == TRUE){stopCluster(cl)}
+        if (carallel == 1){stopCluster(cl)}
         close(pb)
         message("Optimization failed")
         return(list("success" = FALSE, "message" ="No feasible points! Try to increase the size of the population..."))
@@ -426,14 +433,14 @@ caRamel <-
       }
       for(j in 1:nvar){
         x[,j] <- x[,j] + dx
-        if (carallel == TRUE){
+        if (carallel == 1){
           newfeval <- NULL
           clusterExport(cl=cl, varlist=c("x"), envir = environment())
           res = parLapply(cl, 1:nfront, func)
           for (e in 1:nfront) {
             newfeval <- rbind(newfeval, as.numeric(res[[e]][1:nobj]))
           }
-        } else { #sequential calls
+        } else if (carallel == 0 | carallel == 2){ #sequential calls or user-defined choice
           newfeval <- matrix(data = 0.,
                              nrow = nfront,
                              ncol = nobj)
@@ -452,7 +459,7 @@ caRamel <-
     }
     
     # Stop the // cluster
-    if (carallel == TRUE){stopCluster(cl)}
+    if (carallel == 1){stopCluster(cl)}
     
     end_time <- Sys.time()
     message(paste("Done in", as.character(end_time-start_time), units(end_time-start_time), "-->", date()))
