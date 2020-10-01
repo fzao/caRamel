@@ -1,5 +1,5 @@
 ---
-title: "using caRamel on two benchmark tests"
+title: "Using caRamel on two benchmark tests"
 author: "Fabrice Zaoui"
 date: "January 19 2018"
 output: html_document

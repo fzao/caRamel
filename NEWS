@@ -3,7 +3,8 @@ News of the caRamel package
 Version 1.3
 ===========
 * third possible choice for evaluating the entire population by the user (carallel=2)
-* vignette example for using a Python function
+* vignette example: calling options of the R user function
+* vignette example: using a Python function with caRamel
 * bug fix number of calls when sensitivity is required
 
 Version 1.2 (2020-09-17)

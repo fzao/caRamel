@@ -1,5 +1,5 @@
 ---
-title: "using a Python function with caRamel"
+title: "Using a Python function with caRamel"
 author: "Fabrice Zaoui"
 date: "September 29 2020"
 output: html_document
