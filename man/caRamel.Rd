@@ -22,7 +22,7 @@ caRamel(
   objnames = NULL,
   listsave = NULL,
   write_gen = FALSE,
-  carallel = TRUE,
+  carallel = 1,
   numcores = NULL,
   graph = TRUE,
   sensitivity = FALSE
@@ -37,7 +37,7 @@ caRamel(
 
 \item{bounds}{: (matrix, nrow = nvar, ncol = 2) lower and upper bounds for the variables}
 
-\item{func}{: the name of the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).}
+\item{func}{: (function) the objective function to optimize. Input argument is the number of parameter set (integer) in the x matrix. The function has to return a vector of at least 'nobj' values (Objectives 1 to nobj are used for optimization, values after nobj are recorded for information.).}
 
 \item{popsize}{: (integer, length = 1) the population size for the genetic algorithm}
 
@@ -55,15 +55,15 @@ caRamel(
 
 \item{pop}{: (matrix, nrow = nset, ncol = nvar or nvar+nobj ) optional, initial population (used to restart an optimization)}
 
-\item{funcinit}{(optional): the name of the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores}
+\item{funcinit}{(function, optional): the initialization function applied on each node of cluster when parallel computation. The arguments are cl and numcores}
 
-\item{objnames}{(optional): the name of the objectives}
+\item{objnames}{(optional): names of the objectives}
 
 \item{listsave}{(optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)}
 
 \item{write_gen}{: (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)}
 
-\item{carallel}{: (logical, length = 1) optional, do parallel computations (TRUE by default)}
+\item{carallel}{: (integer, length = 1) optional, do parallel computations (0: sequential, 1:parallel, 2:user-defined choice)}
 
 \item{numcores}{: (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)}
 
@@ -72,7 +72,7 @@ caRamel(
 \item{sensitivity}{: (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)}
 }
 \value{
-List of five elements:
+List of seven elements:
 \describe{
 \item{success}{return value (logical, length = 1) : TRUE if successfull}
 \item{parameters}{Pareto front (matrix, nrow = archsize, ncol = nvar)}
@@ -80,6 +80,7 @@ List of five elements:
 \item{derivatives}{list of the Jacobian matrices of the Pareto front if the sensitivity parameter is TRUE or NA otherwise}
 \item{save_crit}{evolution of the optimal objectives}
 \item{total_pop}{total population (matrix, nrow = popsize+archsize, ncol = nvar+nobj+nadditional)}
+\item{gpp}{the calling period for the third generation rule (independent sampling with a priori parameters variance)}
 }
 }
 \description{
@@ -127,7 +128,7 @@ results <-
           archsize = 100,
           maxrun = 500,
           prec = matrix(1.e-3, nrow = 1, ncol = nobj),
-          carallel = FALSE)
+          carallel = 0)
 
 }
 \author{
