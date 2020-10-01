@@ -5,7 +5,7 @@ date: "October 01 2020"
 output: html_document
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{options for the carallel parameter}
+  %\VignetteIndexEntry{Options for the carallel parameter}
   %\VignetteEncoding{UTF-8}
 ---
 
