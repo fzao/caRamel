@@ -25,7 +25,8 @@ caRamel(
   carallel = 1,
   numcores = NULL,
   graph = TRUE,
-  sensitivity = FALSE
+  sensitivity = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -70,6 +71,8 @@ caRamel(
 \item{graph}{: (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)}
 
 \item{sensitivity}{: (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)}
+
+\item{verbose}{: (logical, length = 1) optional, verbosity mode (TRUE by default)}
 }
 \value{
 List of seven elements:

@@ -34,6 +34,7 @@
 #' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)
 #' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)
 #' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
+#' @param verbose : (logical, length = 1) optional, verbosity mode (TRUE by default)
 #
 ##' @return
 ##' List of seven elements:
@@ -102,62 +103,63 @@ caRamel <-
            carallel = 1,
            numcores = NULL,
            graph = TRUE,
-           sensitivity = FALSE) {
+           sensitivity = FALSE,
+           verbose = TRUE) {
     
     start_time <- Sys.time()
 
     # Check the input arguments #
     #############################
     if (nobj <= 1) {
-      message("the number of objectives must be greater than one!")
+      if(verbose) message("the number of objectives must be greater than one!")
       return(list("success" = FALSE, "message" ="the number of objectives must be greater than one!"))
     }
     if (nvar < 1) {
-      message("the number of variables must be greater than zero!")
+      if(verbose) message("the number of variables must be greater than zero!")
       return(list("success" = FALSE, "message" ="the number of variables must be greater than zero!"))
     }
     if (length(minmax) != nobj) {
-      message("the dimension of 'minmax' is incorrect!")
+      if(verbose) message("the dimension of 'minmax' is incorrect!")
       return(list("success" = FALSE, "message" ="the dimension of 'minmax' is incorrect!"))
     }
     if ((dim(bounds)[1] != nvar) | (dim(bounds)[2] != 2)) {
-      message("the dimension of 'bounds' is incorrect!")
+      if(verbose) message("the dimension of 'bounds' is incorrect!")
       return(list("success" = FALSE, "message" ="the dimension of 'bounds' is incorrect!"))
     }
     if (class(func) != "function") {
-      message("'func' is not an R function!")
+      if(verbose) message("'func' is not an R function!")
       return(list("success" = FALSE, "message" ="'func' is not an R function!"))
     }
     if (popsize < 1) {
-      message("'popsize' must be strictly positive!")
+      if(verbose) message("'popsize' must be strictly positive!")
       return(list("success" = FALSE, "message" ="'popsize' must be strictly positive!"))
     }
     if (archsize < 1) {
-      message("'archsize' must be strictly positive!")
+      if(verbose) message("'archsize' must be strictly positive!")
       return(list("success" = FALSE, "message" ="'archsize' must be strictly positive!"))
     }
     if (maxrun < 1) {
-      message("'maxrun' must be strictly positive!")
+      if(verbose) message("'maxrun' must be strictly positive!")
       return(list("success" = FALSE, "message" ="'maxrun' must be strictly positive!"))
     }
     if (length(repart_gene) != 4) {
-      message("the dimension of'repart_gene' must be 4!")
+      if(verbose) message("the dimension of'repart_gene' must be 4!")
       return(list("success" = FALSE, "message" ="the dimension of 'repart_gene' must be 4!"))
     }
     if (sum(repart_gene <= 0) > 0) {
-      message("parameter values for each rule of 'repart_gene' must be strictly positive!")
+      if(verbose) message("parameter values for each rule of 'repart_gene' must be strictly positive!")
       return(list("success" = FALSE, "message" ="parameter values for each rule of 'repart_gene' must be strictly positive!"))
     }
     if (!is.null(gpp)){
       if (gpp < 1) {
-        message("gpp must be greater than zero!")
+        if(verbose) message("gpp must be greater than zero!")
         return(list("success" = FALSE, "message" ="gpp be greater than zero!"))
       }
     }
     initialise_calc<-0
     if (!is.null(funcinit)){
       if (class(funcinit) != "function") {
-        message("'funcinit' is not an R function!")
+        if(verbose) message("'funcinit' is not an R function!")
         return(list("success" = FALSE, "message" ="'funcinit' is not an R function!"))
       }
       initialise_calc<-1
@@ -166,20 +168,20 @@ caRamel <-
     writefile <- FALSE
     if (!is.null(listsave)){
       if (class(listsave) != "list") {
-        message("'listsave' is not an R list!")
+        if(verbose) message("'listsave' is not an R list!")
         return(list("success" = FALSE, "message" ="'listsave' is not an R list!"))
       }
       writefile <- TRUE
       if (is.null(listsave$pmt)){
-        message(" 'listsave$pmt' must be defined!")
+        if(verbose) message(" 'listsave$pmt' must be defined!")
         return(list("success" = FALSE, "message" =" 'listsave$pmt' must be defined!"))
       }
       if (is.null(listsave$obj)){
-        message(" 'listsave$obj' must be defined!")
+        if(verbose) message(" 'listsave$obj' must be defined!")
         return(list("success" = FALSE, "message" =" 'listsave$obj' must be defined!"))
       }
       if (is.null(listsave$evol)){
-        message(" 'listsave$evol' must be defined!")
+        if(verbose) message(" 'listsave$evol' must be defined!")
         return(list("success" = FALSE, "message" =" 'listsave$evol' must be defined!"))
       }
       ecrit_total_pop = 0 
@@ -189,7 +191,7 @@ caRamel <-
     }
     if (write_gen == TRUE){
       if (writefile == FALSE){
-        message(" 'listsave' must be defined to use write_gen!")
+        if(verbose) message(" 'listsave' must be defined to use write_gen!")
         return(list("success" = FALSE, "message" =" 'listsave' must be defined to use write_gen!"))
       }
       listsave$RadPmt <- gsub(pattern = ".txt",replacement = "",listsave$pmt)
@@ -198,7 +200,7 @@ caRamel <-
     }
     carallel <- as.integer(carallel)
     if (!(carallel %in% c(0, 1, 2))){
-      message("'carallel' value is not 0, 1 or 2")
+      if(verbose) message("'carallel' value is not 0, 1 or 2")
       return(list("success" = FALSE, "message" ="wrong value for paramemter 'carallel'"))
     }
     
@@ -256,10 +258,10 @@ caRamel <-
     }
     
     # Optimization
-    message(paste("Beginning of caRamel optimization <--", date()))
-    message(paste("Number of variables :", as.character(nvar)))
-    message(paste("Number of functions :", as.character(nobj)))
-    pb <- txtProgressBar(min=0, max=1,initial=0,title="caRamel progress :",label="caRamel progress :" , style=3)
+    if(verbose) message(paste("Beginning of caRamel optimization <--", date()))
+    if(verbose) message(paste("Number of variables :", as.character(nvar)))
+    if(verbose) message(paste("Number of functions :", as.character(nobj)))
+    if(verbose) pb <- txtProgressBar(min=0, max=1,initial=0,title="caRamel progress :",label="caRamel progress :" , style=3)
     while (nrun < maxrun) {
       ngen <- ngen + 1
       
@@ -282,8 +284,8 @@ caRamel <-
         dim(param) <- c(dim(pop)[1], nvar)
         if(dim(param)[1] < 4){
           if (carallel == 1){stopCluster(cl)}
-          close(pb)
-          message("Optimization failed")
+          if(verbose) close(pb)
+          if(verbose) message("Optimization failed")
           return(list("success" = FALSE, "message" ="The number of feasible points is not sufficient! Try to increase the size of the population..."))
         }
         crit <- pop[, (nvar + 1):(nvar + nobj)]
@@ -342,8 +344,7 @@ caRamel <-
       nrun <- nrun + dim(x)[1]
       
       # show progress
-      progress <- round(min(nrun,maxrun) * 100 / maxrun)
-      setTxtProgressBar(pb, min(nrun,maxrun)/maxrun)
+      if(verbose) setTxtProgressBar(pb, min(nrun,maxrun)/maxrun)
       
       # deal with NaN value
       detect_nan <- is.na(newfeval)
@@ -351,7 +352,7 @@ caRamel <-
       if(length(set_ok[set_ok == TRUE]) == 0){
         if (carallel == 1){stopCluster(cl)}
         close(pb)
-        message("Optimization failed")
+        if(verbose) message("Optimization failed")
         return(list("success" = FALSE, "message" ="No feasible points! Try to increase the size of the population..."))
       }
       newfeval <- newfeval[set_ok, ]
@@ -413,11 +414,11 @@ caRamel <-
     }
     
     # Close the progress bar
-    close(pb)
+    if(verbose) close(pb)
     
     # Compute the first order derivatives
     if(sensitivity == TRUE){
-      message("Computing the sensitivity of the Pareto front...")
+      if(verbose) message("Computing the sensitivity of the Pareto front...")
       dx <- 0.0001
       dxinv <- 1. / dx
       jacobian <- list()
@@ -462,9 +463,9 @@ caRamel <-
     if (carallel == 1){stopCluster(cl)}
     
     end_time <- Sys.time()
-    message(paste("Done in", as.character(end_time-start_time), units(end_time-start_time), "-->", date()))
-    message(paste("Size of the Pareto front :", as.character(dim(crit_arch)[1])))
-    message(paste("Number of calls :", as.character(nrun)))
+    if(verbose) message(paste("Done in", as.character(end_time-start_time), units(end_time-start_time), "-->", date()))
+    if(verbose) message(paste("Size of the Pareto front :", as.character(dim(crit_arch)[1])))
+    if(verbose) message(paste("Number of calls :", as.character(nrun)))
     
     return(list(
       "success" = TRUE,
