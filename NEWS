@@ -3,9 +3,11 @@ News of the caRamel package
 Version 1.3
 ===========
 * new verbosity option
-* third possible choice for evaluations: the entire population can be transmitted to the user (carallel=2)
-* vignette example: calling options of the R user function
-* vignette example: using a Python function with caRamel
+* third possible choice for evaluations: the entire population can be transmitted to the user function (carallel=2)
+* new vignette examples: 
+    - calling options of the R user function
+    - using a Python function with caRamel
+    - parallelism with MPI 
 * bug fix number of calls when sensitivity is required
 
 Version 1.2 (2020-09-17)
