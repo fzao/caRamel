@@ -30,7 +30,7 @@
 #' @param objnames (optional): names of the objectives
 #' @param listsave (optional): names of the listing files. Default: None (no output). If exists, fields to be defined: "pmt" (file of parameters on the Pareto Front), "obj" (file of corresponding objective values), "evol" (evolution of maximum objectives by generation). Optional field: "totalpop" (total population and corresponding objectives, useful to restart a computation)
 #' @param write_gen : (logical, length = 1) optional, if TRUE, save files 'pmt' and 'obj' at each generation (FALSE by default)
-#' @param carallel : (integer, length = 1) optional, do parallel computations (0: sequential, 1:parallel, 2:user-defined choice)
+#' @param carallel : (integer, length = 1) optional, do parallel computations? (0: sequential, 1:parallel (default) , 2:user-defined choice)
 #' @param numcores : (integer, length = 1) optional, the number of cores for the parallel computations (all cores by default)
 #' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)
 #' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
