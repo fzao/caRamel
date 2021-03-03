@@ -1,7 +1,7 @@
 #' Decreasing of the population of parameters sets
-#' 
+#'
 #' decreases the population of parameters sets
-#'  
+#'
 #' @param matobj : matrix of objectives, dimension (ngames, nobj)
 #' @param minmax : vector of booleans, of dimension nobj: TRUE if maximization of the objective, FALSE otherwise
 #' @param prec : nobj dimension vector: accuracy
@@ -11,9 +11,9 @@
 ##' A list containing two elements:
 ##' \describe{
 ##' \item{ind_arch}{indices of individuals in the updated Pareto front}
-##' \item{ind_pop}{indices of individuals in the updated population} 
+##' \item{ind_pop}{indices of individuals in the updated population}
 ##' }
-#' 
+#'
 #' @examples
 #' # Definition of the parameters
 #' matobj <- matrix(rexp(200), 100, 2)
@@ -23,7 +23,7 @@
 #' popsize <- 100
 #' # Call the function
 #' res <- decrease_pop(matobj, minmax, prec, archsize, popsize)
-#' 
+#'
 #' @author Fabrice Zaoui
 
 decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
@@ -55,15 +55,14 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
   ind_pop <- ind_pop[Fs$ix]
 
   # Separation "elite" / rest of the population
-  arch <- matrix(pop[Fo == 1, ], ncol=nobj)
-  pop <- matrix(pop[Fo > 1, ], ncol=nobj)
+  arch <- matrix(pop[Fo == 1, ], ncol = nobj)
+  pop <- matrix(pop[Fo > 1, ], ncol = nobj)
   ind_arch <- ind_pop[Fo == 1]
   ind_pop <- ind_pop[Fo > 1]
 
   Fo <- Fo[Fo > 1]
 
-  #////////////////////// Decreasing the population size if> popsize //////////////////////
-  
+  # Decreasing the population size
   # If the population size exceeds popsize, elimination of the parameter sets with a high Fo
   if (dim(pop)[1] > popsize) {
     Fmax <- Fo[popsize]
@@ -80,7 +79,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
     ind_pop <- ind_pop1
   }
 
-  # /////////////////// Decreasing the archive size if> archsize ///////////////
+  #  Decreasing the archive size
   if (dim(arch)[1] > archsize) {
     arch_down <- TRUE
     arch_prec <- 2 * prec

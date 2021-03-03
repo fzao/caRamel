@@ -1,7 +1,7 @@
 #' Plotting of caRamel results
-#' 
+#'
 #' Plot graphs of the Pareto front and a graph of optimization evolution
-#' 
+#'
 #' @param caramel_results : list resulting from the caRamel() function, with fields $objectives and $save_crit
 #' @param nobj : number of objectives (optional)
 #' @param objnames : vector of objectives names (optional)
@@ -20,25 +20,29 @@
 #' bounds <- matrix(data = 1, nrow = nvar, ncol = 2) # Define the bound constraints
 #' bounds[, 1] <- -3 * bounds[, 1]
 #' bounds[, 2] <- 3 * bounds[, 2]
-#' 
+#'
 #' # Caramel optimization
 #' results <- caRamel(nobj, nvar, minmax, bounds, viennet, popsize = 100, archsize = 100,
 #'           maxrun = 500, prec = matrix(1.e-3, nrow = 1, ncol = nobj), carallel = FALSE)
-#' 
+#'
 #' # Plot of results
 #' plot_caramel(results)
 
-plot_caramel <- function(caramel_results, nobj=NULL, objnames=NULL){
-  
-  ngen <- length(caramel_results$save_crit[,1])
-  nrun <- caramel_results$save_crit[ngen,1]
-  
-  if (is.null(nobj)){nobj <- length(caramel_results$objectives[1,])}
-  if (is.null(objnames)){objnames <- paste("Obj",as.character(c(1:nobj)),sep="")}else{nobj<-length(objnames)}
-  
+plot_caramel <- function(caramel_results, nobj = NULL, objnames = NULL) {
+
+  ngen <- length(caramel_results$save_crit[, 1])
+  nrun <- caramel_results$save_crit[ngen, 1]
+
+  if (is.null(nobj)) nobj <- length(caramel_results$objectives[1, ])
+  if (is.null(objnames)) {
+     objnames <- paste("Obj", as.character(c(1:nobj)), sep = "")
+  } else {
+     nobj <- length(objnames)
+  }
+
   MatObj <- caramel_results$objectives
   MatEvol <- t(caramel_results$save_crit)
-  
+
   plot_population(MatObj, nobj, ngen, nrun, objnames, MatEvol)
-  
+
 }

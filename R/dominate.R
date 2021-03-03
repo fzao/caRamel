@@ -1,22 +1,21 @@
 #' Successive Pareto fronts of a population
-#' 
+#'
 #' calculates the successive Pareto fronts of a population (classification "onion peel"), when objectives need to be maximized.
-#'  
+#'
 #' @param matobj : matrix [ NInd , NObj ] of objectives
 #' @return f : vector of dimension NInd of dominances
-#' 
+#'
 #' @examples
 #' # Definition of the parameters
 #' matobj <- matrix(runif(200), 100, 2)
 #' # Call the function
 #' pareto_rank <- dominate(matobj)
-#' 
+#'
 #' @author Fabrice Zaoui
 
 dominate <- function(matobj) {
   # Call "pareto" function
   nind <- dim(matobj)[1] # Number of individuals
-  nobj <- dim(matobj)[2] # Number of criteria
   f <- matrix(data = 0., nrow = nind)
   ix <- which(f == 0)
   k <- 1

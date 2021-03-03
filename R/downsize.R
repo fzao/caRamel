@@ -1,12 +1,12 @@
 #' Downsizing of a population to only one individual per box up to a given accuracy
-#' 
+#'
 #' reduces the number of individuals in a population to only one individual per box up to a given accuracy
-#'  
+#'
 #' @param points : matrix of objectives
 #' @param Fo : rank on the front of each point (1: dominates on the Pareto)
 #' @param prec : (double, length = nobj) desired accuracy for sorting objectives
 #' @return vector indices
-#' 
+#'
 #' @examples
 #' # Definition of the parameters
 #' points <- matrix(rexp(200), 100, 2)
@@ -14,7 +14,7 @@
 #' Fo <- sample(1:100, 100)
 #' # Call the function
 #' res <- downsize(points, Fo, prec)
-#' 
+#'
 #' @author Fabrice Zaoui
 
 downsize <- function(points, Fo, prec) {
@@ -22,21 +22,21 @@ downsize <- function(points, Fo, prec) {
 
   imax1 <- apply(points, 2, which.max)
   imax1 <- sort(unique(imax1))
-  
+
   # Conservation of a single point per box at most
   u <- sort(unique(the_box))
   indices <- NULL
-  
-  for (i in 1:length(u)) {
+
+  for (i in seq_len(length(u))) {
     iu <- which(the_box == u[i])
-    
+
     # The candidates to represent the box are limited to those of smaller front
     Fmin <- min(Fo[iu])
     iux <- which(Fo[iu] == Fmin)
     iu <- iu[iux]
     iux <- NULL
-    
-    #If in "or" there is one (or more) set that maximizes absolutely one of the obj,
+
+    # If in "or" there is one (or more) set that maximizes absolutely one of the obj,
     # it is him that one keeps (case where the box contains at least one point of the front)
     if (Fmin == 1) {
       D <-
