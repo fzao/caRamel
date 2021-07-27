@@ -36,9 +36,9 @@ Plot graphs the population regarding each couple of objectives
 # Definition of the population
 Pop <- matrix(runif(300), 100, 3)
 # Call the function
-plot_population(MatObj = Pop, nobj=3, objnames=c("Obj1","Obj2","Obj3"))
+plot_population(MatObj = Pop, nobj = 3, objnames = c("Obj1", "Obj2", "Obj3"))
 
 }
 \author{
-C. Monteil
+Celine Monteil
 }

@@ -23,12 +23,12 @@ Plots graphs the population regarding each couple of objectives and emphasizes t
 Pop <- matrix(runif(300), 100, 3)
 
 # Definition of objectives to maximize (Obj1, Obj2) and to minimize (Obj3)
-maximized <- c(TRUE,TRUE,FALSE)
+maximized <- c(TRUE, TRUE, FALSE)
 
 # Call the function
-plot_pareto(MatObj = Pop, maximized=maximized)
+plot_pareto(MatObj = Pop, maximized = maximized)
 
 }
 \author{
-C. Monteil
+Celine Monteil
 }

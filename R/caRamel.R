@@ -252,10 +252,12 @@ caRamel <-
     }
 
     # Optimization
-    if(verbose) message(paste("Beginning of caRamel optimization <--", date()))
-    if(verbose) message(paste("Number of variables :", as.character(nvar)))
-    if(verbose) message(paste("Number of functions :", as.character(nobj)))
-    if(verbose) pb <- txtProgressBar(min = 0, max = 1, initial = 0, title = "caRamel progress :", label = "caRamel progress :" , style = 3)
+    if(verbose) {
+      message(paste("Beginning of caRamel optimization <--", date()))
+      message(paste("Number of variables :", as.character(nvar)))
+      message(paste("Number of functions :", as.character(nobj)))
+      pb <- txtProgressBar(min = 0, max = 1, initial = 0, title = "caRamel progress :", label = "caRamel progress :" , style = 3)
+    }
     while (nrun < maxrun) {
       ngen <- ngen + 1
 
@@ -278,8 +280,10 @@ caRamel <-
         dim(param) <- c(dim(pop)[1], nvar)
         if (dim(param)[1] < 4) {
           if (carallel == 1) stopCluster(cl)
-          if (verbose) close(pb)
-          if (verbose) message("Optimization failed")
+          if (verbose) {
+            close(pb)
+            message("Optimization failed")
+          }
           return(list("success" = FALSE, "message" = "The number of feasible points is not sufficient! Try to increase the size of the population..."))
         }
         crit <- pop[, (nvar + 1):(nvar + nobj)]
@@ -345,8 +349,10 @@ caRamel <-
       set_ok <- !rowSums(detect_nan)
       if (length(set_ok[set_ok == TRUE]) == 0) {
         if (carallel == 1) stopCluster(cl)
-        close(pb)
-        if (verbose) message("Optimization failed")
+        if (verbose) {
+          message("Optimization failed")
+          close(pb)
+        }
         return(list("success" = FALSE, "message" = "No feasible points! Try to increase the size of the population..."))
       }
       newfeval <- newfeval[set_ok, ]
@@ -455,9 +461,11 @@ caRamel <-
     if (carallel == 1) stopCluster(cl)
 
     end_time <- Sys.time()
-    if (verbose) message(paste("Done in", as.character(end_time - start_time), units(end_time - start_time), "-->", date()))
-    if (verbose) message(paste("Size of the Pareto front :", as.character(dim(crit_arch)[1])))
-    if (verbose) message(paste("Number of calls :", as.character(nrun)))
+    if (verbose) {
+      message(paste("Done in", as.character(end_time - start_time), units(end_time - start_time), "-->", date()))
+      message(paste("Size of the Pareto front :", as.character(dim(crit_arch)[1])))
+      message(paste("Number of calls :", as.character(nrun)))
+    }
 
     return(list(
       "success" = TRUE,

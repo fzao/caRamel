@@ -26,5 +26,5 @@ res <- dominated(x, Y)
 
 }
 \author{
-F. Zaoui
+Fabrice Zaoui
 }
