@@ -14,6 +14,11 @@
 #' @author Fabrice Zaoui
 
 dominate <- function(matobj) {
+  # Test for possible NA values
+  try(if(any(is.na(matobj))){
+    message("The dominance cannot be calcultated due to a NA value")
+    invokeRestart("abort")
+  })
   # Call "pareto" function
   nind <- dim(matobj)[1] # Number of individuals
   f <- matrix(data = 0., nrow = nind)
