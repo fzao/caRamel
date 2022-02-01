@@ -35,6 +35,7 @@
 #' @param graph : (logical, length = 1) optional, plot graphical output at each generation (TRUE by default)
 #' @param sensitivity : (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)
 #' @param verbose : (logical, length = 1) optional, verbosity mode (TRUE by default)
+#' @param worklist : optional values to be transmitted to the user's function (not used)
 #
 ##' @return
 ##' List of seven elements:
@@ -104,7 +105,8 @@ caRamel <-
            numcores = NULL,
            graph = TRUE,
            sensitivity = FALSE,
-           verbose = TRUE) {
+           verbose = TRUE,
+           worklist = NULL) {
 
     start_time <- Sys.time()
 
@@ -230,7 +232,7 @@ caRamel <-
         x <<- pop[, 1:nvar]
         if (carallel == 1) {
           newfeval <- NULL
-          clusterExport(cl = cl, varlist = c("x"), envir = environment())
+          clusterExport(cl = cl, varlist = c("x", "worklist"), envir = environment())
           res <- parLapply(cl, 1:dim(x)[1], func)
           for (j in 1:dim(x)[1]) {
             newfeval <- rbind(newfeval, as.numeric(res[[j]][1:nobj]))
@@ -306,7 +308,7 @@ caRamel <-
       # parallel calls
       if (carallel == 1) {
         newfeval <- NULL
-        clusterExport(cl = cl, varlist = c("x"), envir = environment())
+        clusterExport(cl = cl, varlist = c("x", "worklist"), envir = environment())
         res <- parLapply(cl, 1:dim(x)[1], func)
         for (j in 1:dim(x)[1]) {
           newfeval <- rbind(newfeval, as.numeric(res[[j]][1:nobj]))
@@ -434,7 +436,7 @@ caRamel <-
         x[, j] <- x[, j] + dx
         if (carallel == 1) {
           newfeval <- NULL
-          clusterExport(cl = cl, varlist = c("x"), envir = environment())
+          clusterExport(cl = cl, varlist = c("x", "worklist"), envir = environment())
           res <- parLapply(cl, 1:nfront, func)
           for (e in 1:nfront) {
             newfeval <- rbind(newfeval, as.numeric(res[[e]][1:nobj]))

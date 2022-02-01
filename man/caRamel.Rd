@@ -26,7 +26,8 @@ caRamel(
   numcores = NULL,
   graph = TRUE,
   sensitivity = FALSE,
-  verbose = TRUE
+  verbose = TRUE,
+  worklist = NULL
 )
 }
 \arguments{
@@ -73,6 +74,8 @@ caRamel(
 \item{sensitivity}{: (logical, length = 1) optional, compute the first order derivatives of the pareto front (FALSE by default)}
 
 \item{verbose}{: (logical, length = 1) optional, verbosity mode (TRUE by default)}
+
+\item{worklist}{: optional values to be transmitted to the user's function (not used)}
 }
 \value{
 List of seven elements:
