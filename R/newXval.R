@@ -52,7 +52,7 @@ newXval <-
     }
     obj[, !isperf] <- 1 - obj[, !isperf]
 
-    Fo <- dominate2(obj)
+    Fo <- dominate(obj)
     param_arch <- as.matrix(param[Fo == 1, ])
     if (dim(param_arch)[2]<npar){param_arch <- t(param_arch)} # to keep nb_param columns
     obj_arch <- obj[Fo == 1, ]

@@ -11,24 +11,21 @@
 #' # Call the function
 #' pareto_rank <- dominate(matobj)
 #'
-#' @author Fabrice Zaoui
+#' @author Alban de Lavenne, Fabrice Zaoui
 
 dominate <- function(matobj) {
+
   # Test for possible NA values
   try(if(any(is.na(matobj))){
     message("The dominance cannot be calcultated due to a NA value")
     invokeRestart("abort")
   })
-  # Call "pareto" function
+
+  if (!is.double(matobj)) {storage.mode(matobj) <- 'double'}
   nind <- dim(matobj)[1] # Number of individuals
-  f <- matrix(data = 0., nrow = nind)
-  ix <- which(f == 0)
-  k <- 1
-  while (length(ix) > 0) {
-    ftmp <- pareto(matobj[ix, , drop = FALSE])
-    f[ix] <- k * ftmp
-    ix <- which(f == 0)
-    k <- k + 1
-  }
-  return(f)
+  ord <- order(matobj[,1], matobj[,2], decreasing=TRUE) # order to make it faster
+  res <- matrix(data = .Call(c_dominate, matobj[ord,]), nrow = nind)
+  res[ord] <- res # original order
+  return(res)
+
 }

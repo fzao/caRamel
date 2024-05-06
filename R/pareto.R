@@ -11,29 +11,14 @@
 #' # Call the function
 #' is_pareto <- pareto(X)
 #'
-#' @author Fabrice Zaoui
+#' @author Alban de Lavenne, Fabrice Zaoui
 
 pareto <- function(X) {
 
-  Ft <- logical(length = dim(X)[1]) # Initially all vectors are marked as non-Pareto
-
-  Xtmp <- X
-  itmp <- matrix(data = 1:dim(X)[1])
-  ix1 <- 1
-  i1 <- 1
-
-  while (1) {
-    X1 <- Xtmp[ix1, ]
-    is_dominated <- dominated(X1, Xtmp)
-    Xtmp <- Xtmp[!is_dominated, ]
-    itmp <- itmp[!is_dominated]
-    ix1 <- which(itmp > i1)[1]
-    if (is.na(ix1))
-      break
-    i1 <- itmp[ix1]
-  }
-
-  Ft[itmp] <- TRUE
-  return(Ft)
+  if (!is.double(X)) {storage.mode(X) <- 'double'}
+  ord <- order(X[,1],X[,2],decreasing=TRUE) # order to make it faster
+  res <- .Call(c_pareto, X[ord,]) > 0
+  res[ord] <- res # original order
+  return(res)
 
 }

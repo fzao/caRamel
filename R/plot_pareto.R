@@ -27,7 +27,7 @@ plot_pareto <- function(MatObj, nobj = NULL, objnames = NULL, maximized = NULL) 
 
   MatTest <- MatObj
   MatTest[, !maximized] <- -MatObj[, !maximized]
-  is_pareto <- pareto2(MatTest)
+  is_pareto <- pareto(MatTest)
 
   # Graphs
   nb_fen <- choose(n = nobj, k = 2)
