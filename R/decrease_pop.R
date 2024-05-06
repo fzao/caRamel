@@ -34,7 +34,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
 
   matobj[, !minmax] <- -matobj[, !minmax]
 
-  Fo <- dominate(matobj)
+  Fo <- dominate2(matobj)
 
   # Choice of retained points
   indices <- downsize(matobj, Fo, prec)
@@ -44,7 +44,7 @@ decrease_pop <- function(matobj, minmax, prec, archsize, popsize) {
   ind_pop <- ind_pop[indices, ]
 
   #////////////////////// Recalculation of fronts ////////////////////////
-  Fo <- dominate(pop)
+  Fo <- dominate2(pop)
 
   # Sort by increasing front
   Fs <- sort(Fo, index.return = TRUE)

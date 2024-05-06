@@ -23,7 +23,7 @@ Dimprove <- function(o_splx, f_splx) {
   ledge <- NULL
 
   for (k in seq_len(length(if1))) {
-    is_dominated <- dominated(o_splx[if1[k], ], o_splx)
+    is_dominated <- dominated2(o_splx[if1[k], ], o_splx)
     ideb <- which(is_dominated == TRUE)
     if (length(ideb) > 0) {
       ak <-
