@@ -1,3 +1,4 @@
+useDynLib(caRamel, .registration=TRUE)
 importFrom("graphics", "legend", "par", "plot", "points")
 importFrom("stats", "rnorm", "runif", "sd")
 importFrom("utils", "setTxtProgressBar", "txtProgressBar", "write.table")

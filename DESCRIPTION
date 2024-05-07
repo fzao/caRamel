@@ -1,18 +1,20 @@
 Package: caRamel
 Type: Package
 Title: Automatic Calibration by Evolutionary Multi Objective Algorithm
-Version: 1.3
-Date: 2022-02-01
+Version: 1.4
+Date: 2024-06-05
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),
   person("Frederic", "Hendrickx", role = c("ctb")),
-  person("Fabrice", "Zaoui", role = c("aut", "cre"), email = "fabrice.zaoui@edf.fr")
+  person("Fabrice", "Zaoui", role = c("aut", "cre"), email = "fabrice.zaoui@edf.fr"),
+  person("Alban", "de Lavenne", role = c("ctb"))
   )
 Author: Nicolas Le Moine [aut],
   Celine Monteil [aut],
   Frederic Hendrickx [ctb],
-  Fabrice Zaoui [aut, cre]
+  Fabrice Zaoui [aut, cre],
+  Alban de Lavenne [ctb]
 Maintainer: Fabrice Zaoui <fabrice.zaoui@edf.fr>
 Depends: geometry, parallel
 Suggests: markdown, rmarkdown, knitr, testthat
@@ -25,6 +27,6 @@ BugReports: https://github.com/fzao/caRamel/issues
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 7.1.2
-NeedsCompilation: no
+NeedsCompilation: yes
 VignetteBuilder: knitr
 Repository: CRAN
