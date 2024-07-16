@@ -128,7 +128,7 @@ caRamel <-
       if (verbose) message("the dimension of 'bounds' is incorrect!")
       return(list("success" = FALSE, "message" = "the dimension of 'bounds' is incorrect!"))
     }
-    if (class(func) != "function") {
+    if (!"function" %in% class(func)) {
       if (verbose) message("'func' is not an R function!")
       return(list("success" = FALSE, "message" = "'func' is not an R function!"))
     }
@@ -160,7 +160,7 @@ caRamel <-
     }
     initialise_calc <- 0
     if (!is.null(funcinit)) {
-      if (class(funcinit) != "function") {
+      if (!"function" %in% class(funcinit)) {
         if (verbose) message("'funcinit' is not an R function!")
         return(list("success" = FALSE, "message" = "'funcinit' is not an R function!"))
       }
@@ -169,7 +169,7 @@ caRamel <-
     if (is.null(objnames)) objnames <- paste("Obj", as.character(c(1:nobj)), sep = "")
     writefile <- FALSE
     if (!is.null(listsave)) {
-      if (class(listsave) != "list") {
+      if (!"list" %in% class(listsave)) {
         if (verbose) message("'listsave' is not an R list!")
         return(list("success" = FALSE, "message" = "'listsave' is not an R list!"))
       }
