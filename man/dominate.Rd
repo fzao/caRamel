@@ -23,5 +23,5 @@ pareto_rank <- dominate(matobj)
 
 }
 \author{
-Fabrice Zaoui
+Alban de Lavenne, Fabrice Zaoui
 }

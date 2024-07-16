@@ -23,5 +23,5 @@ is_pareto <- pareto(X)
 
 }
 \author{
-Fabrice Zaoui
+Alban de Lavenne, Fabrice Zaoui
 }
