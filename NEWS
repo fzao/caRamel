@@ -1,5 +1,9 @@
 News of the caRamel package
 
+Version 1.4 (2024-07-23)
+===========
+* new Fortran subroutines to find Pareto fronts (speeding-up computations)
+
 Version 1.3 (2022-02-01)
 ===========
 * fix issue #3: passing extra arguments to the user's function
