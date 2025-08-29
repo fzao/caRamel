@@ -71,6 +71,7 @@ newXval <-
     #**************************************************************
 
     if (n_inter > 0 | n_extra > 0) {
+      obj <- unique(obj)
       simplices <- suppressMessages(delaunayn(obj))
 
       # For each simplex calculation of the number of vertices belonging to the Pareto front
