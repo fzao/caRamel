@@ -42,12 +42,11 @@ module pareto_and_co
          
         integer(kind=c_int), intent(in), value :: nind, nobj
         real(kind=c_double), intent(in), dimension(nind, nobj) :: X
-        real(kind=c_double), dimension(nind, nobj) :: Xrow
         integer(kind=c_int), intent(out), dimension(nind) :: Ft
         integer(kind=c_int), dimension(nind) :: ipop
         logical, dimension(nind) :: is_efficient
         integer, allocatable :: ileft(:), is_dominated(:)
-        integer :: i, j, k, nleft
+        integer :: i, nleft
         
         ipop = [(i, i=1, nind)]
         is_efficient = .TRUE.

@@ -24,8 +24,7 @@ License: GPL-3 | file LICENSE
 URL: https://github.com/fzao/caRamel
 BugReports: https://github.com/fzao/caRamel/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: yes
 VignetteBuilder: knitr
 Repository: CRAN
-
