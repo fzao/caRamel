@@ -1,5 +1,9 @@
 News of the caRamel package
 
+Version 1.5 (2026-05-07)
+===========
+* faster algorithms for computing Pareto fronts
+
 Version 1.4 (2024-07-23)
 ===========
 * new Fortran subroutines to find Pareto fronts (speeding-up computations)
