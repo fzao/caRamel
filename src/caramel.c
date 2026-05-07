@@ -16,6 +16,28 @@ extern SEXP c_pareto(SEXP X){
   return(Ft);
 }
 
+void F77_NAME(pareto_2d)(double *X, int nind, int *Ft);
+extern SEXP c_pareto_2d(SEXP X){
+  SEXP dim = PROTECT(getAttrib(X, R_DimSymbol));
+  const int nind = INTEGER(dim)[0];
+  SEXP Ft;
+  PROTECT(Ft = allocVector(INTSXP, nind));
+  F77_CALL(pareto_2d)(REAL(X), nind, INTEGER(Ft));
+  UNPROTECT(2);
+  return(Ft);
+}
+
+void F77_NAME(pareto_3d)(double *X, int nind, int *Ft);
+extern SEXP c_pareto_3d(SEXP X){
+  SEXP dim = PROTECT(getAttrib(X, R_DimSymbol));
+  const int nind = INTEGER(dim)[0];
+  SEXP Ft;
+  PROTECT(Ft = allocVector(INTSXP, nind));
+  F77_CALL(pareto_3d)(REAL(X), nind, INTEGER(Ft));
+  UNPROTECT(2);
+  return(Ft);
+}
+
 void F77_NAME(dominate)(double *matobj, int nind, int nobj, int *f);
 extern SEXP c_dominate(SEXP matobj){
   SEXP dim = PROTECT(getAttrib(matobj, R_DimSymbol));
@@ -42,6 +64,8 @@ extern SEXP c_dominated(SEXP Xi, SEXP X){
 
 static const R_CallMethodDef CallEntries[] = {
     {"c_pareto", (DL_FUNC) &c_pareto, 1},
+    {"c_pareto_2d", (DL_FUNC) &c_pareto_2d, 1},
+    {"c_pareto_3d", (DL_FUNC) &c_pareto_3d, 1},
     {"c_dominate", (DL_FUNC) &c_dominate, 1},
     {"c_dominated", (DL_FUNC) &c_dominated, 2},
     {NULL, NULL, 0}
