@@ -1,8 +1,8 @@
 Package: caRamel
 Type: Package
 Title: Automatic Calibration by Evolutionary Multi Objective Algorithm
-Version: 1.4
-Date: 2024-07-23
+Version: 1.5
+Date: 2026-05-07
 Authors@R: c(
   person("Nicolas", "Le Moine", role = c("aut")),
   person("Celine", "Monteil", role = c("aut")),
@@ -24,7 +24,7 @@ License: GPL-3 | file LICENSE
 URL: https://github.com/fzao/caRamel
 BugReports: https://github.com/fzao/caRamel/issues
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 NeedsCompilation: yes
 VignetteBuilder: knitr
 Repository: CRAN
+Config/roxygen2/version: 8.0.0
