@@ -263,19 +263,19 @@ caRamel <-
     while (nrun < maxrun) {
       ngen <- ngen + 1
 
-      # new population
+      # new population : LHS draw
       if (is.null(pop)) {
-        A <-
-          t(matrix(data = bounds[, 2] - bounds[, 1],
-                   ncol = popsize,
-                   nrow = nvar))
-        B <- t(matrix(data = bounds[, 1],
-                      ncol = popsize,
-                      nrow = nvar))
-        x <- A * matrix(runif(popsize * nvar), ncol = nvar) + B
-        probj <- matrix(data = NaN,
-                        nrow = popsize,
-                        ncol = nobj)
+          x <- matrix(0, nrow = popsize, ncol = nvar)
+          for (j in 1:nvar) {
+            # stratification + permutation
+            u <- (sample(popsize) - 1 + runif(popsize)) / popsize
+            # scaling
+            x[, j] <- bounds[j, 1] + u * (bounds[j, 2] - bounds[j, 1])
+          }
+          
+          probj <- matrix(data = NaN,
+                          nrow = popsize,
+                          ncol = nobj)
       } else {
         vamax <- (ngen %% gpp) == 0
         param <- as.matrix(pop[, 1:nvar])

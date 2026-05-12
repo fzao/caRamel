@@ -3,6 +3,8 @@ News of the caRamel package
 Version 1.5 (2026-05-07)
 ===========
 * faster algorithms for computing Pareto fronts
+* default initialisation with LHS
+* minor fix
 
 Version 1.4 (2024-07-23)
 ===========
